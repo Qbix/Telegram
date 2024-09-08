@@ -1,0 +1,40 @@
+{
+	"Q": {
+		"pluginInfo": {
+			"Telegram": {
+				"version": "0.2",
+				"compatible": "0.1",
+				"requires": {
+					"Q": "1.0",
+					"Users": "1.0",
+					"Streams": "1.0"
+				},
+				"permissions": [],
+				"connections": ["Users", "Telegram"]
+			}
+		},
+		"handlersBeforeEvent": {},
+		"handlersAfterEvent": {
+			"Q/Plugin/install": ["Telegram/after/Q_Plugin_install"]
+		},
+		"routes@end": {},
+		"routes": {},
+		"web": {},
+		"javascript": {},
+		"text": {},
+		"images": {},
+		"bot": {
+			"userAgent": "Qbix"
+		}
+	},
+	"Users": {
+		"apps": {
+			"telegram": {
+				"*": {
+					"appIdForAuth": "all"
+				}
+			}
+		}
+	},
+	"Streams": {}
+}
