@@ -209,9 +209,74 @@ class Telegram_Bot //extends Base_Telegram_Bot
             throw new Q_Exception_InvalidInput(array('source' => '$chat_id'));
         }
         $params = array_merge($options, compact('chat_id', 'video'));
-        $params['chat_id'] = $chat_id;
         
-        return self::api($appId, "sendVideo", $params);
+        
+        //actually:
+        // if $params['video'] is URL or telegramID, we just sendVideo with header 'Content-Type: application/json'
+        // otherwise:
+        // - expecting absolute path(for example from $_FILES) and trying to convert into CURLFile object
+        // - trigger chat action "upload_video"
+        // - sendVideo with header 'Content-Type: multipart/form-data'
+                
+        if (Q_Valid::url($params['video']) || (preg_match('/^[\/\w\-. ]+$/', $params['video']))) {
+            return self::api($appId, "sendVideo", $params, []);
+        } else {
+            if (!is_a($params['video'], CURLFile)) {
+                try {
+                    $params['video'] = new CURLFile(realpath($params['video']));
+                } catch (Exception $e) {
+                    throw new Q_Exception_InvalidInput(array('source' => '$video'));    
+                }
+            }
+            //self::sendChatAction($appId, $chat_id, 'upload_video');
+            self::api($appId, 'sendChatAction', [
+                'chat_id' => $chat_id,
+                'action' => 'upload_video'
+            ], []);
+
+            return self::api($appId, "sendVideo", $params, [
+                'Accept: application/json',
+                'Content-Type: multipart/form-data'
+            ]);
+        }
+    }
+    
+    /**
+     * Perform an action on behalf of the Telegram bot, such as typing, uploading a file, or recording a video.
+     * This can be used to indicate that the bot is performing an action (e.g., "typing..." indicator).
+     *
+     * @method sendChatAction
+     * @static
+     *
+     * @param {String} $appId The username of the Telegram bot, found in local/app.json under Users/apps/telegram config
+     * @param {Integer|String} $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername).
+     * @param {String} $action Type of action to broadcast. Choose one, depending on what the user is about to receive: 
+     * - "typing" for text messages, 
+     * - "upload_photo" for photos, 
+     * - "record_video" or "upload_video" for videos, 
+     * - "record_voice" or "upload_voice" for voice notes, 
+     * - "upload_document" for general files, 
+     * - "choose_sticker" for stickers, 
+     * - "find_location" for location data, 
+     * - "record_video_note" or "upload_video_note" for video notes.
+     * @param {String} [$options.business_connection_id] Optional. Unique identifier of the business connection on behalf of which the action will be sent.
+     * @param {Integer} [options.message_thread_id] Optional. Unique identifier for the target message thread; for supergroups only.
+     * 
+     * @return {Boolean} Returns true on success.
+     */
+    static function sendChatAction($appId, $chat_id, $action, array $options = [])
+    {
+        if (!is_int($chat_id) && !is_string($chat_id)) {
+            throw new Q_Exception_InvalidInput(array('source' => '$chat_id'));
+        }
+        
+        if (!is_string($action)) {
+            throw new Q_Exception_InvalidInput(array('source' => '$action'));
+        }
+        
+        $params = array_merge($options, compact('chat_id', 'action'));
+        
+        return self::api($appId, "sendChatAction", $params);
     }
 
     /**
@@ -250,17 +315,22 @@ class Telegram_Bot //extends Base_Telegram_Bot
      * @return {array} The JSON-decoded response from Telegram
      * @throws {Telegram_Exception_API} if there is an error
      */
-    private static function api($appId, $methodName, array $params)
+    private static function api($appId, $methodName, array $params, $headers = [])
     {
         $endpoint = self::endpoint($appId, $methodName);
-        $data = Q::json_encode($params);
-        $response = Q_Utils::post($endpoint, $data, Q_Config::get(
+        
+        if (empty($headers)) {
+            $headers = [
+                'Accept: application/json',
+                'Content-Type: application/json'
+            ];
+        }
+
+        $response = Q_Utils::post($endpoint, $params, Q_Config::get(
             'Telegram', 'bot', 'userAgent', 'Qbix', null
-        ), [], [
-            'Accept'=> 'application/json',
-            'Content-type'=> 'application/json'
-        ], 30, false);
+        ), []/*curl_opts*/, $headers, 30, false);
         $arr = Q::json_decode($response, true);
+
         Q_Valid::requireFields(array('ok'), $arr, true);
         if ($arr['ok'] !== true) {
             throw new Telegram_Exception_API(Q::take($arr, [
