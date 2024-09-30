@@ -244,22 +244,27 @@ class Telegram_Bot //extends Base_Telegram_Bot
     /**
      * Call the Telegram Bot API
      * @method api
-     * @param {String} $appId The username of the Telegram bot, found in local/app.json under Users/apps/telegram config
-     * @param {String} $methodName The name of the Telegram Bot API method in https://core.telegram.org/bots/api
+     * @param {string} $appId The username of the Telegram bot, found in local/app.json under Users/apps/telegram config
+     * @param {string} $methodName The name of the Telegram Bot API method in https://core.telegram.org/bots/api
+     * @param {array} $params 
+     * @param {string} [$payload] Any payload for uploads using multipart/form-data
      * @static
      * @return {array} The JSON-decoded response from Telegram
      * @throws {Telegram_Exception_API} if there is an error
      */
-    private static function api($appId, $methodName, array $params)
+    static function api($appId, $methodName, array $params, $payload = null)
     {
         $endpoint = self::endpoint($appId, $methodName);
-        $data = Q::json_encode($params);
-        $response = Q_Utils::post($endpoint, $data, Q_Config::get(
-            'Telegram', 'bot', 'userAgent', 'Qbix', null
-        ), [], [
+        $data = http_build_query($params);
+        $headers = [
             'Accept'=> 'application/json',
-            'Content-type'=> 'application/json'
-        ], 30, false);
+        ];
+        if ($payload) {
+            $headers['Content-Type'] = 'multipart/form-data';
+        }
+        $response = Q_Utils::post("$endpoint?$data", $payload, Q_Config::get(
+            'Telegram', 'bot', 'userAgent', 'Qbix', null
+        ), [], $headers, 30, false);
         $arr = Q::json_decode($response, true);
         Q_Valid::requireFields(array('ok'), $arr, true);
         if ($arr['ok'] !== true) {
