@@ -145,22 +145,23 @@ class Telegram_Bot //extends Base_Telegram_Bot
      * @static
      *
      * @param {String} $appId The username of the Telegram bot, found in local/app.json under Users/apps/telegram config
-     * @param {String} [options.business_connection_id] Unique identifier of the business connection on behalf of which the message will be sent.
-     * @param {Integer|String} chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername).
-     * @param {Integer} [options.message_thread_id] Unique identifier for the target message thread (topic) of the forum; for forum supergroups only.
-     * @param {String} text Text of the message to be sent, 1-4096 characters after entities parsing.
-     * @param {String} [options.parse_mode] Mode for parsing entities in the message text. See formatting options for more details.
-     * @param {Array<MessageEntity>} [options.entities] A JSON-serialized list of special entities that appear in the message text, which can be specified instead of parse_mode.
-     * @param {LinkPreviewOptions} [options.link_preview_options] Link preview generation options for the message.
-     * @param {Boolean} [options.disable_notification] Sends the message silently. Users will receive a notification with no sound.
-     * @param {Boolean} [options.protect_content] Protects the contents of the sent message from forwarding and saving.
-     * @param {String} [options.message_effect_id] Unique identifier of the message effect to be added to the message; for private chats only.
-     * @param {ReplyParameters} [options.reply_parameters] Description of the message to reply to.
-     * @param {InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply} [options.reply_markup] Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user.
+     * @param {Integer|String} $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername).
+     * @param {String} $text Text of the message to be sent, 1-4096 characters after entities parsing.
+     * @param {Array} [$options=array()]
+     * @param {String} [$options.business_connection_id] Unique identifier of the business connection on behalf of which the message will be sent.
+     * @param {Integer} [$options.message_thread_id] Unique identifier for the target message thread (topic) of the forum; for forum supergroups only.
+     * @param {String} [$options.parse_mode] Mode for parsing entities in the message text. See formatting options for more details.
+     * @param {Array<MessageEntity>} [$options.entities] A JSON-serialized list of special entities that appear in the message text, which can be specified instead of parse_mode.
+     * @param {LinkPreviewOptions} [$options.link_preview_options] Link preview generation options for the message.
+     * @param {Boolean} [$options.disable_notification] Sends the message silently. Users will receive a notification with no sound.
+     * @param {Boolean} [$options.protect_content] Protects the contents of the sent message from forwarding and saving.
+     * @param {String} [$options.message_effect_id] Unique identifier of the message effect to be added to the message; for private chats only.
+     * @param {ReplyParameters} [$options.reply_parameters] Description of the message to reply to.
+     * @param {InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply} [$ptions.reply_markup] Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard or to force a reply from the user.
      *
      * @return {Message} Returns the sent Message on success.
      */
-    static function sendMessage($appId, $chat_id, $text, array $params)
+    static function sendMessage($appId, $chat_id, $text, array $options = [])
     {
         if (!is_int($chat_id) && !is_string($chat_id)) {
             throw new Q_Exception_InvalidInput(array('source' => '$chat_id'));
@@ -168,9 +169,50 @@ class Telegram_Bot //extends Base_Telegram_Bot
         if (!is_string($text)) {
             throw new Q_Exception_InvalidInput(array('source' => '$text'));
         }
+        $options['chat_id'] = $chat_id;
+        $options['text'] = $text;
+        return self::api($appId, "sendMessage", $options);
+    }
+
+    /**
+     * Use this method to send photos. On success, the sent Message is returned.
+     * https://core.telegram.org/bots/api#sendphoto
+     *
+     * @method sendPhoto
+     * @static
+     *
+     * @param {String} $appId The username of the Telegram bot, found in local/app.json under Users/apps/telegram config
+     * @param {String} [options.business_connection_id] Unique identifier of the business connection on behalf of which the message will be sent.
+     * @param {Integer|String} chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername).
+     * @param {Integer} [options.message_thread_id] Unique identifier for the target message thread (topic) of the forum; for forum supergroups only.
+     * @param {InputFile|String} photo Photo to send. Pass a file_id as String to send a photo that exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a video from the Internet, or upload a new video using multipart/form-data.
+     * @param {Integer} [options.duration] Duration of sent photo in seconds.
+     * @param {Integer} [options.width] Photo width.
+     * @param {Integer} [options.height] Photo height.
+     * @param {InputFile|String} [options.thumbnail] Thumbnail of the file sent; can be ignored if thumbnail generation is supported server-side. Thumbnail must be in JPEG format and under 200 kB.
+     * @param {String} [options.caption] Photo caption (may also be used when resending photos by file_id), 0-1024 characters after entities parsing.
+     * @param {String} [options.parse_mode] Mode for parsing entities in the photo caption. See formatting options for more details.
+     * @param {Array<MessageEntity>} [options.caption_entities] A JSON-serialized list of special entities that appear in the caption, which can be specified instead of parse_mode.
+     * @param {Boolean} [options.show_caption_above_media] Pass True if the caption must be shown above the message media.
+     * @param {Boolean} [options.has_spoiler] Pass True if the photo needs to be covered with a spoiler animation.
+     * @param {Boolean} [options.supports_streaming] Pass True if the uploaded photo is suitable for streaming.
+     * @param {Boolean} [options.disable_notification] Sends the message silently. Users will receive a notification with no sound.
+     * @param {Boolean} [options.protect_content] Protects the contents of the sent message from forwarding and saving.
+     * @param {String} [options.message_effect_id] Unique identifier of the message effect to be added to the message; for private chats only.
+     * @param {ReplyParameters} [options.reply_parameters] Description of the message to reply to.
+     * @param {InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply} [options.reply_markup] Additional interface options. A JSON-serialized object for an inline keyboard, custom reply keyboard, instructions to remove a reply keyboard, or to force a reply from the user.
+     *
+     * @return {Message} Returns the sent Message on success.
+     */
+    static function sendPhoto($appId, $chat_id, $photo, array $options = [])
+    {
+        if (!is_int($chat_id) && !is_string($chat_id)) {
+            throw new Q_Exception_InvalidInput(array('source' => '$chat_id'));
+        }
+        $params = array_merge($options, compact('chat_id', 'photo'));
         $params['chat_id'] = $chat_id;
-        $params['text'] = $text;
-        return self::api($appId, "sendMessage", $params);
+        
+        return self::api($appId, "sendPhoto", $params);
     }
 
     /**
