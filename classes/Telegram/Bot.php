@@ -63,6 +63,24 @@ class Telegram_Bot //extends Base_Telegram_Bot
         $token = self::tokenFromConfig($appId);
         $params = [];
         Q::take($options, ['drop_pending_updates'], $params);
+
+        $plugin = 'Telegram';
+        $rows = Telegram::db()->select('*', '{{prefix}}Q_plugin')
+        ->where(compact('plugin'))
+        ->fetchDbRows();
+        if ($rows) {
+            $row = reset($rows);
+            $extra = json_decode($row->extra, true);
+            if ($extra) {
+                unset($extra[$appId]['setWebhook']);
+                $extra = json_encode($extra);
+                Telegram::db()->update('{{prefix}}Q_plugin')
+                ->set(compact('extra'))
+                ->where(compact('plugin'))
+                ->execute();
+            }
+        }
+
         return self::api($appId, 'deleteWebhook', $params);
     }
 
@@ -137,6 +155,33 @@ class Telegram_Bot //extends Base_Telegram_Bot
         ], $params);
         return self::api($appId, "answerCallbackQuery", $params);
     }
+
+    /**
+     * Use this method to send answers to an inline query. On success, True is returned.
+     * No more than 50 results per query are allowed.
+     *
+     * @method answerInlineQuery
+     * @static
+     * @param {string} $inline_query_id Unique identifier for the answered query (required)
+     * @param {array|string} $results A regular array, or a JSON-serialized array, of results for the inline query (required). See https://core.telegram.org/bots/api#inlinequeryresult
+     * @param {object} [$options] Optional parameters:
+     * @param {int} [$options.cache_time=300] The maximum amount of time in seconds that the result of the inline query may be cached on the server (optional)
+     * @param {boolean} [$options.is_personal=false] Pass True if results may be cached on the server side only for the user that sent the query (optional)
+     * @param {string} [$options.next_offset] Pass the offset that a client should send in the next query with the same text to receive more results (optional). Pass an empty string if there are no more results or if pagination is not supported. Offset length can't exceed 64 bytes.
+     * @param {object} [$options.button] A JSON-serialized object describing a button to be shown above inline query results (optional)
+     * @return {boolean} True on success.
+     */
+     static function answerInlineQuery($appId, $inline_query_id, $results, array $options)
+     {
+        if (is_array($results)) {
+            $results = json_encode($results, true);
+        }
+         $params = compact('inline_query_id', 'results');
+         Q::take($options, [
+             'cache_time', 'is_personal', 'next_offset', 'button'
+         ], $params);
+         return self::api($appId, "answerInlineQuery", $params);
+     }
     
     /**
      * Send text messages. https://core.telegram.org/bots/api#sendmessage
@@ -171,6 +216,10 @@ class Telegram_Bot //extends Base_Telegram_Bot
         }
         $options['chat_id'] = $chat_id;
         $options['text'] = $text;
+        if (isset($options['reply_markup'])
+        and is_array($options['reply_markup'])) {
+            $options['reply_markup'] = json_encode($options['reply_markup'], true);
+        }
         return self::api($appId, "sendMessage", $options);
     }
 
