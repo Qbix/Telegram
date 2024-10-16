@@ -51,7 +51,7 @@ class Telegram_Dispatcher
             throw new Users_Exception_NotAuthorized();
         }
 
-        list($appId) = explode('-', $headerValue);
+        list($platform, $appId) = explode('-', $headerValue);
         if ($headerValue !== Telegram::secretToken($appId)) {
             throw new Users_Exception_NotAuthorized();
         }

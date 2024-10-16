@@ -30,12 +30,6 @@ abstract class Telegram extends Base_Telegram
 	 */
 	static function secretToken($appId)
 	{
-		$internalSecret = Q_Config::get(
-            'Q', 'internal', 'secret', $appId
-        );
-		list($appId, $info) = Users::appInfo('telegram', $appId, true);
-		return $appId . '-' . Q::ifset($info, 'secret', Q_Utils::hmac(
-            'sha1', 'Telegram', $internalSecret
-        ));
+		return Users::secretToken('telegram', $appId);
 	}
 };
