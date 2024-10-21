@@ -206,7 +206,7 @@ class Telegram_Bot //extends Base_Telegram_Bot
      *
      * @return {Message} Returns the sent Message on success.
      */
-    static function sendMessage($appId, $chat_id, $text, array $options = [])
+    static function sendMessage($appId, $chat_id, $text, array $options = array())
     {
         if (!is_int($chat_id) && !is_string($chat_id)) {
             throw new Q_Exception_InvalidInput(array('source' => '$chat_id'));
@@ -408,7 +408,7 @@ class Telegram_Bot //extends Base_Telegram_Bot
      * @return {array} The JSON-decoded response from Telegram
      * @throws {Telegram_Exception_API} if there is an error
      */
-    private static function api($appId, $methodName, array $params, $headers = [])
+    static function api($appId, $methodName, array $params, $headers = [])
     {
         $endpoint = self::endpoint($appId, $methodName);
         //$data = http_build_query($params);
