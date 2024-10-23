@@ -369,6 +369,34 @@ class Telegram_Bot //extends Base_Telegram_Bot
         
         return self::api($appId, "sendChatAction", $params);
     }
+    
+    /**
+     * Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work 
+     * and must have the can_invite_users administrator right. Returns True on success.
+     * 
+     * @method approveChatJoinRequest
+     * @static
+     *
+     * @param {String} $appId The username of the Telegram bot, found in local/app.json under Users/apps/telegram config
+     * @param {Integer|String} $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername).
+     * @param {Integer} $user_id Unique identifier of the target user
+     * 
+     * @return {Boolean} Returns true on success.
+     */
+    static function approveChatJoinRequest($appId, $chat_id, $user_id) 
+    {
+        if (!is_int($chat_id) && !is_string($chat_id)) {
+            throw new Q_Exception_InvalidInput(array('source' => '$chat_id'));
+        }
+        
+        if (!is_int($user_id) && !is_string($user_id)) {
+            throw new Q_Exception_InvalidInput(array('source' => '$user_id'));
+        }
+        
+        $params = compact('chat_id', 'user_id');
+        
+        return self::api($appId, "approveChatJoinRequest", $params);
+    }
 
     /**
      * Get bot token from appId in config

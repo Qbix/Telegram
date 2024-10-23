@@ -1,5 +1,6 @@
 {
     "notFound": {
         "NotImplemented": "This functionality is not implemented yet"
-    }
+    },
+    "Welcome": "welcome to our chat"
 }
