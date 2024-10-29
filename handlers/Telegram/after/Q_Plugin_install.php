@@ -2,6 +2,9 @@
 
 function Telegram_after_Q_Plugin_install($params)
 {
+    if ($plugin_name !== 'Telegram') {
+        return;
+    }
     $extra = Q_Plugin::extra('Telegram', 'plugin', 'Telegram');
     $apps = Q_Config::get('Users', 'apps', 'telegram', array());
     foreach ($apps as $appId => $info) {
