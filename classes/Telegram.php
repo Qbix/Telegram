@@ -32,4 +32,42 @@ abstract class Telegram extends Base_Telegram
 	{
 		return Users::secretToken('telegram', $appId);
 	}
+
+	/**
+	 * Given data sent by Telegram, verify that it is properly signed.
+	 * @method verifyData
+	 * @static
+	 * @param {string|array} $data Data sent by Telegram. Could be a querystring instead of an array.
+	 *   Contains the "hash" that is removed from the data, and verified against.
+	 * @param {boolean} [$skipExpirationCheck] Pass true here to skip checking the auth_date
+	 * @return {boolean} Returns true if the data is properly signed, and not expired
+	 */
+	static function verifyData($data, $skipExpirationCheck = false)
+	{
+		if (is_string($data)) {
+			parse_str($data, $arr);
+			$data = $arr;
+		}
+		if (!isset($data['hash'])) {
+			return false;
+		}
+		if (!$skipExpirationCheck) {
+			if (!isset($data['auth_date'])
+			or !Q_Valid::expiration($data['auth_date'])) {
+				return false;
+			}
+		}
+		$hash = $data['hash'];
+		unset($data['hash']);
+		Q_Utils::ksort($data);
+		$lines = array();
+		foreach ($data as $k => $v) {
+			$lines[] = "$k=$v";
+		}
+		$serialized = implode("\n", $lines);
+		list($appId, $info) = Users::appInfo('telegram', $appId);
+		$token = $info['token'];
+		$key = hash_hmac('sha256', $token, 'WebAppData', true);
+		return $hash === hash_hmac('sha256', $serialized, $key);
+	}
 };

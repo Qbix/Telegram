@@ -18,13 +18,18 @@
 			"Q/Plugin/install": ["Telegram/after/Q_Plugin_install"]
 		},
 		"routes@end": {},
-		"routes": {},
+		"routes": {
+			"Telegram/initData": {"module": "Telegram", "action": "initData"}
+		},
 		"web": {},
 		"javascript": {},
 		"text": {},
 		"images": {},
 		"bot": {
 			"userAgent": "Qbix"
+		},
+		"expirations": {
+			"telegram": 600
 		}
 	},
 	"Users": {
