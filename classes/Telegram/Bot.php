@@ -17,7 +17,7 @@ class Telegram_Bot //extends Base_Telegram_Bot
      * @method setWebhook
      * @static
      *
-     * @param {String} $appId The username of the Telegram bot, found in local/app.json under Users/apps/telegram config
+     * @param {string} $appId The appId under Users/apps/telegram config
      * @param {String} $url HTTPS URL to send updates to. Use an empty string to remove webhook integration. (Required)
      * @param {Array} [$options] Optional parameters for configuring the webhook.
      * @param {String} [$options.certificate] Provider content of your public .pem file so that the root certificate in use can be checked. See the self-signed guide for details. https://core.telegram.org/bots/self-signed
@@ -52,7 +52,7 @@ class Telegram_Bot //extends Base_Telegram_Bot
      * @method deleteWebhook
      * @static
      *
-     * @param {String} $appId The username of the Telegram bot, found in local/app.json under Users/apps/telegram config
+     * @param {string} $appId The appId under Users/apps/telegram config
      * @param {Array} [$options] Optional parameters for configuring the webhook.
      * @param {String} [$options.drop_pending_updates] Pass True to drop all pending updates
      *
@@ -116,7 +116,7 @@ class Telegram_Bot //extends Base_Telegram_Bot
      * @method getUpdates
      * @static
      *
-     * @param {String} $appId The username of the Telegram bot, found in local/app.json under Users/apps/telegram config
+     * @param {string} $appId The appId under Users/apps/telegram config
      * @param {Array} [$options] Optional parameters for retrieving updates.
      * @param {Integer} [$options.offset] Identifier of the first update to be returned. Must be greater by one than the highest among the identifiers of previously received updates.
      * @param {Integer} [$options.limit] Limits the number of updates to be retrieved. Values between 1-100 are accepted. Defaults to 100.
@@ -137,7 +137,7 @@ class Telegram_Bot //extends Base_Telegram_Bot
      * @method answerCallbackQuery
      * @static
      *
-     * @param {String} $appId The username of the Telegram bot, found in local/app.json under Users/apps/telegram config
+     * @param {string} $appId The appId under Users/apps/telegram config
      * @param {String} $callback_query_id Unique identifier for the query to be answered.
      * @param {String} [$options.text] Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters.
      * @param {Boolean} [$options.show_alert] If True, an alert will be shown by the client instead of a notification at the top of the chat screen. Defaults to false.
@@ -189,7 +189,7 @@ class Telegram_Bot //extends Base_Telegram_Bot
      * @method sendMessage
      * @static
      *
-     * @param {String} $appId The username of the Telegram bot, found in local/app.json under Users/apps/telegram config
+     * @param {string} $appId The appId under Users/apps/telegram config
      * @param {Integer|String} $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername).
      * @param {String} $text Text of the message to be sent, 1-4096 characters after entities parsing.
      * @param {Array} [$options=array()]
@@ -230,7 +230,7 @@ class Telegram_Bot //extends Base_Telegram_Bot
      * @method sendPhoto
      * @static
      *
-     * @param {String} $appId The username of the Telegram bot, found in local/app.json under Users/apps/telegram config
+     * @param {string} $appId The appId under Users/apps/telegram config
      * @param {String} [options.business_connection_id] Unique identifier of the business connection on behalf of which the message will be sent.
      * @param {Integer|String} chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername).
      * @param {Integer} [options.message_thread_id] Unique identifier for the target message thread (topic) of the forum; for forum supergroups only.
@@ -271,7 +271,7 @@ class Telegram_Bot //extends Base_Telegram_Bot
      * @method sendVideo
      * @static
      *
-     * @param {String} $appId The username of the Telegram bot, found in local/app.json under Users/apps/telegram config
+     * @param {string} $appId The appId under Users/apps/telegram config
      * @param {String} [options.business_connection_id] Unique identifier of the business connection on behalf of which the message will be sent.
      * @param {Integer|String} chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername).
      * @param {Integer} [options.message_thread_id] Unique identifier for the target message thread (topic) of the forum; for forum supergroups only.
@@ -331,6 +331,22 @@ class Telegram_Bot //extends Base_Telegram_Bot
             ]);
         }
     }
+
+    /**
+     * Get the URL of a file that is hosted on Telegram
+     * @method getFileURL
+     * @static
+     * @param {string} $appId The appId under Users/apps/telegram config
+     * @param {String} $file_id The ID of the file hosted on Telegram
+     * @param {String} [&$size] Optionally pass a reference to a variable that will be filled with the file's size in bytes
+     * @return {String} The public URL of the file, for downloading it
+     */
+    static function getFileURL($appId, $file_id, &$size)
+    {
+        $info = self::api($appId, 'getFile', compact('file_id'));
+        $token = self::tokenFromConfig($appId);
+        return "https://api.telegram.org/file/bot$token/" . $info['file_path'];
+    }
     
     /**
      * Perform an action on behalf of the Telegram bot, such as typing, uploading a file, or recording a video.
@@ -339,7 +355,7 @@ class Telegram_Bot //extends Base_Telegram_Bot
      * @method sendChatAction
      * @static
      *
-     * @param {String} $appId The username of the Telegram bot, found in local/app.json under Users/apps/telegram config
+     * @param {string} $appId The appId under Users/apps/telegram config
      * @param {Integer|String} $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername).
      * @param {String} $action Type of action to broadcast. Choose one, depending on what the user is about to receive: 
      * - "typing" for text messages, 
@@ -377,7 +393,7 @@ class Telegram_Bot //extends Base_Telegram_Bot
      * @method approveChatJoinRequest
      * @static
      *
-     * @param {String} $appId The username of the Telegram bot, found in local/app.json under Users/apps/telegram config
+     * @param {string} $appId The appId under Users/apps/telegram config
      * @param {Integer|String} $chat_id Unique identifier for the target chat or username of the target channel (in the format @channelusername).
      * @param {Integer} $user_id Unique identifier of the target user
      * 
@@ -416,7 +432,7 @@ class Telegram_Bot //extends Base_Telegram_Bot
      * Calculate an endpoint for calling methods
      * @method endpoint
      * @static
-     * @param {String} $appId The username of the Telegram bot, found in local/app.json under Users/apps/telegram config
+     * @param {string} $appId The appId under Users/apps/telegram config
      * @param {String} $methodName The name of the Telegram Bot API method in https://core.telegram.org/bots/api
      */
     private static function endpoint($appId, $methodName) 
@@ -428,7 +444,7 @@ class Telegram_Bot //extends Base_Telegram_Bot
     /**
      * Call the Telegram Bot API
      * @method api
-     * @param {string} $appId The username of the Telegram bot, found in local/app.json under Users/apps/telegram config
+     * @param {string} $appId The appId under Users/apps/telegram config
      * @param {string} $methodName The name of the Telegram Bot API method in https://core.telegram.org/bots/api
      * @param {array} $params 
      * @param {string} [$headers] headers, which can be overrode. Accept and Content-Type are 'application/json' by default
