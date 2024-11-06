@@ -11,6 +11,6 @@ function Telegram_notFound_message_response($params)
         $appId, $chatId, Q::interpolate(
             $text['notFound']['Message'],
             ['eventName' => $eventName]
-        )
+        ), ['parse_mode' => 'MarkdownV2']
     );
 }

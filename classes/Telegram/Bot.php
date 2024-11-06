@@ -214,7 +214,7 @@ class Telegram_Bot //extends Base_Telegram_Bot
      * @param {Array} [$options=array()]
      * @param {String} [$options.business_connection_id] Unique identifier of the business connection on behalf of which the message will be sent.
      * @param {Integer} [$options.message_thread_id] Unique identifier for the target message thread (topic) of the forum; for forum supergroups only.
-     * @param {String} [$options.parse_mode] Mode for parsing entities in the message text. See formatting options for more details.
+     * @param {String} [$options.parse_mode] Mode for parsing entities in the message text. Can be "HTML" or "MarkdownV2"
      * @param {Array<MessageEntity>} [$options.entities] A JSON-serialized list of special entities that appear in the message text, which can be specified instead of parse_mode.
      * @param {LinkPreviewOptions} [$options.link_preview_options] Link preview generation options for the message.
      * @param {Boolean} [$options.disable_notification] Sends the message silently. Users will receive a notification with no sound.
