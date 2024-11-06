@@ -338,12 +338,13 @@ class Telegram_Bot //extends Base_Telegram_Bot
      * @static
      * @param {string} $appId The appId under Users/apps/telegram config
      * @param {String} $file_id The ID of the file hosted on Telegram
-     * @param {String} [&$size] Optionally pass a reference to a variable that will be filled with the file's size in bytes
+     * @param {String} [&$info] Optionally pass a reference to a variable that will be filled with an array of "size" and "file_unique_id"
      * @return {String} The public URL of the file, for downloading it
      */
-    static function getFileURL($appId, $file_id, &$size)
+    static function getFileURL($appId, $file_id, &$info = null)
     {
-        $info = self::api($appId, 'getFile', compact('file_id'));
+        $response = self::api($appId, 'getFile', compact('file_id'));
+        $info = $response['result'];
         $token = self::tokenFromConfig($appId);
         return "https://api.telegram.org/file/bot$token/" . $info['file_path'];
     }
