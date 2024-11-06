@@ -39,6 +39,14 @@
 					"appIdForAuth": "all"
 				}
 			}
+		},
+		"apps-private": {
+			"telegram": ["token", "secret"]
+		},
+		"import": {
+			"telegram": [
+				"first_name", "last_name", "username", "language_code"
+			]
 		}
 	},
 	"Streams": {}
