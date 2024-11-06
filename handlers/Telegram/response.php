@@ -5,8 +5,8 @@ function Telegram_response($params)
     $appId = $params['appId'];
     $updateType = $params['updateType'];
     list($appId, $info) = Users::appInfo('telegram', $appId);
-    $module = Q::ifset($info, 'module', $appId);
-    $eventName = "$module/telegram/$updateType/response";
+    $params['module'] = $module = Q::ifset($info, 'module', $appId);
+    $params['eventName'] = $eventName = "$module/telegram/$updateType/response";
     if (!Q::canHandle($eventName)) {
         $eventName = "Telegram/notFound/$updateType/response";
     }

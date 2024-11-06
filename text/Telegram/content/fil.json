@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Hindi pa ipinapatupad ang functionality na ito"
-    }
+        "NotImplemented": "Hindi pa ipinapatupad ang functionality na ito",
+        "Message": "Mangyaring magpatupad ng handler para sa kaganapan ` {{eventName}} `"
+    },
+    "Welcome": "Maligayang pagdating sa aming chat!"
 }

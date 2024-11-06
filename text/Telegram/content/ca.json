@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Aquesta funcionalitat encara no està implementada"
-    }
+        "NotImplemented": "Aquesta funcionalitat encara no està implementada",
+        "Message": "Si us plau, implementeu un controlador per a l&#39;esdeveniment ` {{eventName}}"
+    },
+    "Welcome": "Benvingut al nostre xat!"
 }

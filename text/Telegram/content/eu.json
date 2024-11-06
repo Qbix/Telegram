@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Funtzio hau oraindik ez dago inplementatu"
-    }
+        "NotImplemented": "Funtzio hau oraindik ez dago inplementatu",
+        "Message": "Mesedez, inplementatu ` {{eventName}} ` gertaeraren kudeatzailea"
+    },
+    "Welcome": "Ongi etorri gure berriketara!"
 }

@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Tato funkce zatím není implementována"
-    }
+        "NotImplemented": "Tato funkce zatím není implementována",
+        "Message": "Implementujte prosím obsluhu pro událost ` {{eventName}} `"
+    },
+    "Welcome": "Vítejte na našem chatu!"
 }

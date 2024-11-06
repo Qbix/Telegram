@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Din il-funzjonalità għadha mhix implimentata"
-    }
+        "NotImplemented": "Din il-funzjonalità għadha mhix implimentata",
+        "Message": "Jekk jogħġbok implimenta handler għall-avveniment &quot; {{eventName}} &quot;."
+    },
+    "Welcome": "Merħba fiċ-chat tagħna!"
 }

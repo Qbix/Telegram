@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Această funcționalitate nu este încă implementată"
-    }
+        "NotImplemented": "Această funcționalitate nu este încă implementată",
+        "Message": "Vă rugăm să implementați un handler pentru evenimentul „ {{eventName}} ”."
+    },
+    "Welcome": "Bun venit la chat-ul nostru!"
 }

@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Ova funkcionalnost još nije implementirana"
-    }
+        "NotImplemented": "Ova funkcionalnost još nije implementirana",
+        "Message": "Implementirajte rukovatelj za događaj ` {{eventName}} `"
+    },
+    "Welcome": "Dobrodošli u naš chat!"
 }

@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Deze functionaliteit is nog niet geïmplementeerd"
-    }
+        "NotImplemented": "Deze functionaliteit is nog niet geïmplementeerd",
+        "Message": "Implementeer een handler voor gebeurtenis ` {{eventName}}"
+    },
+    "Welcome": "Welkom in onze chat!"
 }

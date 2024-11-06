@@ -132,6 +132,25 @@ class Telegram_Bot //extends Base_Telegram_Bot
     }
 
     /**
+     * Tries to deduce the chat_id to reply to
+     * @method chatIdForReply
+     * @static
+     * @param {Array} $params array with keys "updateType" and "update" containing the Telegram update
+     * @return {String} The chat_id that the bot should probably use in sendMessage() replies
+     */
+    static function chatIdForReply($params)
+    {
+        Q_Valid::requireFields(['update', 'updateType'], $params);
+        $update = $params['update'];
+        $updateType = $params['updateType'];
+        return Q::ifset($update, $updateType, 'from', 'id', 
+            Q::ifset($update, $updateType, 'user', 'id', null, 
+                Q::ifset($update, $updateType, 'chat', 'id', null)
+            )
+        );
+    }
+
+    /**
      * Answer callback queries sent from inline keyboards.
      *
      * @method answerCallbackQuery

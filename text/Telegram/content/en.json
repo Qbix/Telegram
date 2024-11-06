@@ -1,6 +1,7 @@
 {
     "notFound": {
+        "Message": "Please implement a handler for event `{{eventName}}`",
         "NotImplemented": "This functionality is not implemented yet"
     },
-    "Welcome": "welcome to our chat"
+    "Welcome": "Welcome to our chat!"
 }

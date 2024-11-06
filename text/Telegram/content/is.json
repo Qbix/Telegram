@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Þessi virkni er ekki innleidd ennþá"
-    }
+        "NotImplemented": "Þessi virkni er ekki innleidd ennþá",
+        "Message": "Vinsamlega útfærðu meðhöndlun fyrir atburði ` {{eventName}} `"
+    },
+    "Welcome": "Velkomin á spjallið okkar!"
 }

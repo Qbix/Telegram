@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Utendaji huu bado haujatekelezwa"
-    }
+        "NotImplemented": "Utendaji huu bado haujatekelezwa",
+        "Message": "Tafadhali tekeleza kidhibiti cha tukio ` {{eventName}}"
+    },
+    "Welcome": "Karibu kwenye gumzo letu!"
 }

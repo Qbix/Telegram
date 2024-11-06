@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Esta funcionalidad aún no está implementada"
-    }
+        "NotImplemented": "Esta funcionalidad aún no está implementada",
+        "Message": "Implemente un controlador para el evento ` {{eventName}}"
+    },
+    "Welcome": "¡Bienvenido a nuestro chat!"
 }

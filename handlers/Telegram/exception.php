@@ -6,11 +6,7 @@ function Telegram_exception($params)
     $appId = $params['appId'];
     $update = $params['update'];
     $updateType = $params['updateType'];
-    $chatId = Q::ifset($update, $updateType, 'from', 'id', 
-        Q::ifset($update, $updateType, 'user', 'id', null, 
-            Q::ifset($update, $updateType, 'chat', 'id', null)
-        )
-    );
+    $chatId = Telegram_Bot::chatIdForReply($params);
     $messageText = $exception->getMessage();
     Q::log($exception, 'telegram');
     Telegram_Bot::sendMessage($appId, $chatId, $messageText, [

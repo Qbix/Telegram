@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Nid yw&#39;r swyddogaeth hon wedi&#39;i gweithredu eto"
-    }
+        "NotImplemented": "Nid yw&#39;r swyddogaeth hon wedi&#39;i gweithredu eto",
+        "Message": "Gweithredwch driniwr ar gyfer digwyddiad ` {{eventName}} `"
+    },
+    "Welcome": "Croeso i&#39;n sgwrs!"
 }

@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Ši funkcija dar neįdiegta"
-    }
+        "NotImplemented": "Ši funkcija dar neįdiegta",
+        "Message": "Įdiekite įvykio „ {{eventName}} “ tvarkyklę"
+    },
+    "Welcome": "Sveiki atvykę į mūsų pokalbį!"
 }

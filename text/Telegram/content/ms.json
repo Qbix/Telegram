@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Fungsi ini belum dilaksanakan lagi"
-    }
+        "NotImplemented": "Fungsi ini belum dilaksanakan lagi",
+        "Message": "Sila laksanakan pengendali untuk acara ` {{eventName}} `"
+    },
+    "Welcome": "Selamat datang ke sembang kami!"
 }

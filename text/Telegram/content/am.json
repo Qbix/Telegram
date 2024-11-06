@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "ይህ ተግባር ገና አልተተገበረም።"
-    }
+        "NotImplemented": "ይህ ተግባር ገና አልተተገበረም።",
+        "Message": "እባክዎ ለክስተት ` {{eventName}} ተቆጣጣሪን ይተግብሩ"
+    },
+    "Welcome": "እንኳን ወደ ቻታችን በደህና መጡ!"
 }

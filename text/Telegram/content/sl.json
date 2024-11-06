@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Ta funkcionalnost še ni implementirana"
-    }
+        "NotImplemented": "Ta funkcionalnost še ni implementirana",
+        "Message": "Implementirajte obravnavo za dogodek » {{eventName}} «"
+    },
+    "Welcome": "Dobrodošli v našem klepetu!"
 }

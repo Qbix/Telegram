@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "아직 이 기능은 구현되지 않았습니다."
-    }
+        "NotImplemented": "아직 이 기능은 구현되지 않았습니다.",
+        "Message": "` {{eventName}} ` 이벤트에 대한 핸들러를 구현해 주세요."
+    },
+    "Welcome": "우리의 채팅에 오신 것을 환영합니다!"
 }

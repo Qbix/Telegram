@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "この機能はまだ実装されていません"
-    }
+        "NotImplemented": "この機能はまだ実装されていません",
+        "Message": "イベント ` {{eventName}} ` のハンドラーを実装してください"
+    },
+    "Welcome": "チャットへようこそ！"
 }

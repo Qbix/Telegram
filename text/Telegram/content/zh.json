@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "此功能尚未实现"
-    }
+        "NotImplemented": "此功能尚未实现",
+        "Message": "请为事件“ {{eventName}} ”实现处理程序"
+    },
+    "Welcome": "欢迎加入我们的聊天！"
 }

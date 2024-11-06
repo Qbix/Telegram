@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Seda funktsiooni pole veel rakendatud"
-    }
+        "NotImplemented": "Seda funktsiooni pole veel rakendatud",
+        "Message": "Rakendage sündmuse &quot; {{eventName}} &quot; töötleja"
+    },
+    "Welcome": "Tere tulemast meie vestlusesse!"
 }

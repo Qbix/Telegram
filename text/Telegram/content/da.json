@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Denne funktionalitet er ikke implementeret endnu"
-    }
+        "NotImplemented": "Denne funktionalitet er ikke implementeret endnu",
+        "Message": "Implementer venligst en handler for hændelsen ` {{eventName}} `"
+    },
+    "Welcome": "Velkommen til vores chat!"
 }

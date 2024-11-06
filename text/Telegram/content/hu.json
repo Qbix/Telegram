@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Ez a funkció még nincs megvalósítva"
-    }
+        "NotImplemented": "Ez a funkció még nincs megvalósítva",
+        "Message": "Kérjük, valósítson meg egy kezelőt a ` {{eventName}} eseményhez"
+    },
+    "Welcome": "Üdvözöljük chat-ünkben!"
 }

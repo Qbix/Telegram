@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Denna funktion är inte implementerad ännu"
-    }
+        "NotImplemented": "Denna funktion är inte implementerad ännu",
+        "Message": "Vänligen implementera en hanterare för händelse ` {{eventName}} `"
+    },
+    "Welcome": "Välkommen till vår chatt!"
 }

@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Ky funksionalitet nuk është zbatuar ende"
-    }
+        "NotImplemented": "Ky funksionalitet nuk është zbatuar ende",
+        "Message": "Ju lutemi zbatoni një mbajtës për ngjarjen ` {{eventName}}"
+    },
+    "Welcome": "Mirë se vini në bisedën tonë!"
 }

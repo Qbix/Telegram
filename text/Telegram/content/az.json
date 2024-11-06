@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Bu funksionallıq hələ həyata keçirilməyib"
-    }
+        "NotImplemented": "Bu funksionallıq hələ həyata keçirilməyib",
+        "Message": "Lütfən, ` {{eventName}} ` hadisəsi üçün işləyici tətbiq edin"
+    },
+    "Welcome": "Söhbətimizə xoş gəlmisiniz!"
 }

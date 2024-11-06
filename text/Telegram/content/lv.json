@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Šī funkcionalitāte vēl nav ieviesta"
-    }
+        "NotImplemented": "Šī funkcionalitāte vēl nav ieviesta",
+        "Message": "Lūdzu, ieviesiet notikuma {{eventName}} apdarinātāju"
+    },
+    "Welcome": "Laipni lūdzam mūsu tērzēšanā!"
 }

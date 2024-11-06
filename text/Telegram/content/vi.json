@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Chức năng này chưa được triển khai"
-    }
+        "NotImplemented": "Chức năng này chưa được triển khai",
+        "Message": "Vui lòng triển khai trình xử lý cho sự kiện ` {{eventName}} `"
+    },
+    "Welcome": "Chào mừng đến với cuộc trò chuyện của chúng tôi!"
 }

@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Cette fonctionnalité n&#39;est pas encore implémentée"
-    }
+        "NotImplemented": "Cette fonctionnalité n&#39;est pas encore implémentée",
+        "Message": "Veuillez implémenter un gestionnaire pour l&#39;événement « {{eventName}} »"
+    },
+    "Welcome": "Bienvenue sur notre chat !"
 }

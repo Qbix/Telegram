@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Tätä toimintoa ei ole vielä otettu käyttöön"
-    }
+        "NotImplemented": "Tätä toimintoa ei ole vielä otettu käyttöön",
+        "Message": "Ota käsittelijä tapahtumalle &quot; {{eventName}} &quot;."
+    },
+    "Welcome": "Tervetuloa chattiin!"
 }

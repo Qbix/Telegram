@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Níl an fheidhmiúlacht seo curtha i bhfeidhm fós"
-    }
+        "NotImplemented": "Níl an fheidhmiúlacht seo curtha i bhfeidhm fós",
+        "Message": "Cuir láimhseálaí i bhfeidhm don imeacht ` {{eventName}} ` le do thoil"
+    },
+    "Welcome": "Fáilte go dtí ár comhrá!"
 }

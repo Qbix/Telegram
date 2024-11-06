@@ -1,5 +1,7 @@
 {
     "notFound": {
-        "NotImplemented": "Ta funkcjonalność nie została jeszcze zaimplementowana"
-    }
+        "NotImplemented": "Ta funkcjonalność nie została jeszcze zaimplementowana",
+        "Message": "Proszę wdrożyć obsługę zdarzenia ` {{eventName}} `"
+    },
+    "Welcome": "Witamy na naszym czacie!"
 }
