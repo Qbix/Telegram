@@ -72,6 +72,11 @@ class Telegram_Dispatcher
                  */
                 Q::event('Telegram/validate', $params, true);
             }
+			// Potentially authenticate the Telegram user
+			// and even create a native user account corresponding to them
+			$authenticated = ($updateType === 'message')
+				? self::handleStartCommand($update, $appId)
+				: null;
             if (!isset(self::$skip['Telegram/objects'])) {
                 /**
                  * Gives the app a chance to fetch objects needed for handling
@@ -110,6 +115,52 @@ class Telegram_Dispatcher
 		self::$served = 'response';
 		return true;
     }
+
+	/**
+	 * Handle /start command from bot, with a parameter
+	 * @method handleStartCommand
+	 * @static
+	 * @return {boolean|string} could be true, false, 'connected', 'adopted', 'registered'
+	 * @throws {Q_Exception_WrongValue}
+	 * @throws {Users_Exception_NotAuthorized}
+	 */
+	protected static function handleStartCommand()
+	{
+		if (empty($update['message']['text'])
+		or !Q::startsWith($update['message']['text'], '/start ')) {
+			return false;
+		} 
+		list($start, $parameter) = explode(' ', $update['message']['text'], 2);
+		if (empty($parameter)) {
+			return false;
+		}
+		$parts = explode('-', $parameter, 4);
+		if (count($parts < 4)) {
+			throw new Q_Exception_WrongValue(array(
+				'field' => 'startCommandParameter',
+				'range' => 'intentId-startTime-endTime-signature',
+				'value' => $parameter
+			));
+		}
+		list($intentId, $signature) = $parts;
+		$capability = new Q_Capability(
+			array('Users/authenticate'),
+			compact('sessionId'),
+			$startTime,
+			$endTime
+		);
+		if ($signature === $capability->signature()) {
+			throw new Users_Exception_NotAuthorized();
+		}
+		// open session in the database with deterministic ID
+		$deterministicSeed = "$appId-$userId";
+		$deterministicId = Q_Session::generateId($deterministicSeed, 'internal');
+		Q_Session::start(false, $deterministicId, 'internal');
+		// perform authentication with the verified userId
+		Users::setLoggedInUser($userId);
+		Users::authenticate('telegram', $appId, $authenticated);
+		return $authenticated;
+	}
 
 	/**
 	 * Set to "response"
