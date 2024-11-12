@@ -41,6 +41,7 @@ class Telegram_Dispatcher
 		array $update = array()
     ) {
 		self::$startedDispatch = true;
+		self::$update = $update;
 
         if (empty($update)) {
             return false;
@@ -120,11 +121,13 @@ class Telegram_Dispatcher
 	 * Handle /start command from bot, with a parameter
 	 * @method handleStartCommand
 	 * @static
+	 * @param {array} $update
+	 * @param {string} $appId
 	 * @return {boolean|string} could be true, false, 'connected', 'adopted', 'registered'
 	 * @throws {Q_Exception_WrongValue}
 	 * @throws {Users_Exception_NotAuthorized}
 	 */
-	protected static function handleStartCommand()
+	protected static function handleStartCommand($update, $appId)
 	{
 		if (empty($update['message']['text'])
 		or !Q::startsWith($update['message']['text'], '/start ')) {
@@ -135,31 +138,55 @@ class Telegram_Dispatcher
 			return false;
 		}
 		$parts = explode('-', $parameter, 4);
-		if (count($parts < 4)) {
+		if (empty($parts)) {
 			throw new Q_Exception_WrongValue(array(
 				'field' => 'startCommandParameter',
-				'range' => 'intentId-startTime-endTime-signature',
+				'range' => 'intentId',
 				'value' => $parameter
 			));
 		}
-		list($intentId, $signature) = $parts;
-		$capability = new Q_Capability(
-			array('Users/authenticate'),
-			compact('sessionId'),
-			$startTime,
-			$endTime
-		);
-		if ($signature === $capability->signature()) {
-			throw new Users_Exception_NotAuthorized();
+		$token = reset($parts);
+		$intent = new Users_Intent(compact('token'));
+		if (!$intent->retrieve()) {
+			throw new Q_Exception_MissingRow(array(
+				'table' => 'Users_Intent',
+				'criteria' => "token=$token"
+			));
 		}
+		$session = null;
+		if (empty($intent->sessionId)) {
+			throw new Q_Exception_MissingValue(array(
+				'field' => 'sessionId',
+				'range' => 'a valid session ID',
+				'value' => 'empty'
+			));
+		}
+		$session = new Users_Session();
+		$session->id = $intent->sessionId;
+		if (!$session->retrieve()) {
+			throw new Q_Exception_SessionTerminated();
+		}
+		$content = json_decode($session->content, true);
+		$originalUserId = Q::ifset($content, 'Users', 'loggedInUser', 'id', null);
+
 		// open session in the database with deterministic ID
-		$deterministicSeed = "$appId-$userId";
-		$deterministicId = Q_Session::generateId($deterministicSeed, 'internal');
-		Q_Session::start(false, $deterministicId, 'internal');
-		// perform authentication with the verified userId
-		Users::setLoggedInUser($userId);
+		if ($originalUserId) {
+			// if user was logged into session that generated intent,
+			// set them as logged-in user here too
+			$deterministicSeed = "$appId-$originalUserId";
+			$deterministicId = Q_Session::generateId($deterministicSeed, 'internal');
+			Q_Session::destroy();
+			Q_Session::start(false, $deterministicId, 'internal');
+			Users::setLoggedInUser($originalUserId, array('keepSessionId' => true)); // set the user as logged in 
+		}
 		Users::authenticate('telegram', $appId, $authenticated);
-		return $authenticated;
+		$user = Users::loggedInUser();
+		if (!$originalUserId) {
+			// set the user as logged-in on the original session, too
+			$content['Users']['loggedInUser']['id'] = $user->id;
+			$session->content = Q::json_encode($content);
+			$session->save(); // note that this is part of an atomic transaction
+		}
 	}
 
 	/**
@@ -202,4 +229,12 @@ class Telegram_Dispatcher
 	 * @protected
 	 */
 	protected static $skip = array();
+
+	/**
+	 * @property $update
+	 * @type array
+	 * @static
+	 * @public
+	 */
+	public static $update;
 }

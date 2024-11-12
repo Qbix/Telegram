@@ -27,20 +27,47 @@
 *   @param {String} [options.appId=Q.info.app] Only needed if you have multiple apps on platform
 */
 Q.Users.authenticate.telegram = function telegram(platform, platformAppId, onSuccess, onCancel, options) {
-   options = options || {};
+    options = options || {};
+
+    Q.handle(Q.action('Telegram/authenticate'));
+    Q.onVisibilityChange.setOnce(function () {
+        Q.loadUrl(location.href, {
+            slotNames: Q.info.slotNames,
+            loadExtras: 'all',
+            ignoreDialogs: true,
+            ignorePage: false,
+            ignoreHistory: true,
+            quiet: true,
+            onActivate: function () {
+                
+            }
+        });
+    }, 'Telegram');
+
+   /*
+       hit an action like Telegram/intent to generate an intent and redirect to bot URL
+       open Telegram and the bot will authenticate (debug this)
+       telegram IDs - interpolate
+       import username, etc. (same with facebook, don't do empty username, unless conflict)
+       don't allow setting username unless through a platform like twitter or telegram or facebook
+       download the icon, username, etc. (same with facebook, don't do empty username)
+       mini app - also authenticate, and there you can have cookies
+       telegram should also have device type, which delivers notifications
+       dialog - implement it generally, but then Telegram bot API can hook into it
+    */
    
-   if (response.status === 'connected') {
-       priv.handleXid(
-           platform, platformAppId, response.authResponse.userID,
-           onSuccess, onCancel, Q.extend({response: response}, options)
-       );
-   } else if (platformAppId) {
-       // let's delete any stale facebook cookies there might be
-       // otherwise they might confuse our server-side authentication.
-       Q.cookie('fbs_' + platformAppId, null, {path: '/'});
-       Q.cookie('fbsr_' + platformAppId, null, {path: '/'});
-       priv._doCancel(platform, platformAppId, null, onSuccess, onCancel, options);
-   }
+//    if (response.status === 'connected') {
+//        priv.handleXid(
+//            platform, platformAppId, response.authResponse.userID,
+//            onSuccess, onCancel, Q.extend({response: response}, options)
+//        );
+//    } else if (platformAppId) {
+//        // let's delete any stale facebook cookies there might be
+//        // otherwise they might confuse our server-side authentication.
+//        Q.cookie('fbs_' + platformAppId, null, {path: '/'});
+//        Q.cookie('fbsr_' + platformAppId, null, {path: '/'});
+//        priv._doCancel(platform, platformAppId, null, onSuccess, onCancel, options);
+//    }
 };
     
 })(Q, Q.jQuery);

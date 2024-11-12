@@ -70,4 +70,29 @@ abstract class Telegram extends Base_Telegram
 		$key = hash_hmac('sha256', $token, 'WebAppData', true);
 		return $hash === hash_hmac('sha256', $serialized, $key);
 	}
+
+	static function approximateRegistrationDate($telegramUserId)
+	{
+		$tree = new Q_Tree();
+		$dates = $tree->load(TELEGRAM_PLUGIN_CONFIG_DIR.DS.'dates.json')->get('dateByUserId');
+		$prevDate = reset($dates);
+		$prevId = intval(key($dates));
+		$tId = max($telegramUserId, $prevId);
+		foreach ($dates as $currentId => $date) {
+			$currentId = intval($currentId);
+			if ($currentId < $tId) {
+				$prevDate = $date;
+				$prevId = $currentId;
+				continue;
+			}
+			$daystampA = Q_Daystamp::fromDateTime($prevDate);
+			$daystampB = Q_Daystamp::fromDateTime($date);
+			$denom = $currentId - $prevId;
+			$fraction = $denom ? (intval($tId) - intval($prevId)) / $denom : 0;
+			return Q_Daystamp::toDateTime(
+				$daystampA + ($daystampB - $daystampA) * $fraction
+			);
+		}
+		$daystampNow = Q_Daystamp::fromTimestamp(time());
+	}
 };

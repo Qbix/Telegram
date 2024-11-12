@@ -13,13 +13,15 @@
 				"connections": ["Users", "Telegram"]
 			}
 		},
-		"handlersBeforeEvent": {},
+		"handlersBeforeEvent": {
+			"Q/Request/platform": ["Telegram/before/Q_Request_platform"]
+		},
 		"handlersAfterEvent": {
 			"Q/Plugin/install": ["Telegram/after/Q_Plugin_install"]
 		},
 		"routes@end": {},
 		"routes": {
-			"Telegram/initData": {"module": "Telegram", "action": "initData"}
+			"Telegram/authenticate": {"module": "Telegram", "action": "authenticate"}
 		},
 		"web": {},
 		"javascript": {},
@@ -49,5 +51,9 @@
 			]
 		}
 	},
-	"Streams": {}
+	"Streams": {
+		"userStreams": {
+			"Telegram": "streams.json"
+		}
+	}
 }

@@ -1,0 +1,17 @@
+{
+    "Streams/user/username": {
+		"platforms": {
+            "telegram": "username"
+		}
+	},
+    "Streams/user/firstName": {
+		"platforms": {
+			"telegram": "first_name"
+		}
+	},
+    "Streams/user/lastName": {
+		"platforms": {
+			"telegram": "last_name"
+		}
+	}
+}
