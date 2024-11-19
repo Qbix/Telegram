@@ -14,7 +14,8 @@
 			}
 		},
 		"handlersBeforeEvent": {
-			"Q/Request/platform": ["Telegram/before/Q_Request_platform"]
+			"Q/Request/platform": ["Telegram/before/Q_Request_platform"],
+			"Q/responseExtras": ["Telegram/before/Q_responseExtras"]
 		},
 		"handlersAfterEvent": {
 			"Q/Plugin/install": ["Telegram/after/Q_Plugin_install"]
