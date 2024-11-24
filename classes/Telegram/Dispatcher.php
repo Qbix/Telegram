@@ -96,6 +96,18 @@ class Telegram_Dispatcher
                  */
                 Q::event('Telegram/action', $params, true);
             }
+			// If we got this far, then this event can be by various plugins
+			// to persist various payment & micropayment transactions to the database.
+			if (!isset(self::$skip['Q/payments'])) {
+				/**
+				 * Gives the app a chance to persist payments transactions to the database.
+				 * the request.
+				 * @event Q/payments
+				 * @param {array} $routed
+				 */
+				Q::event($eventName, self::$routed, true);
+			}
+			// Finally, we can generate a response (after actions and payments were processed)
             /**
              * Gives the app a chance to generate a response.
              * You should not change the server state when handling this event.
