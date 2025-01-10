@@ -13,7 +13,7 @@
 class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_ExternalFrom_Interface
 {
 	/**
-	 * Gets a Users_ExternalFrom_Telegra  object constructed from request and/or cookies.
+	 * Gets a Users_ExternalFrom_Telegram object constructed from request and/or cookies.
 	 * It is your job to populate it with a user id and save it.
 	 * @method authenticate
 	 * @static

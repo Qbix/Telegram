@@ -71,6 +71,27 @@ abstract class Telegram extends Base_Telegram
 		return $hash === hash_hmac('sha256', $serialized, $key);
 	}
 
+	/**
+	 * Get a deterministic session ID
+	 * @method sessionId
+	 * @static
+	 * @param {string} $appId The internal app ID
+	 * @param {string} $telegramUserId The user's ID on telegram
+	 * @return {string}
+	 */
+	static function sessionId($appId, $telegramUserId)
+	{
+		$deterministicSeed = "telegram-$appId-$telegramUserId";
+		return Q_Session::generateId($deterministicSeed, 'internal');
+	}
+
+	/**
+	 * Get the 
+	 * @method approximateRegistrationDate
+	 * @static
+	 * @param {string} $telegramUserId the ID of the Telegram User
+	 * @return {string} a date-time string in the format "Y-m-d h:i:s"
+	 */
 	static function approximateRegistrationDate($telegramUserId)
 	{
 		$tree = new Q_Tree();
@@ -93,6 +114,8 @@ abstract class Telegram extends Base_Telegram
 				$daystampA + ($daystampB - $daystampA) * $fraction
 			);
 		}
+		// newer than all dates in the JSON, may as well return yesterday's date
 		$daystampNow = Q_Daystamp::fromTimestamp(time());
+		return Q_Daystamp::toDateTime($daystampNow) - 1;
 	}
 };

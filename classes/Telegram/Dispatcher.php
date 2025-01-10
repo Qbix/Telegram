@@ -76,7 +76,7 @@ class Telegram_Dispatcher
 			// Potentially authenticate the Telegram user
 			// and even create a native user account corresponding to them
 			$authenticated = ($updateType === 'message')
-				? self::handleStartCommand($update, $appId)
+				? self::doAuthentication($appId, $update)
 				: null;
             if (!isset(self::$skip['Telegram/objects'])) {
                 /**
@@ -130,20 +130,29 @@ class Telegram_Dispatcher
     }
 
 	/**
-	 * Handle /start command from bot, with a parameter
-	 * @method handleStartCommand
+	 * Handle authentication as well as the /start command from bot, with a parameter
+	 * @method doAuthentication
 	 * @static
-	 * @param {array} $update
 	 * @param {string} $appId
+	 * @param {array} $update
 	 * @return {boolean|string} could be true, false, 'connected', 'adopted', 'registered'
 	 * @throws {Q_Exception_WrongValue}
 	 * @throws {Users_Exception_NotAuthorized}
 	 */
-	protected static function handleStartCommand($update, $appId)
+	protected static function doAuthentication($appId, $update)
 	{
-		if (empty($update['message']['text'])
-		or !Q::startsWith($update['message']['text'], '/start ')) {
+		if (empty($update['message']['from']['id'])) {
 			return false;
+		}
+		if (!Q::startsWith($update['message']['text'], '/start ')) {
+			// this is a message but not a /start message,
+			// so just authenticate the user and return true
+			$deterministicId = Telegram::sessionId(
+				$appId, $update['message']['from']['id']
+			);
+			Q_Session::start(false, $deterministicId, 'internal');
+			Users::authenticate('telegram', $appId);
+			return true;
 		} 
 		list($start, $parameter) = explode(' ', $update['message']['text'], 2);
 		if (empty($parameter)) {
@@ -182,16 +191,17 @@ class Telegram_Dispatcher
 		$originalUserId = Q::ifset($content, 'Users', 'loggedInUser', 'id', null);
 
 		// open session in the database with deterministic ID
+		$deterministicId = Telegram::sessionId(
+			$appId, $update['message']['from']['id']
+		);
+		Q_Session::start(false, $deterministicId, 'internal');
+		
 		if ($originalUserId) {
 			// if user was logged into session that generated intent,
-			// set them as logged-in user here too
-			$deterministicSeed = "$appId-$originalUserId";
-			$deterministicId = Q_Session::generateId($deterministicSeed, 'internal');
-			Q_Session::destroy();
-			Q_Session::start(false, $deterministicId, 'internal');
+			// set them as logged-in user here too, before connecting telegram user
 			Users::setLoggedInUser($originalUserId, array('keepSessionId' => true)); // set the user as logged in 
 		}
-		Users::authenticate('telegram', $appId, $authenticated);
+		Users::authenticate('telegram', $appId);
 		$user = Users::loggedInUser();
 		if (!$originalUserId) {
 			// set the user as logged-in on the original session, too
@@ -199,6 +209,7 @@ class Telegram_Dispatcher
 			$session->content = Q::json_encode($content);
 			$session->save(); // note that this is part of an atomic transaction
 		}
+		return true;
 	}
 
 	/**
