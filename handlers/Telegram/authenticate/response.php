@@ -36,6 +36,5 @@ function Telegram_authenticate_response()
     }
     $url = Q_Links::telegram('@'.$info['botUsername'], null, array($parameter => $intent->token));
     Q_Response::redirect($url);
-    echo "Redirecting to Telegram";
     return false;
 }

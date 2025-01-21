@@ -30,7 +30,12 @@ Q.Users.authenticate.telegram = function telegram(platform, platformAppId, onSuc
     options = options || {};
 
     Q.handle(Q.action('Telegram/authenticate'));
-    Q.onVisibilityChange.setOnce(function () {
+    Q.onVisibilityChange.setOnce(function (isShown) {
+        if (!isShown) {
+            return;
+        }
+        // Reload the page, now that the user returned after
+        // authenticating with Telegram.
         Q.loadUrl(location.href, {
             slotNames: Q.info.slotNames,
             loadExtras: 'all',
