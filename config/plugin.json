@@ -22,7 +22,6 @@
 		},
 		"routes@end": {},
 		"routes": {
-			"Telegram/authenticate": {"module": "Telegram", "action": "authenticate"}
 		},
 		"web": {},
 		"javascript": {},
@@ -50,6 +49,15 @@
 			"telegram": [
 				"first_name", "last_name", "username", "language_code", "photo"
 			]
+		},
+		"intents": {
+			"actions": {
+				"Users/authenticate": {
+					"telegram": {
+						"pattern": "tg://resolve?domain={{botUsername}}&{{parameter}}={{token}}"
+					}
+				}
+			}
 		}
 	},
 	"Streams": {

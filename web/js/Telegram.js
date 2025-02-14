@@ -29,7 +29,13 @@
 Q.Users.authenticate.telegram = function telegram(platform, platformAppId, onSuccess, onCancel, options) {
     options = options || {};
 
-    Q.handle(Q.action('Telegram/authenticate'));
+    Q.handle(Q.action('Users/intent', {
+        action: 'Users/authenticate',
+        platform: 'telegram',
+        interpolate: {
+            parameter: 'start'
+        }
+    }));
     Q.onVisibilityChange.setOnce(function (isShown) {
         if (!isShown) {
             return;
