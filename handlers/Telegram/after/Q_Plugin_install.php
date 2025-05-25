@@ -2,7 +2,7 @@
 
 function Telegram_after_Q_Plugin_install($params)
 {
-    if ($plugin_name !== 'Telegram') {
+    if ($params['plugin_name'] !== 'Telegram') {
         return;
     }
     $extra = Q_Plugin::extra('Telegram', 'plugin', 'Telegram');
