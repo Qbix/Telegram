@@ -103,9 +103,9 @@ class Telegram_Dispatcher
 				 * Gives the app a chance to persist payments transactions to the database.
 				 * the request.
 				 * @event Q/payments
-				 * @param {array} $routed
+				 * @param {array} $params
 				 */
-				Q::event($eventName, self::$routed, true);
+				Q::event('Q/payments', $params, true);
 			}
 			// Finally, we can generate a response (after actions and payments were processed)
             /**
