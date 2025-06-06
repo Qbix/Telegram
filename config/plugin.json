@@ -47,7 +47,7 @@
 		},
 		"import": {
 			"telegram": [
-				"first_name", "last_name", "username", "language_code", "photo"
+				"first_name", "last_name", "username", "language_code"
 			]
 		},
 		"intents": {

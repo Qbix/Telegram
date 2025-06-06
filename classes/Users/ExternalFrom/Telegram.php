@@ -68,11 +68,33 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
 	 * @return {array|null} [$suffix=''] Keys are the size strings with optional $suffix
 	 *  and values are the urls
 	 */
-	function icon($sizes = null, $suffix = '')
-	{
-		$icon = array();
-		return $icon;
-	}
+    function icon($sizes = null, $suffix = '')
+    {
+        if (empty($this->xid) || empty($this->appId)) {
+            return array();
+        }
+
+        $sizes = isset($sizes) ? $sizes : array_keys(Q_Image::getSizes('Users/icon'));
+        ksort($sizes);
+
+        // Fetch Telegram profile photos
+        $photos = Telegram_Bot::getUserProfilePhotos($this->appId, $this->xid, 1);
+        if (empty($photos) || empty($photos[0][0]['file_id'])) {
+            return array();
+        }
+
+        $fileId = $photos[0][0]['file_id'];
+        $info = null;
+        $url = Telegram_Bot::getFileURL($this->appId, $fileId, $info);
+
+        // Return same URL for all sizes
+        $icons = array();
+        foreach ($sizes as $size) {
+            $icons[$size . $suffix] = $url;
+        }
+        return $icons;
+    }
+
 
 	/**
 	 * Import some fields from the platform. Also fills Users::$cache['platformUserData'].
@@ -95,7 +117,11 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
         $telegramUser = Telegram_Dispatcher::$update['message']['from'];
         foreach ($fieldNames as $fn) {
             if (isset($telegramUser[$fn])) {
-                $result[$fn] = $telegramUser[$fn];
+                $key = $fn;
+                if ($fn === 'language_code') {
+                    $key = 'preferredLanguage';
+                }
+                $result[$key] = $telegramUser[$fn];
             }
         }
         Users::$cache['platformUserData'] = array(

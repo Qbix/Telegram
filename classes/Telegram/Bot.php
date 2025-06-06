@@ -352,6 +352,36 @@ class Telegram_Bot //extends Base_Telegram_Bot
     }
 
     /**
+     * Gets a Telegram user's profile photos
+     * https://core.telegram.org/bots/api#getuserprofilephotos
+     *
+     * @method getUserProfilePhotos
+     * @static
+     * @param {string} $appId The appId under Users/apps/telegram config
+     * @param {Integer|String} $user_id Telegram user ID
+     * @param {Integer} [$limit=1] Max number of profile photos to return (max 100)
+     * @param {Integer} [$offset=0] Sequential number of the first photo to be returned
+     * @return {array|null} Array of photo objects or null if none
+     */
+    static function getUserProfilePhotos($appId, $user_id, $limit = 1, $offset = 0)
+    {
+        if (empty($user_id)) {
+            throw new Q_Exception_MissingField(['field' => 'user_id']);
+        }
+        $params = [
+            'user_id' => $user_id,
+            'limit' => $limit,
+            'offset' => $offset
+        ];
+        $response = self::api($appId, 'getUserProfilePhotos', $params);
+        if (!empty($response['result']['total_count'])) {
+            return $response['result']['photos'];
+        }
+        return null;
+    }
+
+
+    /**
      * Get the URL of a file that is hosted on Telegram
      * @method getFileURL
      * @static
