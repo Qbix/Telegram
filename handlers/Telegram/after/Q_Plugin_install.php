@@ -25,7 +25,7 @@ function Telegram_after_Q_Plugin_install($params)
         }
         $secret_token = Telegram::secretToken($appId);
         
-        $url = Q::ifset($info, 'webhookUrl', Q_Request::baseUrl('telegram.php'));
+        $url = Q::ifset($info, 'webhookUrl', Q_Request::proxyBaseUrl('telegram.php'));
 
         $result = Telegram_Bot::setWebhook($appId, $url, @compact(
             'certificate', 'secret_token'

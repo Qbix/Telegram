@@ -206,7 +206,7 @@ class Telegram_Dispatcher
 		if (!$originalUserId) {
 			// set the user as logged-in on the original session, too
 			$content['Users']['loggedInUser']['id'] = $user->id;
-			$session->content = Q::json_encode($content);
+			$session->setContent($content);
 			$session->save(); // note that this is part of an atomic transaction
 		}
 		return true;

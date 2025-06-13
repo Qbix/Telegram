@@ -26,6 +26,7 @@ class Telegram_Bot //extends Base_Telegram_Bot
      * @param {String|array} [$options.allowed_updates] A JSON-serialized list of the update types you want your bot to receive. Specify an empty list to receive all update types except chat_member, message_reaction, and message_reaction_count (default).
      * @param {Boolean} [$options.drop_pending_updates] Pass true to drop all pending updates. Defaults to false.
      * @param {String} [$options.secret_token] A secret token (1-256 characters) to be sent in a header “X-Telegram-Bot-Api-Secret-Token” in every webhook request.
+     * @param {array} [$options.interpolate] An array of parameters to interpolate into the URL, such as proxyBaseUrl or reallyBaseUrl
      *
      * @return {Boolean} Returns true on success.
      */
@@ -36,8 +37,13 @@ class Telegram_Bot //extends Base_Telegram_Bot
         and is_array($options['allowed_updates'])) {
             $options['allowed_updates'] = json_encode($options['allowed_updates']);
         }
+        $interpolate = array();
+        if (!empty($options['interpolate'])) {
+            $interpolate = $options['interpolate'];
+            unset($options['interpolate']);
+        }
         $params = [
-            'url' => $url,
+            'url' => Q_Uri::interpolateUrl($url, $interpolate, true)
         ];
         Q::take($options, [
             'certificate', 'ip_address', 'allowed_updates', 'secret_token',
@@ -465,6 +471,57 @@ class Telegram_Bot //extends Base_Telegram_Bot
     }
 
     /**
+     * Restrict a user's permissions in a supergroup.
+     * https://core.telegram.org/bots/api#restrictchatmember
+     *
+     * @method restrictChatMember
+     * @static
+     *
+     * @param {string} $appId The appId under Users/apps/telegram config
+     * @param {int|string} $chat_id Chat ID or @channelusername
+     * @param {int|string} $user_id User ID of the target user
+     * @param {array} [$permissions] Optional. Pass a permissions array (Telegram format).
+     * @param {int} [$until_date] Optional. Timestamp until when the restrictions are active
+     *
+     * @return {bool} Returns true on success.
+     */
+    static function restrictChatMember($appId, $chat_id, $user_id, array $permissions = [], $until_date = null)
+    {
+        $params = [
+            'chat_id' => $chat_id,
+            'user_id' => $user_id
+        ];
+
+        if (empty($permissions)) {
+            // default to fully muted
+            $params['permissions'] = [
+                'can_send_messages' => false,
+                'can_send_audios' => false,
+                'can_send_documents' => false,
+                'can_send_photos' => false,
+                'can_send_videos' => false,
+                'can_send_video_notes' => false,
+                'can_send_voice_notes' => false,
+                'can_send_polls' => false,
+                'can_send_other_messages' => false,
+                'can_add_web_page_previews' => false,
+                'can_change_info' => false,
+                'can_invite_users' => false,
+                'can_pin_messages' => false
+            ];
+        } else {
+            $params['permissions'] = $permissions;
+        }
+
+        if ($until_date !== null) {
+            $params['until_date'] = $until_date;
+        }
+
+        return self::api($appId, 'restrictChatMember', $params);
+    }
+
+
+    /**
      * Get bot token from appId in config
      * @method tokenFromConfig
      * @static
@@ -475,6 +532,24 @@ class Telegram_Bot //extends Base_Telegram_Bot
     protected static function tokenFromConfig($appId)
     {
         list($appId, $info) = Users::appInfo("telegram", $appId, true);
+        if (empty($info['token'])) {
+            if ($aifu = Q_Config::get('Users', 'apps', 'telegram', '*', 'appIdForAuth', null)) {
+                $appId2 = null;
+                $apps = Q_Config::get('Users', 'apps', 'telegram', array());
+                foreach ($apps as $k => $v) {
+                    if ($k !== '*') {
+                        $appId2 = $k;
+                        break;
+                    }
+                }
+                if ($appId2) {
+                    list($appId2, $info) = Users::appInfo("telegram", $appId2, true);
+                }
+            }
+            if (empty($info['token'])) {
+                throw new Q_Exception_MissingConfig(array('fieldpath' => "Users/apps/telegram/$appId/token"));
+            }
+        }
         return Q::ifset($info, 'token', null);
     }
     

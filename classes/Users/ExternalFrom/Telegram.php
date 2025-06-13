@@ -65,10 +65,11 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
 	 * Gets the logged-in user icon urls
 	 * @param {array} [$sizes=Q_Image::getSizes('Users/icon')]
 	 *  An array of size strings such "80x80"
-	 * @return {array|null} [$suffix=''] Keys are the size strings with optional $suffix
+     * @param {string} [$suffix=".png"] Optional suffix to append to the size strings, e.g. ".png"
+	 * @return {array|null} Keys are the size strings with optional $suffix
 	 *  and values are the urls
 	 */
-    function icon($sizes = null, $suffix = '')
+    function icon($sizes = null, $suffix = '.png')
     {
         if (empty($this->xid) || empty($this->appId)) {
             return array();
@@ -83,7 +84,8 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
             return array();
         }
 
-        $fileId = $photos[0][0]['file_id'];
+        $biggest = end($photos[0]);
+        $fileId = $biggest['file_id'];
         $info = null;
         $url = Telegram_Bot::getFileURL($this->appId, $fileId, $info);
 

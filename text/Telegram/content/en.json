@@ -3,5 +3,17 @@
         "Message": "Please implement a handler for event `{{eventName}}`",
         "NotImplemented": "This functionality is not implemented yet"
     },
-    "Welcome": "Welcome to our chat!"
+    "Welcome": "Welcome to our chat!",
+	"activation": {
+		"Thanks": "Thanks for adding me to this group."
+	},
+	"channel": {
+		"join": {
+			"Greeting": "Welcome to the group! Please check your DMs.",
+			"LinkTitle": "Start a private chat with the bot"
+		},
+		"request": {
+			"Greeting": "Hi there! Please answer the following question to complete your join request..."
+		}
+	}
 }

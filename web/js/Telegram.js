@@ -80,5 +80,10 @@ Q.Users.authenticate.telegram = function telegram(platform, platformAppId, onSuc
 //        priv._doCancel(platform, platformAppId, null, onSuccess, onCancel, options);
 //    }
 };
+
+Q.text.Users.login.telegram = {
+    src: null,
+    alt: "log in with telegram"
+};
     
 })(Q, Q.jQuery);
