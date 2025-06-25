@@ -118,4 +118,73 @@ abstract class Telegram extends Base_Telegram
 		$daystampNow = Q_Daystamp::fromTimestamp(time());
 		return Q_Daystamp::toDateTime($daystampNow) - 1;
 	}
+
+	/**
+	 * Import the Telegram user data into an array you can assign to a Users_User row
+	 * @method import
+	 * @static
+	 * @param {array} $telegramUser The Telegram user data
+	 * @param {array} $fieldNames The field names to import from the Telegram user data
+	 * @return {array} The imported data, with keys matching the field names in $fieldNames
+	 */
+	static function import($telegramUser, $fieldNames = null)
+	{
+		if (!is_array($fieldNames)) {
+			$fieldNames = Q_Config::get('Users', 'import', 'telegram', null);
+		}
+		if (empty($fieldNames)) {
+			return array();
+		}
+        if (empty($telegramUser)) {
+            return array();
+        }
+        $result = array();
+        foreach ($fieldNames as $fn) {
+            if (isset($telegramUser[$fn])) {
+                $key = $fn;
+                if ($fn === 'language_code') {
+                    $key = 'preferredLanguage';
+                }
+                $result[$key] = $telegramUser[$fn];
+            }
+        }
+		return $result;
+	}
+
+	/**
+	 * Get the a user's icon urls based on xid,
+	 * using the corresponding bot to fetch the profile photos
+	 * @method icon
+	 * @static
+	 * @param {string} $appId The app ID
+	 * @param {string} $xid The user ID on Telegram
+	 * @param {array} [$sizes=Q_Image::getSizes('Users/icon')]
+	 *  An array of size strings such "80x80"
+	 * @param {string} [$suffix=".png"] Optional suffix to append to the size strings, e.g. ".png"
+	 * @return {array|null} Keys are the size strings with optional $suffix
+	 *  and values are the urls
+	 */
+	static function icon($appId, $xid, $sizes = null, $suffix = '.png')
+	{
+        $sizes = isset($sizes) ? $sizes : array_keys(Q_Image::getSizes('Users/icon'));
+        ksort($sizes);
+
+        // Fetch Telegram profile photos
+        $photos = Telegram_Bot::getUserProfilePhotos($appId, $xid, 1);
+        if (empty($photos) || empty($photos[0][0]['file_id'])) {
+            return array();
+        }
+
+        $biggest = end($photos[0]);
+        $fileId = $biggest['file_id'];
+        $info = null;
+        $url = Telegram_Bot::getFileURL($appId, $fileId, $info);
+
+        // Return same URL for all sizes
+        $icons = array();
+        foreach ($sizes as $size) {
+            $icons[$size . $suffix] = $url;
+        }
+        return $icons;
+	}
 };

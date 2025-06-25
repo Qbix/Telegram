@@ -13,5 +13,10 @@
 		"platforms": {
 			"telegram": "last_name"
 		}
+	},
+	"Telegram/chats": {
+		"type": "Streams/category",
+		"title": "Telegram chats",
+		"icon": "Streams/category"
 	}
 }

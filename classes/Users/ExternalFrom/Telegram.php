@@ -74,58 +74,23 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
         if (empty($this->xid) || empty($this->appId)) {
             return array();
         }
-
-        $sizes = isset($sizes) ? $sizes : array_keys(Q_Image::getSizes('Users/icon'));
-        ksort($sizes);
-
-        // Fetch Telegram profile photos
-        $photos = Telegram_Bot::getUserProfilePhotos($this->appId, $this->xid, 1);
-        if (empty($photos) || empty($photos[0][0]['file_id'])) {
-            return array();
-        }
-
-        $biggest = end($photos[0]);
-        $fileId = $biggest['file_id'];
-        $info = null;
-        $url = Telegram_Bot::getFileURL($this->appId, $fileId, $info);
-
-        // Return same URL for all sizes
-        $icons = array();
-        foreach ($sizes as $size) {
-            $icons[$size . $suffix] = $url;
-        }
-        return $icons;
+        return Telegram::icon($this->appId, $this->xid, $sizes, $suffix);
     }
 
 
 	/**
 	 * Import some fields from the platform. Also fills Users::$cache['platformUserData'].
+     * This checks Q_Config('Users', 'import', 'telegram') for the fields to import,
+     * during Streams_after_Users_User_saveExecute hook.
+     * Note that importing a username may cause a conflict with an existing user,
+     * during Users_User->beforeSave, if Q_Config::get('Users', 'username', 'unique', true)
+     * in which case the username will be set to null instead.
 	 * @param {array} $fieldNames
 	 * @return {array}
 	 */
-	function import($fieldNames)
+	function import($fieldNames = null)
 	{
-		$platform = 'telegram';
-		if (!is_array($fieldNames)) {
-			$fieldNames = Q_Config::get('Users', 'import', $platform, null);
-		}
-		if (!$fieldNames) {
-			return array();
-		}
-        if (empty(Telegram_Dispatcher::$update['message']['from'])) {
-            return array();
-        }
-        $result = array();
-        $telegramUser = Telegram_Dispatcher::$update['message']['from'];
-        foreach ($fieldNames as $fn) {
-            if (isset($telegramUser[$fn])) {
-                $key = $fn;
-                if ($fn === 'language_code') {
-                    $key = 'preferredLanguage';
-                }
-                $result[$key] = $telegramUser[$fn];
-            }
-        }
+        $result = Telegram::import(Telegram_Dispatcher::$update['message']['from'], $fieldNames);
         Users::$cache['platformUserData'] = array(
             'telegram' => $result
         );

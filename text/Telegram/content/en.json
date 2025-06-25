@@ -4,16 +4,23 @@
         "NotImplemented": "This functionality is not implemented yet"
     },
     "Welcome": "Welcome to our chat!",
-	"activation": {
-		"Thanks": "Thanks for adding me to this group."
-	},
-	"channel": {
+	"group": {
 		"join": {
 			"Greeting": "Welcome to the group! Please check your DMs.",
 			"LinkTitle": "Start a private chat with the bot"
 		},
 		"request": {
 			"Greeting": "Hi there! Please answer the following question to complete your join request..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Thanks for adding me to the channel!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Thanks for unblocking me!"
 		}
 	}
 }

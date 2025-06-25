@@ -2,7 +2,7 @@
 	"Q": {
 		"pluginInfo": {
 			"Telegram": {
-				"version": "0.2",
+				"version": "0.3",
 				"compatible": "0.1",
 				"requires": {
 					"Q": "1.0",
@@ -46,9 +46,12 @@
 			"telegram": ["token", "secret"]
 		},
 		"import": {
-			"telegram": [
-				"first_name", "last_name", "username", "language_code"
-			]
+			"telegram": ["first_name", "last_name", "username", "language_code"]
+		},
+		"futureUser": {
+			"telegram": {
+				"icon": false
+			}
 		},
 		"intents": {
 			"actions": {
