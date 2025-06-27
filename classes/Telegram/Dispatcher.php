@@ -94,7 +94,7 @@ class Telegram_Dispatcher
                  * @event Telegram/action
                  * @param {array} $update
                  */
-                Q::event('Telegram/action', $params, true);
+                Q::event('Telegram/action', $params);
             }
 			// If we got this far, then this event can be by various plugins
 			// to persist various payment & micropayment transactions to the database.
@@ -115,6 +115,12 @@ class Telegram_Dispatcher
              * @param {array} $update
              */
             Q::event('Telegram/response', $params);
+			/**
+             * Gives the app a chance to log what happened to streams and files
+             * @event Telegram/log
+             * @param {array} $update
+             */
+            Q::event('Telegram/log', $params, true);
         } catch (Exception $exception) {
 			/**
 			 * @event Telegram/exception

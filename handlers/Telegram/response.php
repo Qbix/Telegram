@@ -3,7 +3,7 @@
 function Telegram_response($params)
 {
 	$appId = $params['appId'];
-	$updateType = $params['updateType'];
+	$updateType = preg_replace('/[^a-zA-Z0-9_]/', '', $params['updateType']);
 	list($appId, $info) = Users::appInfo('telegram', $appId);
 	$module = Q::ifset($info, 'module', $appId);
 	$params['module'] = $module;

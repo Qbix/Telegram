@@ -187,4 +187,28 @@ abstract class Telegram extends Base_Telegram
         }
         return $icons;
 	}
+
+	/**
+	 * Get a display name for a Telegram user or chat.
+	 *
+	 * @method name
+	 * @static
+	 * @param {array} $chat The chat object from Telegram
+	 * @return {string} The name or title of the chat
+	 */
+	static function name($chat)
+	{
+		if (!is_array($chat)) {
+			return '';
+		}
+
+		if (Q::ifset($chat, 'type') === 'private') {
+			$first = trim(Q::ifset($chat, 'first_name', ''));
+			$last = trim(Q::ifset($chat, 'last_name', ''));
+			return trim("$first $last");
+		}
+
+		return Q::ifset($chat, 'title', 'Telegram Chat');
+	}
+
 };

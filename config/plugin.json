@@ -18,7 +18,8 @@
 			"Q/responseExtras": ["Telegram/before/Q_responseExtras"]
 		},
 		"handlersAfterEvent": {
-			"Q/Plugin/install": ["Telegram/after/Q_Plugin_install"]
+			"Q/Plugin/install": ["Telegram/after/Q_Plugin_install"],
+			"Telegram/log": ["Telegram/after/Telegram_log"]
 		},
 		"routes@end": {},
 		"routes": {
@@ -66,6 +67,16 @@
 	"Streams": {
 		"userStreams": {
 			"Telegram": "streams.json"
+		}
+	},
+	"Telegram": {
+		"syndicate": {
+			"chatTypes": {
+				"private": false,
+				"group": true,
+				"supergroup": true,
+				"channel": true
+			}
 		}
 	}
 }
