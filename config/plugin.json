@@ -65,6 +65,22 @@
 		}
 	},
 	"Streams": {
+		"types": {
+			"Telegram/chat": {
+				"emoji": "💬",
+				"create": false,
+				"edit": false,
+				"messages": {
+					"Streams/chat/message": { "post": false },
+					"Streams/chat/edit": { "post": false },
+					"Streams/chat/remove": { "post": false }
+				},
+				"defaults": {
+					"title": "Telegram Chat",
+					"icon": "Streams/chat"
+				}
+			}
+		},
 		"userStreams": {
 			"Telegram": "streams.json"
 		}

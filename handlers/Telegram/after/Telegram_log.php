@@ -46,6 +46,7 @@ function Telegram_after_Telegram_log($params)
 	$stream = Streams_Stream::fetchOrCreate($publisherId, $publisherId, $streamName, array(
 		'skipAccess' => true,
 		'fields' => array(
+			'type' => 'Telegram/chat',
 			'title' => isset($chat['title']) ? $chat['title'] : $fallback,
 			'attributes' => array()
 		)
