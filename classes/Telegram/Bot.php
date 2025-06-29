@@ -22,8 +22,7 @@ class Telegram_Bot //extends Base_Telegram_Bot
     static function getUser($appId) {
         $platform = 'telegram';
         $botInfo = self::getMe($appId);
-        $bot = $botInfo['result'];
-        $xid = (string)$bot['id'];
+        $xid = (string)$botInfo['id'];
 
         $ef = Users_ExternalFrom::select()
             ->where('platform', $platform)
@@ -51,37 +50,30 @@ class Telegram_Bot //extends Base_Telegram_Bot
 
         // Get bot info from Telegram
         $botInfo = self::getMe($appId);
-        $bot = $botInfo['result'];
-        $xid = (string)$bot['id']; // Telegram user ID of the bot
+        $xid = (string)$botInfo['id']; // Telegram user ID of the bot
 
         // Check if already linked
         $ef = Users_ExternalFrom::select()
-            ->where('platform', $platform)
-            ->where('appId', $appId)
-            ->where('xid', $xid)
+            ->where(compact('platform', 'appId', 'xid'))
             ->fetchDbRow();
         if ($ef) {
             return Users_User::fetch($ef->userId, true);
         }
 
         // Set up import data
-        Users::$cache['importUserData'] = array(
-            'platform' => $platform,
-            'appId' => $appId,
-            'xid' => $xid,
-            'platformUserData' => array(
-                'telegram' => array(
-                    'id' => $xid,
-                    'username' => Q::ifset($bot, 'username', ''),
-                    'first_name' => Q::ifset($bot, 'first_name', ''),
-                    'last_name' => Q::ifset($bot, 'last_name', '')
-                )
+        $platformUserData = array(
+            'telegram' => array(
+                'id' => $xid,
+                'username' => Q::ifset($botInfo, 'username', ''),
+                'first_name' => Q::ifset($botInfo, 'first_name', ''),
+                'last_name' => Q::ifset($botInfo, 'last_name', '')
             )
-        );
+         );
+        Users::$cache['importUserData'] = compact('platform', 'appId', 'xid', 'platformUserData');
 
         // Insert a new Users_User and get a unique userId
         $user = new Users_User();
-        $user->signedUpWith = 
+        $user->xids = json_encode(array('telegram_all' => $xid));
         $user->save();
 
         // Import icon, if configured
@@ -95,9 +87,13 @@ class Telegram_Bot //extends Base_Telegram_Bot
             'platform' => $platform,
             'appId' => $appId,
             'xid' => $xid,
-            'userId' => $user->id
+            'userId' => $user->id,
+            'extra' => json_encode(array('appIds' => array($appId)))
         ));
         $ef->save(true);
+        $ef2 = new Users_ExternalFrom($ef->fields);
+        $ef2->appId = 'all';
+        $ef2->save(true);
 
         // Save Identify
         list($hashed, $ui_type) = Users::hashing($xid, $platformApp);
