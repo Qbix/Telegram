@@ -172,7 +172,13 @@ abstract class Telegram extends Base_Telegram
 			return array();
 		}
 
-		$fileId = $chat['photo']['big_file_id'];
+		$fileId = isset($chat['photo']['big_file_id'])
+			? $chat['photo']['big_file_id']
+			: (isset($chat['photo']['small_file_id']) ? $chat['photo']['small_file_id'] : null);
+		if (!$fileId) {
+			return array();
+		}
+
 		$info = null;
 		$url = Telegram_Bot::getFileURL($appId, $fileId, $info);
 

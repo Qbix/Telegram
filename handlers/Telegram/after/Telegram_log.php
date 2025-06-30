@@ -80,13 +80,12 @@ function Telegram_after_Telegram_log($params)
     }
 
 	// Post message to stream if present
-	if (isset($update['message']) && isset($update['message']['text'])) {
+	if (isset($update['message']) && isset($update['message']['text']) and $xid) {
 		$content = $update['message']['text'];
 		$instructions = $update['message'];
 		unset($instructions['text']);
 
-		$authorUser = Telegram::futureUser($appId, $from);
-		$stream->join(array('userId' => $authorUser->id, 'noVisit' => true));
+		$stream->join(array('userId' => $user->id, 'noVisit' => true));
 
 		$stream->post($authorUser->id, array(
 			'type' => 'Streams/chat/message',
