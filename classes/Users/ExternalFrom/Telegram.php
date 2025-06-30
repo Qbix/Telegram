@@ -74,9 +74,8 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
         if (empty($this->xid) || empty($this->appId)) {
             return array();
         }
-        return Telegram::icon($this->appId, $this->xid, $sizes, $suffix);
+        return Telegram::userIcon($this->appId, $this->xid, $sizes, $suffix);
     }
-
 
 	/**
 	 * Import some fields from the platform. Also fills Users::$cache['platformUserData'].

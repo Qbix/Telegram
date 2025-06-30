@@ -78,7 +78,7 @@ class Telegram_Bot //extends Base_Telegram_Bot
 
         // Import icon, if configured
         if (Q_Config::get('Users', 'futureUser', 'telegram', 'icon', false)) {
-            $icon = Telegram::icon($appId, $xid);
+            $icon = Telegram::userIcon($appId, $xid);
             Users::importIcon($user, $icon);
         }
 

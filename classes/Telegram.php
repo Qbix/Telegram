@@ -152,9 +152,42 @@ abstract class Telegram extends Base_Telegram
 	}
 
 	/**
+	 * Get a Telegram chat's icon URL using bot API
+	 * @method chatIcon
+	 * @static
+	 * @param {string} $appId The app ID
+	 * @param {int|string} $chatId The Telegram chat ID
+	 * @param {array} [$sizes=Q_Image::getSizes('Streams/icon')]
+	 * @param {string} [$suffix='.png'] Optional suffix
+	 * @return {array|null} Map of size => icon URL
+	 */
+	static function chatIcon($appId, $chatId, $sizes = null, $suffix = '.png')
+	{
+		$sizes = isset($sizes) ? $sizes : array_keys(Q_Image::getSizes('Streams/icon'));
+		ksort($sizes);
+
+		// Call Telegram API to get chat info
+		$chat = Telegram_Bot::getChat($appId, $chatId);
+		if (empty($chat['photo']['big_file_id'])) {
+			return array();
+		}
+
+		$fileId = $chat['photo']['big_file_id'];
+		$info = null;
+		$url = Telegram_Bot::getFileURL($appId, $fileId, $info);
+
+		// Use same URL for all sizes
+		$icons = array();
+		foreach ($sizes as $size) {
+			$icons[$size . $suffix] = $url;
+		}
+		return $icons;
+	}
+
+	/**
 	 * Get the a user's icon urls based on xid,
 	 * using the corresponding bot to fetch the profile photos
-	 * @method icon
+	 * @method userIcon
 	 * @static
 	 * @param {string} $appId The app ID
 	 * @param {string} $xid The user ID on Telegram
@@ -164,7 +197,7 @@ abstract class Telegram extends Base_Telegram
 	 * @return {array|null} Keys are the size strings with optional $suffix
 	 *  and values are the urls
 	 */
-	static function icon($appId, $xid, $sizes = null, $suffix = '.png')
+	static function userIcon($appId, $xid, $sizes = null, $suffix = '.png')
 	{
         $sizes = isset($sizes) ? $sizes : array_keys(Q_Image::getSizes('Users/icon'));
         ksort($sizes);
@@ -234,7 +267,7 @@ abstract class Telegram extends Base_Telegram
 		Users::$cache['platformUserData'] = array('telegram' => Telegram::import($from));
 		$user = Users::futureUser('telegram_all', $xid, $status, $inserted);
 		if ($inserted && Q_Config::get('Users', 'futureUser', 'telegram', 'icon', false)) {
-			$icon = Telegram::icon($appId, $xid);
+			$icon = Telegram::userIcon($appId, $xid);
 			Users::importIcon($user, $icon);
 		}
 		Users::$cache['platformUserData'] = null;

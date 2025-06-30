@@ -46,6 +46,13 @@ function Telegram_after_Telegram_log($params)
 			'attributes' => array()
 		)
 	), $results);
+	
+	if ($results['created']) {
+		// update the icon of the chat, if any
+		if ($icon = Telegram::chatIcon($appId, $chatId)) {
+			Streams::importIcon($stream, $icon);
+		}
+	}
 
 	// Set attributes if coming from my_chat_member
 	if (isset($update['my_chat_member'])) {
