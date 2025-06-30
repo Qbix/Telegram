@@ -211,4 +211,34 @@ abstract class Telegram extends Base_Telegram
 		return Q::ifset($chat, 'title', 'Telegram Chat');
 	}
 
+	/**
+	 * Inserts a new Users_User or returns an existing one.
+	 * Also imports the icon for the user.
+	 * @method futureUser
+	 * @static
+	 * @param {string} $appId the internal appId (doesn't get used for now)
+	 * @param {integer} $xid the user's id in telegram
+	 * @param {array} $from pass the 
+	 * @param {&string} [$status=null] The status of the user - 'verified' or 'future'
+	 * @param {&boolean} [$inserted=false] Whether a new user was inserted
+	 * @return {Users_User}
+	 * @throws {Q_Exception_WrongType}
+	 */
+	static function futureUser($appId, $from, &$status=null, &$inserted=null)
+	{
+		// ignore appId and just use "all" because xid doesn't depend on appId
+		if (!isset($from['id'])) {
+			throw new Q_Exception_WrongType(array('field' => 'from', 'type' => 'Telegram User'));
+		}
+		$xid = $from['id'];
+		Users::$cache['platformUserData'] = array('telegram' => Telegram::import($from));
+		$user = Users::futureUser('telegram_all', $xid, $status, $inserted);
+		if ($inserted && Q_Config::get('Users', 'futureUser', 'telegram', 'icon', false)) {
+			$icon = Telegram::icon($appId, $xid);
+			Users::importIcon($user, $icon);
+		}
+		Users::$cache['platformUserData'] = null;
+		return $user;
+	}
+
 };

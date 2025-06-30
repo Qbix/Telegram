@@ -15,15 +15,10 @@ function Telegram_after_Telegram_log($params)
 		$from = $update['my_chat_member']['from'];
 	}
 
+	$user = null;
 	$xid = isset($from['id']) ? $from['id'] : null;
 	if ($xid && empty($from['is_bot'])) {
-		Users::$cache['platformUserData'] = array('telegram' => Telegram::import($from));
-		$user = Users::futureUser('telegram_all', $xid, $futureUserStatus, $inserted);
-
-		if ($inserted && Q_Config::get('Users', 'futureUser', 'telegram', 'icon', false)) {
-			$icon = Telegram::icon($appId, $xid);
-			Users::importIcon($user, $icon);
-		}
+		$user = Telegram::futureUser($appId, $from);
 	}
 
 	// Extract chat object
@@ -83,7 +78,10 @@ function Telegram_after_Telegram_log($params)
 		$instructions = $update['message'];
 		unset($instructions['text']);
 
-		$stream->post($publisherId, array(
+		$authorUser = Telegram::futureUser($appId, $from);
+		$stream->join(array('userId' => $authorUser->id, 'noVisit' => true));
+
+		$stream->post($authorUser->id, array(
 			'type' => 'Streams/chat/message',
 			'content' => $content,
 			'instructions' => $instructions
