@@ -10,10 +10,6 @@ function Telegram_telegram_my_chat_member_response($params)
 	$chatType = $chat['type'];
 	$botStatus = Q::ifset($info['new_chat_member'], 'status');
 
-	if (!in_array($botStatus, ['member', 'administrator'])) {
-		return;
-	}
-
 	$key = ($chatType === 'supergroup') ? 'group' : $chatType;
 	$greeting = Q::interpolate(['Telegram/content', [$key, 'added', 'Greeting']]);
 
