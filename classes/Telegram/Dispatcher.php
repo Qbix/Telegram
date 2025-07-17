@@ -165,55 +165,77 @@ class Telegram_Dispatcher
 			return false;
 		}
 		$parts = explode('-', $parameter, 4);
-		if (empty($parts)) {
+		if (count($parts) < 2) {
 			throw new Q_Exception_WrongValue(array(
 				'field' => 'startCommandParameter',
-				'range' => 'intentId',
+				'range' => 'intent-$token or invite-$token',
 				'value' => $parameter
 			));
 		}
-		$token = reset($parts);
-		$intent = new Users_Intent(compact('token'));
-		if (!$intent->retrieve()) {
-			throw new Q_Exception_MissingRow(array(
-				'table' => 'Users_Intent',
-				'criteria' => "token=$token"
-			));
-		}
-		$session = null;
-		if (empty($intent->sessionId)) {
-			throw new Q_Exception_MissingValue(array(
-				'field' => 'sessionId',
-				'range' => 'a valid session ID',
-				'value' => 'empty'
-			));
-		}
-		$session = new Users_Session();
-		$session->id = $intent->sessionId;
-		if (!$session->retrieve()) {
-			throw new Q_Exception_SessionTerminated();
-		}
-		$content = json_decode($session->content, true);
-		$originalUserId = Q::ifset($content, 'Users', 'loggedInUser', 'id', null);
 
 		// open session in the database with deterministic ID
 		$deterministicId = Telegram::sessionId(
 			$appId, $update['message']['from']['id']
 		);
 		Q_Session::start(false, $deterministicId, 'internal');
-		
-		if ($originalUserId) {
-			// if user was logged into session that generated intent,
-			// set them as logged-in user here too, before connecting telegram user
-			Users::setLoggedInUser($originalUserId, array('keepSessionId' => true)); // set the user as logged in 
-		}
-		Users::authenticate('telegram', $appId);
-		$user = Users::loggedInUser();
-		if (!$originalUserId) {
-			// set the user as logged-in on the original session, too
-			$content['Users']['loggedInUser']['id'] = $user->id;
-			$session->setContent($content);
-			$session->save(); // note that this is part of an atomic transaction
+
+		$type = $parts[0];
+		$token = $parts[1];
+		if ($type === 'intent') {
+			$intent = new Users_Intent(compact('token'));
+			if (!$intent->retrieve()) {
+				throw new Q_Exception_MissingRow(array(
+					'table' => 'Users_Intent',
+					'criteria' => "token=$token"
+				));
+			}
+			$session = null;
+			if (empty($intent->sessionId)) {
+				throw new Q_Exception_MissingValue(array(
+					'field' => 'sessionId',
+					'range' => 'a valid session ID',
+					'value' => 'empty'
+				));
+			}
+			$session = new Users_Session();
+			$session->id = $intent->sessionId;
+			if (!$session->retrieve()) {
+				throw new Q_Exception_SessionTerminated();
+			}
+			$content = json_decode($session->content, true);
+			if ($originalUserId = Q::ifset($content, 'Users', 'loggedInUser', 'id', null)) {
+				// if user was logged into session that generated intent,
+				// set them as logged-in user here too, before connecting telegram user
+				Users::setLoggedInUser($originalUserId, array('keepSessionId' => true)); // set the user as logged in 
+			}
+			if ($invite = Q::ifset($content, 'Streams', 'invite', null)) {
+				$_SESSION['Streams']['invite'] = $invite;
+			}
+			Users::authenticate('telegram', $appId);
+			$user = Users::loggedInUser();
+			if (!$originalUserId) {
+				// set the user as logged-in on the original session, too
+				$content['Users']['loggedInUser']['id'] = $user->id;
+				$session->setContent($content);
+				$session->save(); // note that this is part of an atomic transaction
+			}
+		} else if ($type === 'invite') {
+			if ($invite = Streams_Invite::fromToken($token)) {
+				// accept invite and autosubscribe if first time and possible
+				$invite->accept(array(
+					'access' => true,
+					'subscribe' => true
+				));
+				$_SESSION['Streams']['invite'] = $invite->fields;
+			}
+			$user = Users::loggedInUser();
+			if (isset($invite->publisherId) and isset($invite->invitingUserId)) {
+				try {
+					Streams_Stream::handleReferral($user->id, $invite->publisherId, 'Telegram/chat/private', $invite->invitingUserId);
+				} catch (Exception $e) {
+					Q::log($e);
+				}
+			}
 		}
 		return true;
 	}

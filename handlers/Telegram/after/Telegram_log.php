@@ -54,14 +54,16 @@ function Telegram_after_Telegram_log($params)
 		}
 	}
 
+	$chatType = isset($chat['type']) ? $chat['type'] : 'private';
+
 	// Set attributes if coming from my_chat_member
 	if (isset($update['my_chat_member'])) {
 		$botStatus = isset($update['my_chat_member']['new_chat_member']['status'])
-            ? $update['my_chat_member']['new_chat_member']['status']
-            : null;
+			? $update['my_chat_member']['new_chat_member']['status']
+			: null;
 		$botStatusTime = isset($update['my_chat_member']['date'])
-            ? $update['my_chat_member']['date']
-            : null;
+			? $update['my_chat_member']['date']
+			: null;
 		$attributes = array(
 			'xid' => $xid,
 			'chatType' => $chatType,
@@ -71,13 +73,18 @@ function Telegram_after_Telegram_log($params)
 		);
 		$stream->setAttribute($attributes);
 		$stream->changed(isset($user) ? $user->id : $publisherId);
+	} else if ($chatType === 'private' and isset($update['message'])) {
+		if ($stream->getAttribute('botStatus') === 'kicked') {
+			$stream->setAttribute('botStatusTime', time());
+		}
+		$stream->setAttribute('botStatus', 'member');
+		$stream->changed(isset($user) ? $user->id : $publisherId);
 	}
 
-	$chatType = isset($chat['type']) ? $chat['type'] : 'private';
-    $default = Q_Config::get('Telegram', 'syndicate', 'chatTypes', $chatType, false);
-    if (!$stream->getAttribute('Telegram/syndicate', $default)) {
-        return;
-    }
+	$default = Q_Config::get('Telegram', 'syndicate', 'chatTypes', $chatType, false);
+	if (!$stream->getAttribute('Telegram/syndicate', $default)) {
+		return;
+	}
 
 	// Post message to stream if present
 	if (isset($update['message']) && isset($update['message']['text']) and $xid) {
@@ -85,6 +92,7 @@ function Telegram_after_Telegram_log($params)
 		$instructions = $update['message'];
 		unset($instructions['text']);
 
+		// no need to subscribe, because telegram already delivers notifications
 		$stream->join(array('userId' => $user->id, 'noVisit' => true));
 
 		$stream->post($authorUser->id, array(

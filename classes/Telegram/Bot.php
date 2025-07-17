@@ -63,7 +63,6 @@ class Telegram_Bot //extends Base_Telegram_Bot
         // Set up import data
         $platformUserData = array(
             'telegram' => array(
-                'id' => $xid,
                 'username' => Q::ifset($botInfo, 'username', ''),
                 'first_name' => Q::ifset($botInfo, 'first_name', ''),
                 'last_name' => Q::ifset($botInfo, 'last_name', '')
@@ -73,8 +72,9 @@ class Telegram_Bot //extends Base_Telegram_Bot
 
         // Insert a new Users_User and get a unique userId
         $user = new Users_User();
+        $user->id = "Telegram.$appId";
         $user->xids = json_encode(array('telegram_all' => $xid));
-        $user->save();
+        $user->save(true);
 
         // Import icon, if configured
         if (Q_Config::get('Users', 'futureUser', 'telegram', 'icon', false)) {

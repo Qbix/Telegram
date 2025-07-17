@@ -58,7 +58,7 @@
 			"actions": {
 				"Users/authenticate": {
 					"telegram": {
-						"redirect": "tg://resolve?domain={{botUsername}}&{{parameter}}={{token}}"
+						"redirect": "tg://resolve?domain={{botUsername}}&{{parameter}}=intent-{{token}}"
 					}
 				}
 			}
