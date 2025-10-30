@@ -8,12 +8,14 @@
 /* jshint -W014 */
 (function(Q, $) {
 
+var Telegram = window.Telegram;
+
 Q.onInit.add(function _Telegram_autoDetect() {
 	// may as well add this even in the browser context,
 	// because the telegram links on desktop telegram open a regular browser
 	Q.addScript('https://telegram.org/js/telegram-web-app.js?59', function () {
 		try {
-			window.Telegram.WebApp.ready();
+			Telegram.WebApp.ready();
 
 			// Run only once
 			if (Q.Users.loggedInUser) return;
@@ -22,7 +24,7 @@ Q.onInit.add(function _Telegram_autoDetect() {
 			var ctx = Q.Telegram.context();
 			if (ctx === 'browser') return;
 
-			if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData) {
+			if (Telegram && Telegram.WebApp && Telegram.WebApp.initData) {
 				var unsafe = Telegram.WebApp.initDataUnsafe;
 				if (unsafe && unsafe.user && unsafe.user.id) {
 					Q.Users.authPayload = Q.Users.authPayload || {};
@@ -46,7 +48,7 @@ Q.onInit.add(function _Telegram_autoDetect() {
 	});
 }, 'Telegram');
 
-var Telegram = Q.Telegram = {
+var T = Q.Telegram = {
 
 	/**
 	 * Detects current Telegram execution context.
@@ -55,12 +57,8 @@ var Telegram = Q.Telegram = {
 	 */
 	context: function () {
 		try {
-			if (window.Telegram && window.Telegram.WebApp) return 'app';
-			if (window.TelegramProxy) return 'webview';
-			if (window.external && typeof window.external.notify === 'function') return 'injected-ios';
-			if (window.Android && typeof window.Android.postMessage === 'function') return 'injected-android';
-			if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.TelegramHandler)
-				return 'injected-ios-modern';
+			if (Telegram && Telegram.WebApp) return 'app';
+			if (TelegramWebviewProxy) return 'webview';
 		} catch (e) {}
 		return 'browser';
 	},
@@ -70,7 +68,7 @@ var Telegram = Q.Telegram = {
 	 * @return {Boolean} true if running inside an injected iOS/Android WebView
 	 */
 	isInjected: function () {
-		var ctx = Telegram.context();
+		var ctx = T.context();
 		return ctx.indexOf('injected') === 0;
 	},
 
@@ -82,17 +80,17 @@ var Telegram = Q.Telegram = {
 	 */
 	postMessage: function (name, data) {
 		if (!data) data = {};
-		var ctx = Telegram.context();
+		var ctx = T.context();
 		var payload = JSON.stringify({ eventType: name, eventData: data });
 
 		try {
 			switch (ctx) {
 				case 'app':
-					window.Telegram.WebApp.sendData(payload);
+					Telegram.WebApp.sendData(payload);
 					break;
 				case 'webview':
-					if (window.TelegramProxy.postEvent)
-						window.TelegramProxy.postEvent(name, data);
+					if (TelegramProxy.postEvent)
+						TelegramProxy.postEvent(name, data);
 					break;
 				case 'injected-android':
 					window.Android.postMessage(payload);
@@ -121,9 +119,9 @@ var Telegram = Q.Telegram = {
 		try {
 			var ctx = Telegram.context();
 			if (ctx === 'app') {
-				window.Telegram.WebApp.close();
-			} else if (ctx === 'webview' && window.TelegramProxy.close) {
-				window.TelegramProxy.close();
+				Telegram.WebApp.close();
+			} else if (ctx === 'webview' && TelegramProxy.close) {
+				TelegramProxy.close();
 			} else {
 				Telegram.postMessage('close');
 			}
@@ -140,9 +138,9 @@ var Telegram = Q.Telegram = {
 		try {
 			var ctx = Telegram.context();
 			if (ctx === 'app') {
-				window.Telegram.WebApp.expand();
-			} else if (ctx === 'webview' && window.TelegramProxy.expand) {
-				window.TelegramProxy.expand();
+				Telegram.WebApp.expand();
+			} else if (ctx === 'webview' && TelegramProxy.expand) {
+				TelegramProxy.expand();
 			}
 		} catch (e) {
 			if (console && console.warn) console.warn('Telegram.expand failed', e);
@@ -158,13 +156,13 @@ var Telegram = Q.Telegram = {
 	openLink: function (url, opts) {
 		if (!opts) opts = {};
 		try {
-			var ctx = Telegram.context();
-			if (ctx === 'app' && window.Telegram.WebApp.openLink) {
-				window.Telegram.WebApp.openLink(url, opts);
+			var ctx = T.context();
+			if (ctx === 'app' && Telegram.WebApp.openLink) {
+				Telegram.WebApp.openLink(url, opts);
 				return;
 			}
-			if (ctx === 'webview' && window.TelegramProxy.openLink) {
-				window.TelegramProxy.openLink(url);
+			if (ctx === 'webview' && TelegramProxy.openLink) {
+				TelegramProxy.openLink(url);
 				return;
 			}
 		} catch (e) {}
@@ -186,10 +184,10 @@ document.addEventListener('click', function (e) {
 		var href = t.getAttribute('href');
 		if (!href || href.indexOf('#') === 0 || href.indexOf('javascript:') === 0)
 			return;
-		var ctx = Telegram.context();
-		if (ctx === 'webview' || Telegram.isInjected()) {
+		var ctx = T.context();
+		if (ctx === 'webview' || T.isInjected()) {
 			e.preventDefault();
-			Telegram.openLink(href);
+			T.openLink(href);
 		}
 	} catch (ex) {
 		if (console && console.warn) console.warn('Link intercept failed', ex);
