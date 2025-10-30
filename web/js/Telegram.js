@@ -8,9 +8,43 @@
 /* jshint -W014 */
 (function(Q, $) {
 
-// may as well add this even in the browser context,
-// because the telegram links on desktop telegram open a regular browser
-Q.addScript('https://telegram.org/js/telegram-web-app.js?59');
+Q.onInit.set(function _Telegram_autoDetect() {
+	// may as well add this even in the browser context,
+	// because the telegram links on desktop telegram open a regular browser
+	Q.addScript('https://telegram.org/js/telegram-web-app.js?59', function () {
+		try {
+			window.Telegram.WebApp.ready();
+
+			// Run only once
+			if (Q.Users.loggedInUser) return;
+
+			// Check if we're inside Telegram context
+			var ctx = Q.Telegram.context();
+			if (ctx === 'browser') return;
+
+			if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData) {
+				var unsafe = Telegram.WebApp.initDataUnsafe;
+				if (unsafe && unsafe.user && unsafe.user.id) {
+					Q.Users.authPayload = Q.Users.authPayload || {};
+					Q.Users.authPayload.telegram = {
+						xid: unsafe.user.id,
+						payload: Telegram.WebApp.initData,
+						platform: 'telegram'
+					};
+
+					// Default future logins to auto-authenticate via Telegram
+					Q.Users.login.options.autoAuthenticatePlatform = 'telegram';
+
+					if (console && console.log)
+						console.log('[Telegram] Auto-detected Telegram WebApp context, xid=' + unsafe.user.id);
+				}
+			}
+		} catch (e) {
+			if (console && console.warn)
+				console.warn('[Telegram] auto-detect failed:', e);
+		}
+	});
+}, 'Telegram');
 
 var Telegram = Q.Telegram = {
 

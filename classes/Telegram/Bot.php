@@ -2302,7 +2302,7 @@ class Telegram_Bot //extends Base_Telegram_Bot
         }
         //$response = Q_Utils::post("$endpoint?$data", $payload, Q_Config::get(
         $response = Q_Utils::post($endpoint, $params, Q_Config::get(
-            'Telegram', 'bot', 'userAgent', 'Qbix', null
+            'Telegram', 'bot', 'userAgent', 'Qbix'
         ), array()/*curl_opts*/, $headers, 30, false);
 
         $arr = Q::json_decode($response, true);
