@@ -1,102 +1,124 @@
 Q.exports(function (Users, priv) {
-    /**
-    * Authenticates this session with a given platform,
-    * if the user was already connected to it.
-    * @method authenticate
-    * @param {String} platform Currently it's `telegram`
-    * @param {String} platformAppId platformAppId
-    * @param {Function} onSuccess Called if the user successfully authenticates with the platform, or was already authenticated.
-    * @param {Function} onCancel Called if the authentication was canceled.
-    * @param {Object} [options] authentication options
-    *   @param {Boolean} [options.startapp=false] set to true to use the Mini App flow (`startapp`)
-    *   @param {String} [options.startappName] optional Telegram Mini App short name (for future use)
-    *   @param {Function|Boolean} [options.prompt=null] see docs
-    *   @param {Boolean} [options.force] forces a status refresh
-    *   @param {String} [options.appId=Q.info.app] Only needed if you have multiple apps on platform
-    */
-    function telegram(platform, platformAppId, onSuccess, onCancel, options) {
-        options = options || {};
+	/**
+	 * Authenticates this session with a given platform,
+	 * if the user was already connected to it.
+	 * It tries to do so by checking a cookie that would have been set by the server,
+	 * or Telegram Mini App context if available.
+	 * @method authenticate
+	 * @param {String} platform Currently it's `telegram`
+	 * @param {String} platformAppId platformAppId
+	 * @param {Function} onSuccess Called if the user successfully authenticates with the platform, or was already authenticated.
+	 *  It is passed the user information if the user changed.
+	 * @param {Function} onCancel Called if the authentication was canceled. Receives err, options
+	 * @param {Object} [options] object of parameters for authentication function
+	 *   @param {Function|Boolean} [options.prompt=null] which shows the usual prompt unless it was already rejected once.
+	 *     Can be false, in which case the user is never prompted and the authentication just happens.
+	 *     Can be true, in which case the usual prompt is shown even if it was rejected before.
+	 *     Can be a function with an onSuccess and onCancel callback, in which case it's used as a prompt.
+	 *   @param {Boolean} [options.force] forces a status refresh
+	 *   @param {String} [options.appId=Q.info.app] Only needed if you have multiple apps on platform
+	 *   @param {Boolean} [options.startapp=false] set to true to use the Mini App flow (`startapp`)
+	 *   @param {String} [options.startappName] optional Telegram Mini App short name (for future use)
+	 */
+	function telegram(platform, platformAppId, onSuccess, onCancel, options) {
+		options = options || {};
 
-        var cookieName = 'tgsr_' + platformAppId;
-        var cookie = Q.cookie(cookieName);
-        var cookieUserId = null;
-        if (cookie) {
-            try {
-                var parsed = JSON.parse(cookie);
-                if (parsed && parsed.user && parsed.user.id) {
-                    cookieUserId = parsed.user.id;
-                }
-            } catch (e) {}
-        }
+		var initData = null;
+		var unsafe = null;
+		var xid = null;
 
-        var ctxUserId = null, initData = null, unsafe = null;
-        try {
-            if (window.Telegram && window.Telegram.WebApp) {
-                unsafe = Telegram.WebApp.initDataUnsafe;
-                if (unsafe && unsafe.user && unsafe.user.id) {
-                    ctxUserId = unsafe.user.id;
-                }
-                initData = Telegram.WebApp.initData;
-            }
-        } catch (e) {}
+		try {
+			if (window.Telegram && window.Telegram.WebApp) {
+				unsafe = Telegram.WebApp.initDataUnsafe;
+				initData = Telegram.WebApp.initData || null;
+				if (unsafe && unsafe.user && unsafe.user.id) {
+					xid = unsafe.user.id;
+				}
+			}
+		} catch (e) {
+			if (console && console.warn) {
+				console.warn('Telegram context initialization error:', e);
+			}
+		}
 
-        // CASE 1: Already have cookie and it matches Telegram context user
-        if (cookieUserId && (!ctxUserId || ctxUserId == cookieUserId)) {
-            return priv.handleXid(
-                platform, platformAppId, cookieUserId,
-                onSuccess, onCancel, options
-            );
-        }
+		// CASE 1 + 2: check if cookie or initData available
+		var cookieName = 'tgsr_' + platformAppId;
+		var hasCookie = !!Q.cookie(cookieName);
+		var hasInitData = !!initData;
 
-        // CASE 2: Have Telegram context with initData → verify via backend
-        if (initData && ctxUserId) {
-            Q.Users.authPayload = Q.Users.authPayload || {};
-            Q.Users.authPayload.telegram = {
-                xid: ctxUserId,
-                payload: initData,
-                platform: 'telegram'
-            };
+		if (hasCookie || hasInitData) {
+			// Send whichever data we have for verification
+			var fields = { platform: 'telegram' };
+			if (hasInitData) {
+				fields['Q.Users.authPayload.telegram'] = initData;
+			}
 
-            Q.req('Users/authenticate', function (err, response) {
-                if (err) {
-                    if (console && console.warn) console.warn('Telegram authenticate failed:', err);
-                    if (typeof onCancel === 'function') onCancel(err, options);
-                    return;
-                }
-                if (typeof onSuccess === 'function') onSuccess(response);
-            }, {
-                method: 'POST',
-                fields: {
-                    platform: 'telegram',
-                    initData: initData
-                }
-            });
-            return;
-        }
+			Q.req(
+				'Users/authenticate',
+				function (err, response) {
+					if (err) {
+						if (console && console.warn) {
+							console.warn('Telegram authenticate failed:', err);
+						}
+						if (typeof onCancel === 'function') {
+							onCancel(err, options);
+						}
+						// clear stale cookies if invalid
+						Q.cookie(cookieName, null, { path: '/' });
+						Q.cookie(cookieName + '_expires', null, { path: '/' });
+						return;
+					}
 
-        // CASE 3: Neither cookie nor context → fallback to intent redirect
-        var parameter = options.startapp ? 'startapp' : 'start';
-        var interpolate = { parameter: parameter };
-        if (options.startappName) interpolate.shortName = options.startappName;
+					var userId =
+						(response && response.user && response.user.id) ||
+						xid ||
+						null;
 
-        Q.handle(Q.action('Users/intent', {
-            action: 'Users/authenticate',
-            platform: 'telegram',
-            interpolate: interpolate
-        }));
+					priv.handleXid(
+						platform,
+						platformAppId,
+						userId,
+						onSuccess,
+						onCancel,
+						Q.extend({ response: response }, options)
+					);
+				},
+				{
+					method: 'POST',
+					fields: fields
+				}
+			);
 
-        Q.onVisibilityChange.setOnce(function (isShown) {
-            if (!isShown) return;
-            Q.loadUrl(location.href, {
-                slotNames: Q.info.slotNames,
-                loadExtras: 'all',
-                ignoreDialogs: true,
-                ignorePage: false,
-                ignoreHistory: true,
-                quiet: true
-            });
-        }, 'Telegram');
-    };
-    telegram.options = {};
-    return telegram;
+			return;
+		}
+
+		// CASE 3: No cookie, no initData → synchronous redirect to Telegram intent
+		var parameter = options.startapp ? 'startapp' : 'start';
+		var interpolate = { parameter: parameter };
+		if (options.startappName) {
+			interpolate.shortName = options.startappName;
+		}
+
+		// Perform synchronous navigation to Telegram app (user gesture safe)
+		location.href = Q.action('Users/intent', {
+			action: 'Users/authenticate',
+			platform: 'telegram',
+			interpolate: interpolate
+		});
+
+		// When user comes back, reload current page to resume
+		Q.onVisibilityChange.setOnce(function (isShown) {
+			if (!isShown) return;
+			Q.loadUrl(location.href, {
+				slotNames: Q.info.slotNames,
+				loadExtras: 'all',
+				ignoreDialogs: true,
+				ignorePage: false,
+				ignoreHistory: true,
+				quiet: true
+			});
+		}, 'Telegram');
+	}
+
+	return telegram;
 });
