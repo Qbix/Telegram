@@ -8,7 +8,7 @@
 /* jshint -W014 */
 (function(Q, $) {
 
-Q.onInit.set(function _Telegram_autoDetect() {
+Q.onInit.add(function _Telegram_autoDetect() {
 	// may as well add this even in the browser context,
 	// because the telegram links on desktop telegram open a regular browser
 	Q.addScript('https://telegram.org/js/telegram-web-app.js?59', function () {

@@ -24,7 +24,11 @@
 		"routes@end": {},
 		"routes": {
 		},
-		"web": {},
+		"web": {
+			"contentSecurityPolicy": {
+				"script": ["https://telegram.org/js/telegram-web-app.js"]
+			}
+		},
 		"javascript": {},
 		"text": {},
 		"images": {},
