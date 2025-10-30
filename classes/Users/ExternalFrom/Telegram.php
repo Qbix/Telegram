@@ -18,19 +18,38 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
 	 * @method authenticate
 	 * @static
 	 * @param {string} [$appId=Q::app()] Can either be an interal appId or an Telegram appId.
-	 * @param {boolean} [$setCookie=true] Whether to set fbsr_$appId cookie
+	 * @param {boolean} [$setCookie=true] Whether to set tgsr_$appId cookie
 	 * @param {boolean} [$longLived=true] Get a long-lived access token, if necessary
 	 * @return {Users_ExternalFrom_Telegram|null}
 	 *  May return null if no such user is authenticated.
 	 */
 	static function authenticate($appId = null, $setCookie = true, $longLived = true)
 	{
-		list($appId, $appInfo) = Users::appInfo('telegram', $appId);
+        $telegramUser = null;
+        if (!empty(Telegram_Dispatcher::$update['message']['from'])) {
+            // User data is in an update sent by Telegram Bot servers
+            $telegramUser = Telegram_Dispatcher::$update['message']['from'];
+        } else {
+			// Look for signed payload from Telegram WebApp JS (tgAuth param or POST)
+			$dataString = Q_Request::special('Users.telegram.authResponse', null);
+			if (!$dataString or !Telegram::verifyData($dataString, true)) {
+                return null;
+            }
+            if (is_string($dataString)) {
+                parse_str($dataString, $data);
+            } else {
+                $data = $dataString;
+            }
+            $telegramUser = $data;
+		}
         if (empty(Telegram_Dispatcher::$update['message']['from']['id'])) {
             return null;
         }
         $telegramUser = Telegram_Dispatcher::$update['message']['from'];
         $xid = $telegramUser['id'];
+
+        // Do the actual authentication
+        list($appId, $appInfo) = Users::appInfo('telegram', $appId);
         if ($minAge = Q::ifset($appInfo, 'authentication', 'minAgeInDays', 0)) {
             $age = 0;
             $date = Telegram::approximateRegistrationDate($telegramUser['id']);
