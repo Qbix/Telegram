@@ -34,6 +34,7 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
 		// Case 2: Telegram WebApp signed initData
 		else {
 			$dataString = Q_Request::special('Users.authPayload.telegram', null);
+            
 			if ($dataString && Telegram::verifyData($dataString, false)) {
 				if (is_string($dataString)) {
 					parse_str($dataString, $data);
