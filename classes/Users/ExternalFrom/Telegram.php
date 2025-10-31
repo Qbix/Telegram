@@ -34,7 +34,7 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
 		// Case 2: Telegram WebApp signed initData
 		else {
 			$dataString = Q_Request::special('Users.authPayload.telegram', null);
-            
+
 			if ($dataString && Telegram::verifyData($dataString, false)) {
 				if (is_string($dataString)) {
 					parse_str($dataString, $data);
@@ -44,7 +44,7 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
 				$telegramUser = $data;
 			}
 			// Case 3: fallback to tgsr_* cookie if present
-			elseif ($cookie = Q_Request::cookie('tgsr_' . $appId, null)) {
+			else if ($cookie = Q::ifset($_COOKIE, "tgsr_$appId", '')) {
 				$decoded = Q::json_decode($cookie, true);
 				if (is_array($decoded) && !empty($decoded['id'])) {
 					$telegramUser = $decoded;
