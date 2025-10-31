@@ -195,7 +195,7 @@ document.addEventListener('click', function (e) {
 
 Q.Users.authenticate.telegram = new Q.Method({}, {
 	customPath: '{{Telegram}}/js/methods/Users/authenticate/telegram.js'
-});)
+});
 Q.Method.define(Q.Users.authenticate);
 
 Q.text.Users.login.telegram = {
