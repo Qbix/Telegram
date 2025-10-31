@@ -7,7 +7,7 @@
 "use strict";
 /* jshint -W014 */
 (function(Q, $) {
-//
+
 Q.onInit.add(function _Telegram_autoDetect() {
 	// may as well add this even in the browser context,
 	// because the telegram links on desktop telegram open a regular browser
@@ -47,7 +47,7 @@ Q.onInit.add(function _Telegram_autoDetect() {
 	});
 }, 'Telegram');
 
-var T = Q.Telegram = {
+var T = Q.Telegram = Q.plugins.Telegram = {
 
 	/**
 	 * Detects current Telegram execution context.
@@ -193,10 +193,9 @@ document.addEventListener('click', function (e) {
 	}
 }, true);
 
-Q.Users.authenticate.telegram = new Q.Method({}, {
+Q.Method.add(Q.Users.authenticate, 'telegram', new Q.Method({}, {
 	customPath: '{{Telegram}}/js/methods/Users/authenticate/telegram.js'
-});
-Q.Method.define(Q.Users.authenticate);
+}));
 
 Q.text.Users.login.telegram = {
 	src: null,
