@@ -20,7 +20,7 @@ Q.exports(function (Users, priv) {
 	 *   @param {Boolean} [options.startapp=false] set to true to use the Mini App flow (`startapp`)
 	 *   @param {String} [options.startappName] optional Telegram Mini App short name (for future use)
 	 */
-	function telegram(platform, platformAppId, onSuccess, onCancel, options) {
+	return function telegram(platform, platformAppId, onSuccess, onCancel, options) {
 		options = options || {};
 
 		var initData = null;
