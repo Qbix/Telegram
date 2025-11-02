@@ -37,11 +37,11 @@ abstract class Telegram extends Base_Telegram
 	 * Given data sent by Telegram, verify that it is properly signed.
 	 * @method verifyData
 	 * @static
-	 * @param {string}} $appId The internal app ID or Telegram app ID
-	 * @param {string|array} $data Data sent by Telegram. Could be a querystring instead of an array.
-	 *   Contains the "hash" that is removed from the data, and verified against.
-	 * @param {boolean} [$skipExpirationCheck] Pass true here to skip checking the auth_date
-	 * @return {boolean} Returns true if the data is properly signed, and not expired
+	 * @param {string} $appId The internal app ID or Telegram app ID
+	 * @param {string|array} $data Data sent by Telegram (query string or array)
+	 *   Contains the "hash" that is removed from the data and verified against.
+	 * @param {boolean} [$skipExpirationCheck] Pass true to skip checking the auth_date
+	 * @return {boolean} True if properly signed (and not expired, unless skipped)
 	 */
 	static function verifyData($appId, $data, $skipExpirationCheck = false)
 	{
@@ -49,29 +49,37 @@ abstract class Telegram extends Base_Telegram
 			parse_str($data, $arr);
 			$data = $arr;
 		}
-		if (!isset($data['hash'])) {
+		if (empty($data['hash'])) {
 			return false;
 		}
 		if (!$skipExpirationCheck) {
-			if (!isset($data['auth_date'])
-			or !Q_Valid::expiration($data['auth_date'])) {
+			if (empty($data['auth_date']) || !Q_Valid::expiration($data['auth_date'])) {
 				return false;
 			}
 		}
+
+		// Extract and remove fields not included in the signature
 		$hash = $data['hash'];
 		unset($data['hash']);
+
 		Q_Utils::ksort($data);
+
 		$lines = array();
 		foreach ($data as $k => $v) {
 			$lines[] = "$k=$v";
 		}
 		$serialized = implode("\n", $lines);
-		list($appId, $info) = Users::appInfo('telegram', $appId);
+
+		list($resolvedAppId, $info) = Users::appInfo('telegram', $appId);
 		$token = $info['token'];
-		$key = hash_hmac('sha256', 'WebAppData', $token, true);
-		return hash_equals($hash, hash_hmac('sha256', $serialized, $key));
-	
+
+		// Per Telegram spec
+		$key = hash_hmac('sha256', $token, 'WebAppData', true);
+		$check_hash = hash_hmac('sha256', $serialized, $key);
+
+		return hash_equals($hash, $check_hash);
 	}
+
 
 	/**
 	 * Get a deterministic session ID
