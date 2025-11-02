@@ -49,7 +49,11 @@ Q.exports(function (Users, priv) {
 		if (hasCookie || hasInitData) {
 			// Send whichever data we have for verification
 			var appId = options && options.appId || platformAppId
-			var fields = { platform: 'telegram', appId: appId };
+			var fields = { 
+				platform: 'telegram', 
+				appId: appId,
+				updateXid: true
+			};
 			if (hasInitData) {
 				fields['Q.Users.authPayload.telegram'] = initData;
 			}
