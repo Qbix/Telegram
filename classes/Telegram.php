@@ -68,7 +68,6 @@ abstract class Telegram extends Base_Telegram
 		list($resolvedAppId, $info) = Users::appInfo('telegram', $appId);
 		$token = $info['token'];
 		$key = hash_hmac('sha256', $token, 'WebAppData', true);
-		echo $token; exit;
 		$check_hash = hash_hmac('sha256', $serialized, $key);
 		return hash_equals($hash, $check_hash);
 	}
