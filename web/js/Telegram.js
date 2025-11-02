@@ -1,8 +1,8 @@
 /**
  * Telegram plugin's front end code
  *
- * @module Streams
- * @class Streams
+ * @module Telegram
+ * @class Telegram
  */
 "use strict";
 /* jshint -W014 */
@@ -193,16 +193,11 @@ document.addEventListener('click', function (e) {
 	}
 }, true);
 
-Q.Users.authenticate.telegram = new Q.Method({}, {
-	customPath: '{{Telegram}}/js/methods/Users/authenticate/telegram.js'
+Q.Users.beforeDefineAuthenticateMethods.add(function (authenticate) {
+	authenticate.telegram = new Q.Method({}, {
+		customPath: '{{Telegram}}/js/methods/Users/authenticate/telegram.js'
+	});
 });
-Q.Method.define(
-	Q.Users.authenticate,
-	'{{Users}}/js/methods/Users/authenticate', 
-    function() {
-        return [Users, priv];
-    }
-);
 
 Q.text.Users.login.telegram = {
 	src: null,
