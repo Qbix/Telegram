@@ -36,7 +36,6 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
 				} else {
 					$data = $dataString;
 				}
-				$telegramUser = $data;
 			} else if ($cookie = Q::ifset($_COOKIE, "tgsr_$appId", '')) {
 				$decoded = Q::json_decode($cookie, true);
 				if (is_array($decoded) && !empty($decoded['id'])) {
