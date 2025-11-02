@@ -81,7 +81,7 @@ Q.exports(function (Users, priv) {
 						userId,
 						onSuccess,
 						onCancel,
-						Q.extend({ response: response }, options)
+						Q.extend({ response: response, prompt: false }, options)
 					);
 				},
 				{
