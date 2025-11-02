@@ -26,33 +26,24 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
 	static function authenticate($appId = null, $setCookie = true, $longLived = true)
 	{
 		$telegramUser = null;
-
-		// Case 1: Webhook (bot) update
 		if (!empty(Telegram_Dispatcher::$update['message']['from']['id'])) {
 			$telegramUser = Telegram_Dispatcher::$update['message']['from'];
-		}
-		// Case 2: Telegram WebApp signed initData
-		else {
+		} else {
 			$dataString = Q_Request::special('Users.authPayload.telegram', null);
-
-			if ($dataString && Telegram::verifyData($dataString, false)) {
+			if ($dataString && Telegram::verifyData($appId, $dataString, false)) {
 				if (is_string($dataString)) {
 					parse_str($dataString, $data);
 				} else {
 					$data = $dataString;
 				}
 				$telegramUser = $data;
-			}
-			// Case 3: fallback to tgsr_* cookie if present
-			else if ($cookie = Q::ifset($_COOKIE, "tgsr_$appId", '')) {
+			} else if ($cookie = Q::ifset($_COOKIE, "tgsr_$appId", '')) {
 				$decoded = Q::json_decode($cookie, true);
 				if (is_array($decoded) && !empty($decoded['id'])) {
 					$telegramUser = $decoded;
 				}
 			}
-
-			// still nothing
-			if (!$telegramUser) {
+            if (!$telegramUser) {
 				return null;
 			}
 		}
