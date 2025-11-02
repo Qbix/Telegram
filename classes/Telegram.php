@@ -283,4 +283,11 @@ abstract class Telegram extends Base_Telegram
 		return $user;
 	}
 
+	/**
+	 * This is set by Telegram_Dispatcher when processing an update
+	 * or by Users_ExternalFrom_Telegram::authenticate
+	 * @property {array} $user The Telegram user data
+	 */
+	public static $user = null;
+
 };

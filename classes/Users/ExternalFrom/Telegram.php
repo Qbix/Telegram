@@ -25,10 +25,7 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
 	 */
 	static function authenticate($appId = null, $setCookie = true, $longLived = true)
 	{
-		$telegramUser = null;
-		if (!empty(Telegram_Dispatcher::$update['message']['from']['id'])) {
-			$telegramUser = Telegram_Dispatcher::$update['message']['from'];
-		} else {
+		if (empty(Telegram::$user['id'])) {
 			$dataString = Q_Request::special('Users.authPayload.telegram', null);
 			if ($dataString && Telegram::verifyData($appId, $dataString, false)) {
 				if (is_string($dataString)) {
@@ -36,23 +33,23 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
 				} else {
 					$data = $dataString;
 				}
-                $telegramUser = Q::json_decode($data['user'], true);
+                Telegram::$user = Q::json_decode($data['user'], true);
 			} else if ($cookie = Q::ifset($_COOKIE, "tgsr_$appId", '')) {
 				$decoded = Q::json_decode($cookie, true);
 				if (is_array($decoded) && !empty($decoded['id'])) {
-					$telegramUser = $decoded;
+					Telegram::$user = $decoded;
 				}
 			}
-            if (!$telegramUser) {
+            if (!Telegram::$user) {
 				return null;
 			}
 		}
 
-		if (empty($telegramUser['id'])) {
+		if (empty(Telegram::$user['id'])) {
 			return null;
 		}
 
-		$xid = $telegramUser['id'];
+		$xid = Telegram::$user['id'];
 		list($appId, $appInfo) = Users::appInfo('telegram', $appId);
 
 		// Enforce minimum account age
@@ -70,7 +67,7 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
 			$cookieNames = array("tgsr_$appId", "tgsr_{$appId}_expires");
 			$expires = time() + 86400; // 1 day or use auth_date + 24h
 
-			Q_Response::setCookie($cookieNames[0], Q::json_encode($telegramUser), $expires);
+			Q_Response::setCookie($cookieNames[0], Q::json_encode(Telegram::$user), $expires);
 			Q_Response::setCookie($cookieNames[1], $expires, $expires);
 		}
 
@@ -116,7 +113,10 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
 	 */
 	function import($fieldNames = null)
 	{
-		$result = Telegram::import(Telegram_Dispatcher::$update['message']['from'], $fieldNames);
+        if (empty(Telegram::$user) or empty($this->xid) || empty($this->appId)) {
+            return array();
+        }
+		$result = Telegram::import(Telegram::$user, $fieldNames);
 		Users::$cache['platformUserData'] = array('telegram' => $result);
 		return $result;
 	}

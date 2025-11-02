@@ -43,6 +43,10 @@ class Telegram_Dispatcher
 		self::$startedDispatch = true;
 		self::$update = $update;
 
+		if (!empty(Telegram_Dispatcher::$update['message']['from'])) {
+			Telegram::$user = Telegram_Dispatcher::$update['message']['from'];
+		}
+
         if (empty($update)) {
             return false;
         }
