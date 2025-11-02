@@ -6,7 +6,7 @@ Q.exports(function (Users, priv) {
 	 * or Telegram Mini App context if available.
 	 * @method authenticate
 	 * @param {String} platform Currently it's `telegram`
-	 * @param {String} platformAppId platformAppId
+	 * @param {String} platformAppId platformAppId can be the appId, or "all"
 	 * @param {Function} onSuccess Called if the user successfully authenticates with the platform, or was already authenticated.
 	 *  It is passed the user information if the user changed.
 	 * @param {Function} onCancel Called if the authentication was canceled. Receives err, options
@@ -48,7 +48,8 @@ Q.exports(function (Users, priv) {
 
 		if (hasCookie || hasInitData) {
 			// Send whichever data we have for verification
-			var fields = { platform: 'telegram' };
+			var appId = options && options.appId || platformAppId
+			var fields = { platform: 'telegram', appId: appId };
 			if (hasInitData) {
 				fields['Q.Users.authPayload.telegram'] = initData;
 			}

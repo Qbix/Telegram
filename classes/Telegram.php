@@ -57,26 +57,19 @@ abstract class Telegram extends Base_Telegram
 				return false;
 			}
 		}
-
-		// Extract and remove fields not included in the signature
 		$hash = $data['hash'];
 		unset($data['hash']);
-
 		Q_Utils::ksort($data);
-
 		$lines = array();
 		foreach ($data as $k => $v) {
 			$lines[] = "$k=$v";
 		}
 		$serialized = implode("\n", $lines);
-
 		list($resolvedAppId, $info) = Users::appInfo('telegram', $appId);
 		$token = $info['token'];
-
-		// Per Telegram spec
 		$key = hash_hmac('sha256', $token, 'WebAppData', true);
+		echo $token; exit;
 		$check_hash = hash_hmac('sha256', $serialized, $key);
-
 		return hash_equals($hash, $check_hash);
 	}
 
