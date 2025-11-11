@@ -160,7 +160,9 @@ class Telegram_Dispatcher
 			$deterministicId = Telegram::sessionId(
 				$appId, $update['message']['from']['id']
 			);
-			Q_Session::start(false, $deterministicId, 'internal');
+			Q_Session::start(false, $deterministicId, 'internal', array(
+				'temporary' => true // cookies aren't persisted anyway
+			));
 			Users::authenticate('telegram', $appId);
 			return true;
 		} 
@@ -181,7 +183,9 @@ class Telegram_Dispatcher
 		$deterministicId = Telegram::sessionId(
 			$appId, $update['message']['from']['id']
 		);
-		Q_Session::start(false, $deterministicId, 'internal');
+		Q_Session::start(false, $deterministicId, 'internal', array(
+			'temporary' => true // cookies aren't persisted anyway
+		));
 
 		$type = $parts[0];
 		$token = $parts[1];
