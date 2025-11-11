@@ -99,31 +99,15 @@ Q.exports(function (Users, priv) {
 
 		// CASE 3: No cookie, no initData → synchronous redirect to Telegram intent
 		var parameter = options.startapp ? 'startapp' : 'start';
-		var interpolate = { parameter: parameter };
+		var interpolate = { parameter: parameter};
 		if (options.startappName) {
 			interpolate.shortName = options.startappName;
 		}
 
-		// Perform synchronous navigation to Telegram app (user gesture safe)
-		location.href = Q.action('Users/intent', {
+		Users.Intent.start({
 			action: 'Users/authenticate',
-			platform: 'telegram',
-			interpolate: interpolate
-		});
-
-		// When user comes back, reload current page to resume
-		Q.onVisibilityChange.setOnce(function (isShown) {
-			if (!isShown) return;
-			Q.loadUrl(location.href, {
-				slotNames: Q.info.slotNames,
-				loadExtras: 'all',
-				ignoreDialogs: true,
-				ignorePage: false,
-				ignoreHistory: true,
-				quiet: true
-			});
-		}, 'Telegram');
+			platform: platform,
+			appId: platformAppId || Q.app
+		}, {interpolate: interpolate});
 	}
-
-	return telegram;
 });
