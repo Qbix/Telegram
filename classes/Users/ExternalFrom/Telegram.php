@@ -28,83 +28,73 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
 		if (empty(Telegram::$user['id'])) {
 			$dataString = Q_Request::special('Users.authPayload.telegram', null);
 			if ($dataString && Telegram::verifyData($appId, $dataString, false)) {
+				// try to get user from auth payload
 				if (is_string($dataString)) {
 					parse_str($dataString, $data);
 				} else {
 					$data = $dataString;
 				}
 				Telegram::$user = Q::json_decode($data['user'], true);
-
-				// -------------------------------------------------------------
-				// Detect Telegram "start_param" and complete corresponding intent
-				// -------------------------------------------------------------
-				if (!empty($data['start_param']) && Q::startsWith($data['start_param'], 'intent-')) {
-					$token = substr($data['start_param'], strlen('intent-'));
-					if ($token) {
-						$intent = new Users_Intent(array('token' => $token));
-						if ($intent->retrieve() && empty($intent->completedTime)) {
-							// Retrieve target session
-							if (!empty($intent->sessionId)) {
-								// Start the target session temporarily (no cookie)
-								Q_Session::start(false, $intent->sessionId, 'internal', array(
-									'temporary' => true
-								));
-							}
-
-							// Associate Telegram user with the logged-in user
-							$external = new Users_ExternalFrom_Telegram();
-							$external->platform = 'telegram';
-							$external->appId = $appId;
-							$external->xid = Q::ifset(Telegram::$user, 'id', null);
-							$external->accessToken = null;
-							$external->expires = null;
-
-							// If there's a logged-in user in this session, attach
-							$user = Users::loggedInUser();
-							if ($user) {
-								$intent->userId = $user->id;
-							}
-
-							// Mark intent as complete
-							$intent->completedTime = Q::timestamp();
-							$intent->save();
-
-							// Fire event like dispatcher-based completion
-							Q::event('Users/intent/telegram/authenticate', array(
-								'intent' => $intent,
-								'fields' => array(
-									'token' => $token,
-									'platform' => 'telegram',
-									'payload' => $dataString,
-									'xid' => Q::ifset(Telegram::$user, 'id', null)
-								),
-								'sessionId' => $intent->sessionId
-							));
-
-							// Persist logged-in user in that target session
-							if ($user) {
-								Users::setLoggedInUser($user);
-							}
-
-							// Optional: after event hook
-							Q::event('Users/intent/telegram/completed', array(
-								'intent' => $intent,
-								'user' => isset($user) ? $user : null,
-								'platform' => 'telegram',
-								'appId' => $appId
-							), 'after');
-						}
+				if (empty(Telegram::$startParam)) {
+					// try to get start param from auth payload
+					if (!empty($data['start_param']) && Q::startsWith($data['start_param'], 'intent-')) {
+						Telegram::$startParam = $data['start_param'];
 					}
 				}
-				// -------------------------------------------------------------
 			} else if ($cookie = Q::ifset($_COOKIE, "tgsr_$appId", '')) {
+				// try to get user from cookie set previously
 				$decoded = Q::json_decode($cookie, true);
 				if (is_array($decoded) && !empty($decoded['id'])) {
 					Telegram::$user = $decoded;
 				}
 			}
-			if (!Telegram::$user) {
+			if (empty(Telegram::$user['id'])) {
 				return null;
+			}
+		}
+
+		// open session in the database with deterministic ID,
+		// which is based on the Telegram user ID, but only
+		// after verifying the authenticity of the user data,
+		// either from a securely signed payload / cookie,
+		// or from Telegram Bot API update containing Telegram::secretToken().
+		// Thus, it is safe to generate a deterministic session ID
+		// to be used with Telegram Bots and Mini-App WebViews.
+		$deterministicId = Telegram::sessionId(
+			$appId, Telegram::$user['id']
+		);
+		Q_Session::start(false, $deterministicId, 'internal');
+
+		if (Telegram::$startParam) {
+			$parts = explode('-', Telegram::$startParam, 4);
+			if (count($parts) < 2) {
+				throw new Q_Exception_WrongValue(array(
+					'field' => 'startCommandParameter',
+					'range' => 'intent-$token or invite-$token',
+					'value' => Telegram::$startParam
+				));
+			}
+			$type = $parts[0];
+			$token = $parts[1];
+			if ($type === 'intent') {
+				if (Users::$intent = Users_Intent::fromToken($token)) {
+					Users::$intent->accept(); // may set logged-in user from original session
+					// authenticate user from intent
+					$content = Users::$intent->get('sessionContent', null);
+					if ($invite = Q::ifset($content, 'Streams', 'invite', null)) {
+						// set invite in session for later processing
+						$_SESSION['Streams']['invite'] = $invite;
+					}
+				}				
+			} else if ($type === 'invite') {
+				if ($invite = Streams_Invite::fromToken($token)) {
+					// accept invite and autosubscribe if first time and possible
+					$invite->accept(array(
+						'access' => true,
+						'subscribe' => true
+					));
+					$_SESSION['Streams']['invite'] = $invite->fields;
+				}
 			}
 		}
 
@@ -141,6 +131,8 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
 		$ef->xid = $xid;
 		$ef->accessToken = null;
 		$ef->expires = null;
+		$ef->set('intent', Users::$intent);
+		$ef->set('results', array());
 
 		if (isset($cookieNames)) {
 			$ef->set('cookiesToClearOnLogout', $cookieNames);
