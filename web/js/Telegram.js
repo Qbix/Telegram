@@ -24,6 +24,7 @@ Q.onInit.add(function _Telegram_autoDetect() {
 			if (ctx === 'browser') return;
 
 			if (Telegram && Telegram.WebApp && Telegram.WebApp.initData) {
+				// we are in a mini-app
 				var unsafe = Telegram.WebApp.initDataUnsafe;
 				if (unsafe && unsafe.user && unsafe.user.id) {
 					Q.Users.authPayload = Q.Users.authPayload || {};
@@ -36,9 +37,13 @@ Q.onInit.add(function _Telegram_autoDetect() {
 					// Default future logins to auto-authenticate via Telegram
 					Q.Users.login.options.autoAuthenticatePlatform = 'telegram';
 
-					if (console && console.log)
+					if (console && console.log) {
 						console.log('[Telegram] Auto-detected Telegram WebApp context, xid=' + unsafe.user.id);
+					}
 				}
+			} else {
+				// we are not in a mini-app, may as well provision an intent now
+				Q.Users.Intent.provision('Users/authenticate', 'telegram');
 			}
 		} catch (e) {
 			if (console && console.warn)
@@ -197,7 +202,7 @@ Q.Users.beforeDefineAuthenticateMethods.add(function (authenticate) {
 	authenticate.telegram = new Q.Method({}, {
 		customPath: '{{Telegram}}/js/methods/Users/authenticate/telegram.js'
 	});
-});
+}, 'Telegram');
 
 Q.text.Users.login.telegram = {
 	src: null,

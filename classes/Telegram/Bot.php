@@ -25,9 +25,7 @@ class Telegram_Bot //extends Base_Telegram_Bot
         $xid = (string)$botInfo['id'];
 
         $ef = Users_ExternalFrom::select()
-            ->where('platform', $platform)
-            ->where('appId', $appId)
-            ->where('xid', $xid)
+            ->where(compact('platform', 'appId', 'xid'))
             ->fetchDbRow();
 
         if (!$ef) {

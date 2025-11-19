@@ -46,6 +46,19 @@ function Telegram_after_Telegram_log($params)
 			'attributes' => array()
 		)
 	), $results);
+
+	if ($results['created'] and $chat['id'] === $xid) {
+		Streams_Access::insert(array(
+			'publisherId' => $stream->publisherId,
+			'streamName' => $stream->name,
+			'ofUserId' => $user->id,
+			'ofContactLabel' => '',
+			'ofParticipantRole' => '',
+			'readLevel' => 40,
+			'writeLevel' => 10,
+			'adminLevel' => 20
+		))->execute();
+	}
 	
 	if ($results['created']) {
 		// update the icon of the chat, if any
@@ -93,7 +106,7 @@ function Telegram_after_Telegram_log($params)
 		unset($instructions['text']);
 
 		// no need to subscribe, because telegram already delivers notifications
-		$stream->join(array('userId' => $user->id, 'noVisit' => true));
+		$stream->join(array('userId' => $user->id, 'noVisit' => true, 'skipAccess' => true));
 
 		$stream->post($authorUser->id, array(
 			'type' => 'Streams/chat/message',

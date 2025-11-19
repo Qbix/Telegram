@@ -104,10 +104,18 @@ Q.exports(function (Users, priv) {
 			interpolate.shortName = options.startappName;
 		}
 
-		Users.Intent.start({
-			action: 'Users/authenticate',
-			platform: platform,
-			appId: platformAppId || Q.app
-		}, {interpolate: interpolate});
+		Q.Users.Intent.start(
+			Q.Users.Intent.provision.results['Users/authenticate'].telegram.FreeCities.capability,
+			{
+				action: 'Users/authenticate',
+				platform: 'telegram',
+				interpolate: {
+					parameter: 'start'
+				},
+				intepolareQR: {
+					parameter: 'startapp'
+				}
+			}
+		);
 	}
 });
