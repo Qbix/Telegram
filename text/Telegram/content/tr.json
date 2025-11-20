@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Bu işlevsellik henüz uygulanmadı",
-        "Message": "Lütfen ` {{eventName}} olayı için bir işleyici uygulayın"
-    },
-    "Welcome": "Sohbetimize hoş geldiniz!"
+	"notFound": {
+		"NotImplemented": "Bu i\u015flevsellik hen\u00fcz uygulanmad\u0131",
+		"Message": "L\u00fctfen ` {{eventName}} olay\u0131 i\u00e7in bir i\u015fleyici uygulay\u0131n"
+	},
+	"Welcome": "Sohbetimize ho\u015f geldiniz!",
+	"group": {
+		"join": {
+			"Greeting": "Gruba ho\u015f geldiniz! L\u00fctfen DM&#39;lerinizi kontrol edin.",
+			"LinkTitle": "Botla \u00f6zel bir sohbet ba\u015flat\u0131n"
+		},
+		"request": {
+			"Greeting": "Merhaba! Kat\u0131l\u0131m talebinizi tamamlamak i\u00e7in l\u00fctfen a\u015fa\u011f\u0131daki soruyu yan\u0131tlay\u0131n..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Beni kanala ekledi\u011finiz i\u00e7in te\u015fekk\u00fcrler!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Beni engelledi\u011fin i\u00e7in te\u015fekk\u00fcrler!"
+		},
+		"authenticated": {
+			"BackToBrowser": "\u015eimdi taray\u0131c\u0131n\u0131za geri d\u00f6n\u00fcp sayfay\u0131 yenileyebilirsiniz."
+		}
+	}
 }

@@ -1,9 +1,9 @@
 {
-    "notFound": {
-        "Message": "Please implement a handler for event `{{eventName}}`",
-        "NotImplemented": "This functionality is not implemented yet"
-    },
-    "Welcome": "Welcome to our chat!",
+	"notFound": {
+		"Message": "Please implement a handler for event `{{eventName}}`",
+		"NotImplemented": "This functionality is not implemented yet"
+	},
+	"Welcome": "Welcome to our chat!",
 	"group": {
 		"join": {
 			"Greeting": "Welcome to the group! Please check your DMs.",
@@ -21,6 +21,9 @@
 	"private": {
 		"added": {
 			"Greeting": "Thanks for unblocking me!"
+		},
+		"authenticated": {
+			"BackToBrowser": "You can now go back to your browser and refresh the page."
 		}
 	}
 }

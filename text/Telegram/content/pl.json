@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Ta funkcjonalność nie została jeszcze zaimplementowana",
-        "Message": "Proszę wdrożyć obsługę zdarzenia ` {{eventName}} `"
-    },
-    "Welcome": "Witamy na naszym czacie!"
+	"notFound": {
+		"NotImplemented": "Ta funkcjonalno\u015b\u0107 nie zosta\u0142a jeszcze zaimplementowana",
+		"Message": "Prosz\u0119 wdro\u017cy\u0107 obs\u0142ug\u0119 zdarzenia ` {{eventName}} `"
+	},
+	"Welcome": "Witamy na naszym czacie!",
+	"group": {
+		"join": {
+			"Greeting": "Witamy w grupie! Prosz\u0119 sprawdzi\u0107 swoje wiadomo\u015bci prywatne.",
+			"LinkTitle": "Rozpocznij prywatn\u0105 rozmow\u0119 z botem"
+		},
+		"request": {
+			"Greeting": "Cze\u015b\u0107! Odpowiedz na poni\u017csze pytanie, aby doko\u0144czy\u0107 pro\u015bb\u0119 o do\u0142\u0105czenie..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Dzi\u0119kuj\u0119 za dodanie mnie do kana\u0142u!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Dzi\u0119kuj\u0119 za odblokowanie!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Mo\u017cesz teraz wr\u00f3ci\u0107 do przegl\u0105darki i od\u015bwie\u017cy\u0107 stron\u0119."
+		}
+	}
 }

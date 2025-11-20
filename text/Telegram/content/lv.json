@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Šī funkcionalitāte vēl nav ieviesta",
-        "Message": "Lūdzu, ieviesiet notikuma {{eventName}} apdarinātāju"
-    },
-    "Welcome": "Laipni lūdzam mūsu tērzēšanā!"
+	"notFound": {
+		"NotImplemented": "\u0160\u012b funkcionalit\u0101te v\u0113l nav ieviesta",
+		"Message": "L\u016bdzu, ieviesiet notikuma {{eventName}} apdarin\u0101t\u0101ju"
+	},
+	"Welcome": "Laipni l\u016bdzam m\u016bsu t\u0113rz\u0113\u0161an\u0101!",
+	"group": {
+		"join": {
+			"Greeting": "Laipni l\u016bgti grup\u0101! L\u016bdzu, p\u0101rbaudiet savas DM.",
+			"LinkTitle": "S\u0101ciet priv\u0101tu t\u0113rz\u0113\u0161anu ar robotu"
+		},
+		"request": {
+			"Greeting": "Sveiki! L\u016bdzu, atbildiet uz \u0161o jaut\u0101jumu, lai pabeigtu pievieno\u0161an\u0101s piepras\u012bjumu..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Paldies, ka pievienoji mani kan\u0101lam!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Paldies, ka atblo\u0137\u0113ji mani!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Tagad varat atgriezties p\u0101rl\u016bkprogramm\u0101 un atsvaidzin\u0101t lapu."
+		}
+	}
 }

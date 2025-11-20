@@ -18,5 +18,10 @@
 		"type": "Streams/category",
 		"title": "Telegram chats",
 		"icon": "Streams/category"
+	},
+	"Streams/greeting/{{communityId}}": {
+		"platforms": {
+			"telegram": "bio"
+		}
 	}
 }

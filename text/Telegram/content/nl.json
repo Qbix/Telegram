@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Deze functionaliteit is nog niet geïmplementeerd",
-        "Message": "Implementeer een handler voor gebeurtenis ` {{eventName}}"
-    },
-    "Welcome": "Welkom in onze chat!"
+	"notFound": {
+		"NotImplemented": "Deze functionaliteit is nog niet ge\u00efmplementeerd",
+		"Message": "Implementeer een handler voor gebeurtenis ` {{eventName}}"
+	},
+	"Welcome": "Welkom in onze chat!",
+	"group": {
+		"join": {
+			"Greeting": "Welkom bij de groep! Controleer je DM&#39;s.",
+			"LinkTitle": "Start een priv\u00e9chat met de bot"
+		},
+		"request": {
+			"Greeting": "Hallo! Beantwoord de volgende vraag om je deelnameverzoek te voltooien..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Bedankt dat je mij aan het kanaal hebt toegevoegd!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Bedankt dat je mij hebt gedeblokkeerd!"
+		},
+		"authenticated": {
+			"BackToBrowser": "U kunt nu teruggaan naar uw browser en de pagina vernieuwen."
+		}
+	}
 }

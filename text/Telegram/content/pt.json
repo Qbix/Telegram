@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Esta funcionalidade ainda não foi implementada",
-        "Message": "Por favor, implemente um manipulador para o evento ` {{eventName}} `"
-    },
-    "Welcome": "Bem-vindo ao nosso bate-papo!"
+	"notFound": {
+		"NotImplemented": "Esta funcionalidade ainda n\u00e3o foi implementada",
+		"Message": "Por favor, implemente um manipulador para o evento ` {{eventName}} `"
+	},
+	"Welcome": "Bem-vindo ao nosso bate-papo!",
+	"group": {
+		"join": {
+			"Greeting": "Bem-vindo(a) ao grupo! Por favor, verifique suas mensagens diretas.",
+			"LinkTitle": "Inicie um bate-papo privado com o bot."
+		},
+		"request": {
+			"Greeting": "Ol\u00e1! Por favor, responda \u00e0 seguinte pergunta para concluir sua solicita\u00e7\u00e3o de ingresso..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Obrigado por me adicionar ao canal!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Obrigado por me desbloquear!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Agora voc\u00ea pode voltar ao seu navegador e atualizar a p\u00e1gina."
+		}
+	}
 }

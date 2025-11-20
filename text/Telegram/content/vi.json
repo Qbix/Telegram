@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Chức năng này chưa được triển khai",
-        "Message": "Vui lòng triển khai trình xử lý cho sự kiện ` {{eventName}} `"
-    },
-    "Welcome": "Chào mừng đến với cuộc trò chuyện của chúng tôi!"
+	"notFound": {
+		"NotImplemented": "Ch\u1ee9c n\u0103ng n\u00e0y ch\u01b0a \u0111\u01b0\u1ee3c tri\u1ec3n khai",
+		"Message": "Vui l\u00f2ng tri\u1ec3n khai tr\u00ecnh x\u1eed l\u00fd cho s\u1ef1 ki\u1ec7n ` {{eventName}} `"
+	},
+	"Welcome": "Ch\u00e0o m\u1eebng \u0111\u1ebfn v\u1edbi cu\u1ed9c tr\u00f2 chuy\u1ec7n c\u1ee7a ch\u00fang t\u00f4i!",
+	"group": {
+		"join": {
+			"Greeting": "Ch\u00e0o m\u1eebng b\u1ea1n \u0111\u1ebfn v\u1edbi nh\u00f3m! Vui l\u00f2ng ki\u1ec3m tra tin nh\u1eafn tr\u1ef1c ti\u1ebfp c\u1ee7a b\u1ea1n.",
+			"LinkTitle": "B\u1eaft \u0111\u1ea7u tr\u00f2 chuy\u1ec7n ri\u00eang t\u01b0 v\u1edbi bot"
+		},
+		"request": {
+			"Greeting": "Xin ch\u00e0o! Vui l\u00f2ng tr\u1ea3 l\u1eddi c\u00e2u h\u1ecfi sau \u0111\u1ec3 ho\u00e0n t\u1ea5t y\u00eau c\u1ea7u tham gia c\u1ee7a b\u1ea1n..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "C\u1ea3m \u01a1n b\u1ea1n \u0111\u00e3 th\u00eam t\u00f4i v\u00e0o k\u00eanh!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "C\u1ea3m \u01a1n b\u1ea1n \u0111\u00e3 b\u1ecf ch\u1eb7n t\u00f4i!"
+		},
+		"authenticated": {
+			"BackToBrowser": "B\u00e2y gi\u1edd b\u1ea1n c\u00f3 th\u1ec3 quay l\u1ea1i tr\u00ecnh duy\u1ec7t v\u00e0 l\u00e0m m\u1edbi trang."
+		}
+	}
 }

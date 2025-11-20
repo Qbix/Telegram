@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Þessi virkni er ekki innleidd ennþá",
-        "Message": "Vinsamlega útfærðu meðhöndlun fyrir atburði ` {{eventName}} `"
-    },
-    "Welcome": "Velkomin á spjallið okkar!"
+	"notFound": {
+		"NotImplemented": "\u00deessi virkni er ekki innleidd enn\u00fe\u00e1",
+		"Message": "Vinsamlega \u00fatf\u00e6r\u00f0u me\u00f0h\u00f6ndlun fyrir atbur\u00f0i ` {{eventName}} `"
+	},
+	"Welcome": "Velkomin \u00e1 spjalli\u00f0 okkar!",
+	"group": {
+		"join": {
+			"Greeting": "Velkomin/n \u00ed h\u00f3pinn! Vinsamlegast k\u00edki\u00f0 \u00e1 einkaskilabo\u00f0in ykkar.",
+			"LinkTitle": "Byrja\u00f0u einkaspjall vi\u00f0 botinn"
+		},
+		"request": {
+			"Greeting": "H\u00e6! Vinsamlegast svara\u00f0u eftirfarandi spurningu til a\u00f0 lj\u00faka bei\u00f0ni \u00feinni um a\u00f0ild..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Takk fyrir a\u00f0 b\u00e6ta m\u00e9r vi\u00f0 r\u00e1sina!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Takk fyrir a\u00f0 opna mig fyrir blokkun!"
+		},
+		"authenticated": {
+			"BackToBrowser": "\u00de\u00fa getur n\u00fa fari\u00f0 aftur \u00ed vafrann \u00feinn og endurn\u00fdja\u00f0 s\u00ed\u00f0una."
+		}
+	}
 }

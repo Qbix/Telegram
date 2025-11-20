@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Denne funktionalitet er ikke implementeret endnu",
-        "Message": "Implementer venligst en handler for hændelsen ` {{eventName}} `"
-    },
-    "Welcome": "Velkommen til vores chat!"
+	"notFound": {
+		"NotImplemented": "Denne funktionalitet er ikke implementeret endnu",
+		"Message": "Implementer venligst en handler for h\u00e6ndelsen ` {{eventName}} `"
+	},
+	"Welcome": "Velkommen til vores chat!",
+	"group": {
+		"join": {
+			"Greeting": "Velkommen til gruppen! Tjek venligst dine privatbeskeder.",
+			"LinkTitle": "Start en privat chat med botten"
+		},
+		"request": {
+			"Greeting": "Hej! Besvar venligst f\u00f8lgende sp\u00f8rgsm\u00e5l for at fuldf\u00f8re din anmodning om tilmelding..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Tak fordi du tilf\u00f8jede mig til kanalen!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Tak fordi du fjernede blokeringen fra mig!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Du kan nu g\u00e5 tilbage til din browser og opdatere siden."
+		}
+	}
 }

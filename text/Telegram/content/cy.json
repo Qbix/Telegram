@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Nid yw&#39;r swyddogaeth hon wedi&#39;i gweithredu eto",
-        "Message": "Gweithredwch driniwr ar gyfer digwyddiad ` {{eventName}} `"
-    },
-    "Welcome": "Croeso i&#39;n sgwrs!"
+	"notFound": {
+		"NotImplemented": "Nid yw&#39;r swyddogaeth hon wedi&#39;i gweithredu eto",
+		"Message": "Gweithredwch driniwr ar gyfer digwyddiad ` {{eventName}} `"
+	},
+	"Welcome": "Croeso i&#39;n sgwrs!",
+	"group": {
+		"join": {
+			"Greeting": "Croeso i&#39;r gr\u0175p! Gwiriwch eich negeseuon uniongyrchol.",
+			"LinkTitle": "Dechreuwch sgwrs breifat gyda&#39;r bot"
+		},
+		"request": {
+			"Greeting": "Helo! Atebwch y cwestiwn canlynol i gwblhau eich cais ymuno..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Diolch am fy ychwanegu at y sianel!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Diolch am fy dadflocio!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Gallwch nawr fynd yn \u00f4l i&#39;ch porwr ac adnewyddu&#39;r dudalen."
+		}
+	}
 }

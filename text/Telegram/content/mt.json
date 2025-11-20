@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Din il-funzjonalità għadha mhix implimentata",
-        "Message": "Jekk jogħġbok implimenta handler għall-avveniment &quot; {{eventName}} &quot;."
-    },
-    "Welcome": "Merħba fiċ-chat tagħna!"
+	"notFound": {
+		"NotImplemented": "Din il-funzjonalit\u00e0 g\u0127adha mhix implimentata",
+		"Message": "Jekk jog\u0127\u0121bok implimenta handler g\u0127all-avveniment &quot; {{eventName}} &quot;."
+	},
+	"Welcome": "Mer\u0127ba fi\u010b-chat tag\u0127na!",
+	"group": {
+		"join": {
+			"Greeting": "Mer\u0127ba fil-grupp! Jekk jog\u0127\u0121bok i\u010b\u010bekkja l-DMs tieg\u0127ek.",
+			"LinkTitle": "Ibda chat privata mal-bot"
+		},
+		"request": {
+			"Greeting": "Bongu! Jekk jog\u0127\u0121bok wie\u0121eb il-mistoqsija li \u0121ejja biex tlesti t-talba tieg\u0127ek biex tissie\u0127eb..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Grazzi talli \u017cidtni mal-kanal!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Grazzi talli \u017cblokkajtni!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Issa tista&#39; ter\u0121a&#39; lura g\u0127all-braw\u017cer tieg\u0127ek u ta\u0121\u0121orna l-pa\u0121na."
+		}
+	}
 }

@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Diese Funktionalität ist noch nicht implementiert",
-        "Message": "Bitte implementieren Sie einen Handler für das Ereignis ` {{eventName}} `"
-    },
-    "Welcome": "Willkommen zu unserem Chat!"
+	"notFound": {
+		"NotImplemented": "Diese Funktionalit\u00e4t ist noch nicht implementiert",
+		"Message": "Bitte implementieren Sie einen Handler f\u00fcr das Ereignis ` {{eventName}} `"
+	},
+	"Welcome": "Willkommen zu unserem Chat!",
+	"group": {
+		"join": {
+			"Greeting": "Willkommen in der Gruppe! Bitte schau in deine Direktnachrichten.",
+			"LinkTitle": "Starte einen privaten Chat mit dem Bot."
+		},
+		"request": {
+			"Greeting": "Hallo! Bitte beantworten Sie die folgende Frage, um Ihre Beitrittsanfrage abzuschlie\u00dfen..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Danke, dass du mich zum Kanal hinzugef\u00fcgt hast!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Danke, dass du mich entsperrt hast!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Sie k\u00f6nnen nun zu Ihrem Browser zur\u00fcckkehren und die Seite aktualisieren."
+		}
+	}
 }

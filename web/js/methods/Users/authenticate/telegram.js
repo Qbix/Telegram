@@ -6,7 +6,7 @@ Q.exports(function (Users, priv) {
 	 * or Telegram Mini App context if available.
 	 * @method authenticate
 	 * @param {String} platform Currently it's `telegram`
-	 * @param {String} platformAppId platformAppId can be the appId, or "all"
+	 * @param {String} appId can be the appId, or "all"
 	 * @param {Function} onSuccess Called if the user successfully authenticates with the platform, or was already authenticated.
 	 *  It is passed the user information if the user changed.
 	 * @param {Function} onCancel Called if the authentication was canceled. Receives err, options
@@ -17,11 +17,16 @@ Q.exports(function (Users, priv) {
 	 *     Can be a function with an onSuccess and onCancel callback, in which case it's used as a prompt.
 	 *   @param {Boolean} [options.force] forces a status refresh
 	 *   @param {String} [options.appId=Q.info.app] Only needed if you have multiple apps on platform
-	 *   @param {Boolean} [options.startapp=false] set to true to use the Mini App flow (`startapp`)
+	 *   @param {Boolean} [options.startapp] set to true to use the Mini App flow (`startapp`)
 	 *   @param {String} [options.startappName] optional Telegram Mini App short name (for future use)
 	 */
-	return function telegram(platform, platformAppId, onSuccess, onCancel, options) {
-		options = options || {};
+	return function telegram(platform, appId, onSuccess, onCancel, options) {
+		options = Q.extend({}, options);
+
+		if (options.startapp === undefined) {
+			// look at the app's config to see if we should use startapp
+			options.startapp = Q.getObject([platform, options.appId, 'startapp'], Users.apps);
+		}
 
 		var initData = null;
 		var unsafe = null;
@@ -42,13 +47,13 @@ Q.exports(function (Users, priv) {
 		}
 
 		// CASE 1 + 2: check if cookie or initData available
-		var cookieName = 'tgsr_' + platformAppId;
+		var cookieName = 'tgsr_' + appId;
 		var hasCookie = !!Q.cookie(cookieName);
 		var hasInitData = !!initData;
 
 		if (hasCookie || hasInitData) {
 			// Send whichever data we have for verification
-			var appId = options && options.appId || platformAppId
+			var appId = options && options.appId || appId
 			var fields = { 
 				platform: 'telegram', 
 				appId: appId,
@@ -81,7 +86,7 @@ Q.exports(function (Users, priv) {
 
 					priv.handleXid(
 						platform,
-						platformAppId,
+						appId,
 						userId,
 						onSuccess,
 						onCancel,
@@ -112,8 +117,8 @@ Q.exports(function (Users, priv) {
 				interpolate: {
 					parameter: 'start'
 				},
-				intepolareQR: {
-					parameter: 'startapp'
+				interpolateQR: {
+					parameter: options.startapp ? 'startapp' : 'start'
 				}
 			}
 		);

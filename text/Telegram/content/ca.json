@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Aquesta funcionalitat encara no està implementada",
-        "Message": "Si us plau, implementeu un controlador per a l&#39;esdeveniment ` {{eventName}}"
-    },
-    "Welcome": "Benvingut al nostre xat!"
+	"notFound": {
+		"NotImplemented": "Aquesta funcionalitat encara no est\u00e0 implementada",
+		"Message": "Si us plau, implementeu un controlador per a l&#39;esdeveniment ` {{eventName}}"
+	},
+	"Welcome": "Benvingut al nostre xat!",
+	"group": {
+		"join": {
+			"Greeting": "Benvinguts al grup! Si us plau, consulteu els vostres missatges directes.",
+			"LinkTitle": "Inicia un xat privat amb el bot"
+		},
+		"request": {
+			"Greeting": "Hola! Si us plau, respon la pregunta seg\u00fcent per completar la teva sol\u00b7licitud d&#39;uni\u00f3..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Gr\u00e0cies per afegir-me al canal!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Gr\u00e0cies per desbloquejar-me!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Ara podeu tornar al navegador i actualitzar la p\u00e0gina."
+		}
+	}
 }

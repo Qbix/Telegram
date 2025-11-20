@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Tato funkce zatím není implementována",
-        "Message": "Implementujte prosím obsluhu pro událost ` {{eventName}} `"
-    },
-    "Welcome": "Vítejte na našem chatu!"
+	"notFound": {
+		"NotImplemented": "Tato funkce zat\u00edm nen\u00ed implementov\u00e1na",
+		"Message": "Implementujte pros\u00edm obsluhu pro ud\u00e1lost ` {{eventName}} `"
+	},
+	"Welcome": "V\u00edtejte na na\u0161em chatu!",
+	"group": {
+		"join": {
+			"Greeting": "V\u00edtejte ve skupin\u011b! Zkontrolujte si pros\u00edm sv\u00e9 soukrom\u00e9 zpr\u00e1vy.",
+			"LinkTitle": "Zahajte soukrom\u00fd chat s botem"
+		},
+		"request": {
+			"Greeting": "Dobr\u00fd den! Pro dokon\u010den\u00ed va\u0161\u00ed \u017e\u00e1dosti o p\u0159ipojen\u00ed pros\u00edm odpov\u011bzte na n\u00e1sleduj\u00edc\u00ed ot\u00e1zku..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "D\u00edky za p\u0159id\u00e1n\u00ed na kan\u00e1l!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "D\u00edky za odblokov\u00e1n\u00ed!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Nyn\u00ed se m\u016f\u017eete vr\u00e1tit do prohl\u00ed\u017ee\u010de a obnovit str\u00e1nku."
+		}
+	}
 }

@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Ky funksionalitet nuk është zbatuar ende",
-        "Message": "Ju lutemi zbatoni një mbajtës për ngjarjen ` {{eventName}}"
-    },
-    "Welcome": "Mirë se vini në bisedën tonë!"
+	"notFound": {
+		"NotImplemented": "Ky funksionalitet nuk \u00ebsht\u00eb zbatuar ende",
+		"Message": "Ju lutemi zbatoni nj\u00eb mbajt\u00ebs p\u00ebr ngjarjen ` {{eventName}}"
+	},
+	"Welcome": "Mir\u00eb se vini n\u00eb bised\u00ebn ton\u00eb!",
+	"group": {
+		"join": {
+			"Greeting": "Mir\u00eb se vini n\u00eb grup! Ju lutemi kontrolloni mesazhet tuaja t\u00eb drejtp\u00ebrdrejta.",
+			"LinkTitle": "Filloni nj\u00eb bised\u00eb private me botin"
+		},
+		"request": {
+			"Greeting": "P\u00ebrsh\u00ebndetje! Ju lutemi p\u00ebrgjigjuni pyetjes s\u00eb m\u00ebposhtme p\u00ebr t\u00eb p\u00ebrfunduar k\u00ebrkes\u00ebn tuaj p\u00ebr t&#39;u bashkuar..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Faleminderit q\u00eb m\u00eb shtove n\u00eb kanal!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Faleminderit q\u00eb m\u00eb zhbllokuat!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Tani mund t\u00eb ktheheni n\u00eb shfletuesin tuaj dhe t\u00eb rifreskoni faqen."
+		}
+	}
 }

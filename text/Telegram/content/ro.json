@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Această funcționalitate nu este încă implementată",
-        "Message": "Vă rugăm să implementați un handler pentru evenimentul „ {{eventName}} ”."
-    },
-    "Welcome": "Bun venit la chat-ul nostru!"
+	"notFound": {
+		"NotImplemented": "Aceast\u0103 func\u021bionalitate nu este \u00eenc\u0103 implementat\u0103",
+		"Message": "V\u0103 rug\u0103m s\u0103 implementa\u021bi un handler pentru evenimentul \u201e {{eventName}} \u201d."
+	},
+	"Welcome": "Bun venit la chat-ul nostru!",
+	"group": {
+		"join": {
+			"Greeting": "Bun venit \u00een grup! V\u0103 rug\u0103m s\u0103 verifica\u021bi mesajele private.",
+			"LinkTitle": "\u00cencepe\u021bi o conversa\u021bie privat\u0103 cu botul"
+		},
+		"request": {
+			"Greeting": "Salut! Te rug\u0103m s\u0103 r\u0103spunzi la urm\u0103toarea \u00eentrebare pentru a finaliza cererea ta de \u00eenscriere..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Mul\u021bumesc c\u0103 m-ai ad\u0103ugat pe canal!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Mul\u021bumesc c\u0103 m-ai deblocat!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Acum pute\u021bi reveni la browser \u0219i actualiza pagina."
+		}
+	}
 }

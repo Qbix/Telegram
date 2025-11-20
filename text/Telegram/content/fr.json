@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Cette fonctionnalité n&#39;est pas encore implémentée",
-        "Message": "Veuillez implémenter un gestionnaire pour l&#39;événement « {{eventName}} »"
-    },
-    "Welcome": "Bienvenue sur notre chat !"
+	"notFound": {
+		"NotImplemented": "Cette fonctionnalit\u00e9 n&#39;est pas encore impl\u00e9ment\u00e9e",
+		"Message": "Veuillez impl\u00e9menter un gestionnaire pour l&#39;\u00e9v\u00e9nement \u00ab {{eventName}}\u00a0\u00bb"
+	},
+	"Welcome": "Bienvenue sur notre chat !",
+	"group": {
+		"join": {
+			"Greeting": "Bienvenue dans le groupe ! Veuillez consulter vos messages priv\u00e9s.",
+			"LinkTitle": "D\u00e9marrez une conversation priv\u00e9e avec le bot"
+		},
+		"request": {
+			"Greeting": "Bonjour ! Veuillez r\u00e9pondre \u00e0 la question suivante pour finaliser votre demande d&#39;adh\u00e9sion..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Merci de m&#39;avoir ajout\u00e9 \u00e0 la cha\u00eene !"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Merci de m&#39;avoir d\u00e9bloqu\u00e9 !"
+		},
+		"authenticated": {
+			"BackToBrowser": "Vous pouvez maintenant retourner dans votre navigateur et actualiser la page."
+		}
+	}
 }

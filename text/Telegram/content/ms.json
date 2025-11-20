@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Fungsi ini belum dilaksanakan lagi",
-        "Message": "Sila laksanakan pengendali untuk acara ` {{eventName}} `"
-    },
-    "Welcome": "Selamat datang ke sembang kami!"
+	"notFound": {
+		"NotImplemented": "Fungsi ini belum dilaksanakan lagi",
+		"Message": "Sila laksanakan pengendali untuk acara ` {{eventName}} `"
+	},
+	"Welcome": "Selamat datang ke sembang kami!",
+	"group": {
+		"join": {
+			"Greeting": "Selamat datang ke kumpulan! Sila semak DM anda.",
+			"LinkTitle": "Mulakan sembang peribadi dengan bot"
+		},
+		"request": {
+			"Greeting": "Hai! Sila jawab soalan berikut untuk melengkapkan permintaan penyertaan anda..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Terima kasih kerana menambahkan saya ke saluran!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Terima kasih kerana menyahsekat saya!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Anda kini boleh kembali ke penyemak imbas anda dan muat semula halaman."
+		}
+	}
 }

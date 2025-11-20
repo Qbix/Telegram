@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Tätä toimintoa ei ole vielä otettu käyttöön",
-        "Message": "Ota käsittelijä tapahtumalle &quot; {{eventName}} &quot;."
-    },
-    "Welcome": "Tervetuloa chattiin!"
+	"notFound": {
+		"NotImplemented": "T\u00e4t\u00e4 toimintoa ei ole viel\u00e4 otettu k\u00e4ytt\u00f6\u00f6n",
+		"Message": "Ota k\u00e4sittelij\u00e4 tapahtumalle &quot; {{eventName}} &quot;."
+	},
+	"Welcome": "Tervetuloa chattiin!",
+	"group": {
+		"join": {
+			"Greeting": "Tervetuloa ryhm\u00e4\u00e4n! Tarkistathan yksityisviestisi.",
+			"LinkTitle": "Aloita yksityinen keskustelu botin kanssa"
+		},
+		"request": {
+			"Greeting": "Hei! Vastaa seuraavaan kysymykseen liittymispyynt\u00f6si loppuun saattamiseksi..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Kiitos kun lis\u00e4sit minut kanavalle!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Kiitos kun avasit eston!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Voit nyt palata selaimeesi ja p\u00e4ivitt\u00e4\u00e4 sivun."
+		}
+	}
 }

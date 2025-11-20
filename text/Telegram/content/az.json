@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Bu funksionallıq hələ həyata keçirilməyib",
-        "Message": "Lütfən, ` {{eventName}} ` hadisəsi üçün işləyici tətbiq edin"
-    },
-    "Welcome": "Söhbətimizə xoş gəlmisiniz!"
+	"notFound": {
+		"NotImplemented": "Bu funksionall\u0131q h\u0259l\u0259 h\u0259yata ke\u00e7irilm\u0259yib",
+		"Message": "L\u00fctf\u0259n, ` {{eventName}} ` hadis\u0259si \u00fc\u00e7\u00fcn i\u015fl\u0259yici t\u0259tbiq edin"
+	},
+	"Welcome": "S\u00f6hb\u0259timiz\u0259 xo\u015f g\u0259lmisiniz!",
+	"group": {
+		"join": {
+			"Greeting": "Qrupa xo\u015f g\u0259lmisiniz! Z\u0259hm\u0259t olmasa DM-l\u0259rinizi yoxlay\u0131n.",
+			"LinkTitle": "Bot il\u0259 \u015f\u0259xsi s\u00f6hb\u0259t\u0259 ba\u015flay\u0131n"
+		},
+		"request": {
+			"Greeting": "salam! Qo\u015fulma sor\u011funuzu tamamlamaq \u00fc\u00e7\u00fcn a\u015fa\u011f\u0131dak\u0131 suala cavab verin..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "M\u0259ni kanala \u0259lav\u0259 etdiyiniz \u00fc\u00e7\u00fcn t\u0259\u015f\u0259kk\u00fcrl\u0259r!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "M\u0259ni blokdan \u00e7\u0131xard\u0131\u011f\u0131n\u0131z \u00fc\u00e7\u00fcn t\u0259\u015f\u0259kk\u00fcr edir\u0259m!"
+		},
+		"authenticated": {
+			"BackToBrowser": "\u0130ndi brauzeriniz\u0259 qay\u0131d\u0131b s\u0259hif\u0259ni yenil\u0259y\u0259 bil\u0259rsiniz."
+		}
+	}
 }

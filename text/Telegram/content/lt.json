@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Ši funkcija dar neįdiegta",
-        "Message": "Įdiekite įvykio „ {{eventName}} “ tvarkyklę"
-    },
-    "Welcome": "Sveiki atvykę į mūsų pokalbį!"
+	"notFound": {
+		"NotImplemented": "\u0160i funkcija dar ne\u012fdiegta",
+		"Message": "\u012ediekite \u012fvykio \u201e {{eventName}} \u201c tvarkykl\u0119"
+	},
+	"Welcome": "Sveiki atvyk\u0119 \u012f m\u016bs\u0173 pokalb\u012f!",
+	"group": {
+		"join": {
+			"Greeting": "Sveiki atvyk\u0119 \u012f grup\u0119! Pra\u0161ome pasitikrinti savo asmenines \u017einutes.",
+			"LinkTitle": "Prad\u0117kite privat\u0173 pokalb\u012f su robotu"
+		},
+		"request": {
+			"Greeting": "Sveiki! Nor\u0117dami u\u017ebaigti prisijungimo u\u017eklaus\u0105, atsakykite \u012f \u0161\u012f klausim\u0105..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "A\u010di\u016b, kad \u012ftrauk\u0117te mane \u012f kanal\u0105!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "A\u010di\u016b, kad atblokavai!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Dabar galite gr\u012f\u017eti \u012f nar\u0161ykl\u0119 ir atnaujinti puslap\u012f."
+		}
+	}
 }

@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Funtzio hau oraindik ez dago inplementatu",
-        "Message": "Mesedez, inplementatu ` {{eventName}} ` gertaeraren kudeatzailea"
-    },
-    "Welcome": "Ongi etorri gure berriketara!"
+	"notFound": {
+		"NotImplemented": "Funtzio hau oraindik ez dago inplementatu",
+		"Message": "Mesedez, inplementatu ` {{eventName}} ` gertaeraren kudeatzailea"
+	},
+	"Welcome": "Ongi etorri gure berriketara!",
+	"group": {
+		"join": {
+			"Greeting": "Ongi etorri taldera! Mesedez, begiratu zuen DM-ak.",
+			"LinkTitle": "Txat pribatu bat hasi bot-arekin"
+		},
+		"request": {
+			"Greeting": "Kaixo! Mesedez, erantzun hurrengo galderari zure bat egiteko eskaera osatzeko..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Eskerrik asko kanalera gehitzeagatik!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Eskerrik asko desblokeatzeagatik!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Orain zure arakatzailera itzuli eta orria freskatu dezakezu."
+		}
+	}
 }

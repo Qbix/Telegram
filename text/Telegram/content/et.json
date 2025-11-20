@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Seda funktsiooni pole veel rakendatud",
-        "Message": "Rakendage sündmuse &quot; {{eventName}} &quot; töötleja"
-    },
-    "Welcome": "Tere tulemast meie vestlusesse!"
+	"notFound": {
+		"NotImplemented": "Seda funktsiooni pole veel rakendatud",
+		"Message": "Rakendage s\u00fcndmuse &quot; {{eventName}} &quot; t\u00f6\u00f6tleja"
+	},
+	"Welcome": "Tere tulemast meie vestlusesse!",
+	"group": {
+		"join": {
+			"Greeting": "Tere tulemast gruppi! Palun kontrollige oma otsekirju.",
+			"LinkTitle": "Alusta botiga privaatset vestlust"
+		},
+		"request": {
+			"Greeting": "Tere! Palun vasta j\u00e4rgmisele k\u00fcsimusele oma liitumistaotluse l\u00f5puleviimiseks..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "T\u00e4nan, et mind kanalile lisasid!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "T\u00e4nan blokeeringu t\u00fchistamise eest!"
+		},
+		"authenticated": {
+			"BackToBrowser": "N\u00fc\u00fcd saate oma brauserisse tagasi minna ja lehte v\u00e4rskendada."
+		}
+	}
 }

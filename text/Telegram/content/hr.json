@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Ova funkcionalnost još nije implementirana",
-        "Message": "Implementirajte rukovatelj za događaj ` {{eventName}} `"
-    },
-    "Welcome": "Dobrodošli u naš chat!"
+	"notFound": {
+		"NotImplemented": "Ova funkcionalnost jo\u0161 nije implementirana",
+		"Message": "Implementirajte rukovatelj za doga\u0111aj ` {{eventName}} `"
+	},
+	"Welcome": "Dobrodo\u0161li u na\u0161 chat!",
+	"group": {
+		"join": {
+			"Greeting": "Dobrodo\u0161li u grupu! Molimo provjerite svoje direktne poruke.",
+			"LinkTitle": "Zapo\u010dnite privatni razgovor s botom"
+		},
+		"request": {
+			"Greeting": "Pozdrav! Molimo vas da odgovorite na sljede\u0107e pitanje kako biste dovr\u0161ili svoj zahtjev za pridru\u017eivanje..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Hvala \u0161to si me dodao/la na kanal!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Hvala \u0161to si me odblokirao/la!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Sada se mo\u017eete vratiti u preglednik i osvje\u017eiti stranicu."
+		}
+	}
 }

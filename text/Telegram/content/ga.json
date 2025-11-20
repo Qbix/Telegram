@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Níl an fheidhmiúlacht seo curtha i bhfeidhm fós",
-        "Message": "Cuir láimhseálaí i bhfeidhm don imeacht ` {{eventName}} ` le do thoil"
-    },
-    "Welcome": "Fáilte go dtí ár comhrá!"
+	"notFound": {
+		"NotImplemented": "N\u00edl an fheidhmi\u00falacht seo curtha i bhfeidhm f\u00f3s",
+		"Message": "Cuir l\u00e1imhse\u00e1la\u00ed i bhfeidhm don imeacht ` {{eventName}} ` le do thoil"
+	},
+	"Welcome": "F\u00e1ilte go dt\u00ed \u00e1r comhr\u00e1!",
+	"group": {
+		"join": {
+			"Greeting": "F\u00e1ilte romhat chuig an ngr\u00fapa! Seice\u00e1il do theachtaireachta\u00ed d\u00edreacha le do thoil.",
+			"LinkTitle": "Tosaigh comhr\u00e1 pr\u00edobh\u00e1ideach leis an bot"
+		},
+		"request": {
+			"Greeting": "Haigh a chairde! Freagair an cheist seo a leanas le do thoil chun d\u2019iarratas ar bhallra\u00edocht a chomhl\u00e1n\u00fa..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Go raibh maith agat as m\u00e9 a chur leis an gcain\u00e9al!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Go raibh maith agat as m\u00e9 a dh\u00edbhloc\u00e1il!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Is f\u00e9idir leat filleadh ar do bhrabhs\u00e1la\u00ed anois agus an leathanach a athnuachan."
+		}
+	}
 }

@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Hierdie funksionaliteit is nog nie geïmplementeer nie",
-        "Message": "Implementeer asseblief &#39;n hanteerder vir gebeurtenis ` {{eventName}} `"
-    },
-    "Welcome": "Welkom by ons chat!"
+	"notFound": {
+		"NotImplemented": "Hierdie funksionaliteit is nog nie ge\u00efmplementeer nie",
+		"Message": "Implementeer asseblief &#39;n hanteerder vir gebeurtenis ` {{eventName}} `"
+	},
+	"Welcome": "Welkom by ons chat!",
+	"group": {
+		"join": {
+			"Greeting": "Welkom by die groep! Gaan asseblief jou DM&#39;s na.",
+			"LinkTitle": "Begin &#39;n privaat klets met die bot"
+		},
+		"request": {
+			"Greeting": "Hallo daar! Beantwoord asseblief die volgende vraag om jou aansluitversoek te voltooi..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Dankie dat jy my by die kanaal gevoeg het!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Dankie dat jy my ontblokkeer het!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Jy kan nou teruggaan na jou blaaier en die bladsy verfris."
+		}
+	}
 }

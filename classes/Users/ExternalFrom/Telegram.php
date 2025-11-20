@@ -124,6 +124,13 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
 			Q_Response::setCookie($cookieNames[1], $expires, $expires);
 		}
 
+		$platform = 'telegram';
+		Users::$cache['platformUserData'] = array(
+            'telegram' => Q::take(Telegram::$user, array(
+				'username', 'first_name', 'last_name', 'bio'
+			))
+        );
+
 		// Build Users_ExternalFrom_Telegram object
 		$ef = new Users_ExternalFrom_Telegram();
 		$ef->platform = 'telegram';

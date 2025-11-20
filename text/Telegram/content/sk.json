@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Táto funkcia ešte nie je implementovaná",
-        "Message": "Implementujte obslužný program pre udalosť ` {{eventName}} `"
-    },
-    "Welcome": "Vitajte na našom chate!"
+	"notFound": {
+		"NotImplemented": "T\u00e1to funkcia e\u0161te nie je implementovan\u00e1",
+		"Message": "Implementujte obslu\u017en\u00fd program pre udalos\u0165 ` {{eventName}} `"
+	},
+	"Welcome": "Vitajte na na\u0161om chate!",
+	"group": {
+		"join": {
+			"Greeting": "Vitaj v skupine! Pros\u00edm, skontroluj si svoje priame spr\u00e1vy.",
+			"LinkTitle": "Za\u010dnite s\u00fakromn\u00fd chat s botom"
+		},
+		"request": {
+			"Greeting": "Dobr\u00fd de\u0148! Pros\u00edm, odpovedzte na nasleduj\u00facu ot\u00e1zku, aby ste dokon\u010dili svoju \u017eiados\u0165 o pripojenie..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "\u010eakujem, \u017ee si ma pridal/a na kan\u00e1l!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "\u010eakujem za odblokovanie!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Teraz sa m\u00f4\u017eete vr\u00e1ti\u0165 do prehliada\u010da a obnovi\u0165 str\u00e1nku."
+		}
+	}
 }

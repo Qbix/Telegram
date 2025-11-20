@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Utendaji huu bado haujatekelezwa",
-        "Message": "Tafadhali tekeleza kidhibiti cha tukio ` {{eventName}}"
-    },
-    "Welcome": "Karibu kwenye gumzo letu!"
+	"notFound": {
+		"NotImplemented": "Utendaji huu bado haujatekelezwa",
+		"Message": "Tafadhali tekeleza kidhibiti cha tukio ` {{eventName}}"
+	},
+	"Welcome": "Karibu kwenye gumzo letu!",
+	"group": {
+		"join": {
+			"Greeting": "Karibu kwenye kikundi! Tafadhali angalia DM zako.",
+			"LinkTitle": "Anzisha gumzo la faragha na roboti"
+		},
+		"request": {
+			"Greeting": "Habari! Tafadhali jibu swali lifuatalo ili kukamilisha ombi lako la kujiunga..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Asante kwa kuniongeza kwenye kituo!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Asante kwa kunifungulia!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Sasa unaweza kurudi kwenye kivinjari chako na uonyeshe ukurasa upya."
+		}
+	}
 }

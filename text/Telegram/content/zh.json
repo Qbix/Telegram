@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "此功能尚未实现",
-        "Message": "请为事件“ {{eventName}} ”实现处理程序"
-    },
-    "Welcome": "欢迎加入我们的聊天！"
+	"notFound": {
+		"NotImplemented": "\u6b64\u529f\u80fd\u5c1a\u672a\u5b9e\u73b0",
+		"Message": "\u8bf7\u4e3a\u4e8b\u4ef6\u201c {{eventName}} \u201d\u5b9e\u73b0\u5904\u7406\u7a0b\u5e8f"
+	},
+	"Welcome": "\u6b22\u8fce\u52a0\u5165\u6211\u4eec\u7684\u804a\u5929\uff01",
+	"group": {
+		"join": {
+			"Greeting": "\u6b22\u8fce\u52a0\u5165\u7fa4\u7ec4\uff01\u8bf7\u67e5\u6536\u60a8\u7684\u79c1\u4fe1\u3002",
+			"LinkTitle": "\u4e0e\u673a\u5668\u4eba\u5f00\u59cb\u79c1\u804a"
+		},
+		"request": {
+			"Greeting": "\u60a8\u597d\uff01\u8bf7\u56de\u7b54\u4ee5\u4e0b\u95ee\u9898\u4ee5\u5b8c\u6210\u60a8\u7684\u52a0\u5165\u7533\u8bf7\u2026\u2026"
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "\u8c22\u8c22\u4f60\u628a\u6211\u6dfb\u52a0\u5230\u9891\u9053\u91cc\uff01"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "\u8c22\u8c22\u4f60\u5e2e\u6211\u89e3\u9664\u5c01\u9501\uff01"
+		},
+		"authenticated": {
+			"BackToBrowser": "\u73b0\u5728\u60a8\u53ef\u4ee5\u8fd4\u56de\u6d4f\u89c8\u5668\u5e76\u5237\u65b0\u9875\u9762\u3002"
+		}
+	}
 }

@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Denna funktion är inte implementerad ännu",
-        "Message": "Vänligen implementera en hanterare för händelse ` {{eventName}} `"
-    },
-    "Welcome": "Välkommen till vår chatt!"
+	"notFound": {
+		"NotImplemented": "Denna funktion \u00e4r inte implementerad \u00e4nnu",
+		"Message": "V\u00e4nligen implementera en hanterare f\u00f6r h\u00e4ndelse ` {{eventName}} `"
+	},
+	"Welcome": "V\u00e4lkommen till v\u00e5r chatt!",
+	"group": {
+		"join": {
+			"Greeting": "V\u00e4lkommen till gruppen! Kolla g\u00e4rna era DM.",
+			"LinkTitle": "Starta en privat chatt med boten"
+		},
+		"request": {
+			"Greeting": "Hej! V\u00e4nligen svara p\u00e5 f\u00f6ljande fr\u00e5ga f\u00f6r att slutf\u00f6ra din medlemsf\u00f6rfr\u00e5gan..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Tack f\u00f6r att du lade till mig p\u00e5 kanalen!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Tack f\u00f6r att du avblockerade mig!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Nu kan du g\u00e5 tillbaka till din webbl\u00e4sare och uppdatera sidan."
+		}
+	}
 }

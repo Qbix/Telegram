@@ -51,7 +51,7 @@
 			"telegram": ["token", "secret"]
 		},
 		"import": {
-			"telegram": ["first_name", "last_name", "username", "language_code"]
+			"telegram": ["first_name", "last_name", "username", "language_code", "bio"]
 		},
 		"futureUser": {
 			"telegram": {

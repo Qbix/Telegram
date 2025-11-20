@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Ta funkcionalnost še ni implementirana",
-        "Message": "Implementirajte obravnavo za dogodek » {{eventName}} «"
-    },
-    "Welcome": "Dobrodošli v našem klepetu!"
+	"notFound": {
+		"NotImplemented": "Ta funkcionalnost \u0161e ni implementirana",
+		"Message": "Implementirajte obravnavo za dogodek \u00bb {{eventName}} \u00ab"
+	},
+	"Welcome": "Dobrodo\u0161li v na\u0161em klepetu!",
+	"group": {
+		"join": {
+			"Greeting": "Dobrodo\u0161li v skupini! Prosimo, preverite svoja zasebna sporo\u010dila.",
+			"LinkTitle": "Za\u010dni zasebni klepet z botom"
+		},
+		"request": {
+			"Greeting": "\u017divjo! Prosimo, odgovorite na naslednje vpra\u0161anje, da dokon\u010date svojo zahtevo za pridru\u017eitev ..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Hvala, ker si me dodal/a na kanal!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Hvala, ker si me odblokiral/a!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Zdaj se lahko vrnete v brskalnik in osve\u017eite stran."
+		}
+	}
 }

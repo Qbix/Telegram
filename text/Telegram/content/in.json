@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Fungsionalitas ini belum diimplementasikan",
-        "Message": "Harap terapkan pengendali untuk acara ` {{eventName}}"
-    },
-    "Welcome": "Selamat datang di obrolan kami!"
+	"notFound": {
+		"NotImplemented": "Fungsionalitas ini belum diimplementasikan",
+		"Message": "Harap terapkan pengendali untuk acara ` {{eventName}}"
+	},
+	"Welcome": "Selamat datang di obrolan kami!",
+	"group": {
+		"join": {
+			"Greeting": "Selamat datang di grup! Silakan periksa DM Anda.",
+			"LinkTitle": "Mulai obrolan pribadi dengan bot"
+		},
+		"request": {
+			"Greeting": "Hai! Mohon jawab pertanyaan berikut untuk menyelesaikan permintaan bergabung Anda..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Terima kasih telah menambahkan saya ke saluran ini!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Terima kasih telah membuka blokir saya!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Sekarang Anda dapat kembali ke peramban dan menyegarkan halaman."
+		}
+	}
 }

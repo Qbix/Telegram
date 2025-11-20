@@ -1,7 +1,29 @@
 {
-    "notFound": {
-        "NotImplemented": "Hindi pa ipinapatupad ang functionality na ito",
-        "Message": "Mangyaring magpatupad ng handler para sa kaganapan ` {{eventName}} `"
-    },
-    "Welcome": "Maligayang pagdating sa aming chat!"
+	"notFound": {
+		"NotImplemented": "Hindi pa ipinapatupad ang functionality na ito",
+		"Message": "Mangyaring magpatupad ng handler para sa kaganapan ` {{eventName}} `"
+	},
+	"Welcome": "Maligayang pagdating sa aming chat!",
+	"group": {
+		"join": {
+			"Greeting": "Maligayang pagdating sa grupo! Mangyaring suriin ang iyong mga DM.",
+			"LinkTitle": "Magsimula ng pribadong chat sa bot"
+		},
+		"request": {
+			"Greeting": "Kumusta! Mangyaring sagutin ang sumusunod na tanong upang makumpleto ang iyong kahilingan sa pagsali..."
+		}
+	},
+	"channel": {
+		"added": {
+			"Greeting": "Salamat sa pag-add sa akin sa channel!"
+		}
+	},
+	"private": {
+		"added": {
+			"Greeting": "Salamat sa pag-unblock sa akin!"
+		},
+		"authenticated": {
+			"BackToBrowser": "Maaari ka na ngayong bumalik sa iyong browser at i-refresh ang pahina."
+		}
+	}
 }
