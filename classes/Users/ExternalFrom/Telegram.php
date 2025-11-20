@@ -27,7 +27,7 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
 	{
 		if (empty(Telegram::$user['id'])) {
 			$dataString = Q_Request::special('Users.authPayload.telegram', null);
-			if ($dataString && Telegram::verifyData($appId, $dataString, false)) {
+			if ($dataString && Telegram::verifyData($appId, $dataString, true)) {
 				// try to get user from auth payload
 				if (is_string($dataString)) {
 					parse_str($dataString, $data);
@@ -126,9 +126,9 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
 
 		$platform = 'telegram';
 		Users::$cache['platformUserData'] = array(
-            'telegram' => Q::take(Telegram::$user, array(
+            'telegram' => Q::take(Telegram::$user, Q_Config::get('Users', 'import', 'telegram', array(
 				'username', 'first_name', 'last_name', 'bio'
-			))
+			)))
         );
 
 		// Build Users_ExternalFrom_Telegram object

@@ -16,34 +16,34 @@ Q.onInit.add(function _Telegram_autoDetect() {
 		try {
 			Telegram.WebApp.ready();
 
-			// Run only once
-			if (Q.Users.loggedInUser) return;
+			if (!Telegram || !Telegram.WebApp || !Telegram.WebApp.initData) {
+				// we are not in a mini-app, may as well provision an intent now
+				Q.Users.Intent.provision('Users/authenticate', 'telegram');
+			}
 
 			// Check if we're inside Telegram context
 			var ctx = Q.Telegram.context();
 			if (ctx === 'browser') return;
 
-			if (Telegram && Telegram.WebApp && Telegram.WebApp.initData) {
-				// we are in a mini-app
-				var unsafe = Telegram.WebApp.initDataUnsafe;
-				if (unsafe && unsafe.user && unsafe.user.id) {
-					Q.Users.authPayload = Q.Users.authPayload || {};
-					Q.Users.authPayload.telegram = {
-						xid: unsafe.user.id,
-						payload: Telegram.WebApp.initData,
-						platform: 'telegram'
-					};
+			// Run only once
+			if (Q.Users.loggedInUser) return;
 
-					// Default future logins to auto-authenticate via Telegram
-					Q.Users.login.options.autoAuthenticatePlatform = 'telegram';
+			// we are in a mini-app
+			var unsafe = Telegram.WebApp.initDataUnsafe;
+			if (unsafe && unsafe.user && unsafe.user.id) {
+				Q.Users.authPayload = Q.Users.authPayload || {};
+				Q.Users.authPayload.telegram = {
+					xid: unsafe.user.id,
+					payload: Telegram.WebApp.initData,
+					platform: 'telegram'
+				};
 
-					if (console && console.log) {
-						console.log('[Telegram] Auto-detected Telegram WebApp context, xid=' + unsafe.user.id);
-					}
+				// Default future logins to auto-authenticate via Telegram
+				Q.Users.login.options.autoAuthenticatePlatform = 'telegram';
+
+				if (console && console.log) {
+					console.log('[Telegram] Auto-detected Telegram WebApp context, xid=' + unsafe.user.id);
 				}
-			} else {
-				// we are not in a mini-app, may as well provision an intent now
-				Q.Users.Intent.provision('Users/authenticate', 'telegram');
 			}
 		} catch (e) {
 			if (console && console.warn)
