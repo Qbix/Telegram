@@ -2,7 +2,8 @@
     "Streams/user/username": {
 		"platforms": {
             "telegram": "username"
-		}
+		},
+		"updateIfEmpty": true
 	},
     "Streams/user/firstName": {
 		"platforms": {

@@ -19,6 +19,9 @@ Q.onInit.add(function _Telegram_autoDetect() {
 			if (!Telegram || !Telegram.WebApp || !Telegram.WebApp.initData) {
 				// we are not in a mini-app, may as well provision an intent now
 				Q.Users.Intent.provision('Users/authenticate', 'telegram');
+				Q.Users.onLogout.set(function () {
+					Q.Users.Intent.provision('Users/authenticate', 'telegram');
+				}, 'Telegram');
 			}
 
 			// Check if we're inside Telegram context
