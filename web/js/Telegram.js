@@ -18,9 +18,9 @@ Q.onInit.add(function _Telegram_autoDetect() {
 
 			if (!Telegram || !Telegram.WebApp || !Telegram.WebApp.initData) {
 				// we are not in a mini-app, may as well provision an intent now
-				Q.Users.Intent.provision('Users/authenticate', 'telegram');
+				Q.Users.Intent.provision('Users/authenticate', 'telegram', Q.info.app);
 				Q.Users.onLogout.set(function () {
-					Q.Users.Intent.provision('Users/authenticate', 'telegram');
+					Q.Users.Intent.provision('Users/authenticate', 'telegram', Q.info.app);
 				}, 'Telegram');
 			}
 
@@ -28,11 +28,8 @@ Q.onInit.add(function _Telegram_autoDetect() {
 			var ctx = Q.Telegram.context();
 			if (ctx === 'browser') return;
 
-			// Run only once
-			if (Q.Users.loggedInUser) return;
-
 			// we are in a mini-app
-			var unsafe = Telegram.WebApp.initDataUnsafe;
+			var unsafe = Q.getObject('Telegram.WebApp.initDataUnsafe');
 			if (unsafe && unsafe.user && unsafe.user.id) {
 				Q.Users.authPayload = Q.Users.authPayload || {};
 				Q.Users.authPayload.telegram = {
@@ -47,6 +44,8 @@ Q.onInit.add(function _Telegram_autoDetect() {
 				if (console && console.log) {
 					console.log('[Telegram] Auto-detected Telegram WebApp context, xid=' + unsafe.user.id);
 				}
+
+				Q.handle(Q.Telegram.onWebAppContext, Telegram, [unsafe]);
 			}
 		} catch (e) {
 			if (console && console.warn)
@@ -64,8 +63,8 @@ var T = Q.Telegram = Q.plugins.Telegram = {
 	 */
 	context: function () {
 		try {
-			if (Telegram && Telegram.WebApp) return 'app';
-			if (TelegramWebviewProxy) return 'webview';
+			if (window.Telegram && window.Telegram.WebApp) return 'app';
+			if (window.Telegram && window.TelegramWebviewProxy) return 'webview';
 		} catch (e) {}
 		return 'browser';
 	},
@@ -179,7 +178,9 @@ var T = Q.Telegram = Q.plugins.Telegram = {
 		} catch (e) {
 			if (console && console.warn) console.warn('openLink fallback failed', e);
 		}
-	}
+	},
+
+	onWebAppContext: new Q.Event()
 }
 
 // Auto-intercept links in Telegram WebView
@@ -201,6 +202,27 @@ document.addEventListener('click', function (e) {
 	}
 }, true);
 
+T.onWebAppContext.add(function (data) {
+	var info = Q.getObject(['telegram', Q.info.app], Q.Users.apps);
+	if (!Q.Users.login.options.autoAuthenticatePlatform
+	|| info.dontLoginAutomatically) {
+		return;
+	}
+	if (Q.Users.loggedInUser) {
+		var startParam = Q.getObject('Telegram.WebApp.initDataUnsafe.start_param');
+		if (!startParam || startParam.split('-')[0] !== 'intent') {
+			// user is already logged in, and no Users/authenticate intent
+			return;
+		}
+	}
+	// log in the user, and also save results in any session that generated the intent
+	Q.Users.login({
+		using: 'telegram',
+		tryQuietly: true,
+		prompt: false
+	});
+}, 'Telegram');
+
 Q.Users.beforeDefineAuthenticateMethods.add(function (authenticate) {
 	authenticate.telegram = new Q.Method({}, {
 		customPath: '{{Telegram}}/js/methods/Users/authenticate/telegram.js'
@@ -211,5 +233,27 @@ Q.text.Users.login.telegram = {
 	src: null,
 	alt: "log in with telegram"
 };
+
+Q.Streams.subscribe.options.permissions = {
+	telegram: true
+};
+
+Q.Streams.Stream.subscribe.onPermission.set(function(info) {
+	if (!info.options.telegram) {
+		return; // do nothing — allow others to handle
+	}
+	var allows = Q.getObject('Telegram.WebApp.initDataUnsafe.allows_write_to_pm');
+	if (allows) {
+		return false; // no need for anything else
+	}
+	var rwa = Q.getObject('window.Telegram.WebApp.requestWriteAccess');
+	if (rwa) {
+		rwa(function (result) { 
+			console.log("Write access:", result);
+		});
+		return false;
+	}
+}, 'Telegram');
+
 
 })(Q, Q.jQuery);

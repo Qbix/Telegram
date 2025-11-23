@@ -87,6 +87,11 @@
 		},
 		"userStreams": {
 			"Telegram": "streams.json"
+		},
+		"rules": {
+			"deliver": {"prepend": "telegram"},
+			"invited": {"prepend": "telegram"},
+			"mentioned": {"prepend": "telegram"}
 		}
 	},
 	"Telegram": {

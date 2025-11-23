@@ -17,7 +17,7 @@
 		 * @static
 		 */
 		tokenFromConfig: function (appId) {
-			var info = Q.Users.appInfo("telegram", appId, true)[1];
+			var info = Q.Users.appInfo("telegram", appId, true).appInfo;
 			var token = Q.getObject("token", info);
 			if (!token) {
 				var fallback = Q.getObject("Users.apps.telegram.*.appIdForAuth", Q.Config.get());
@@ -25,7 +25,7 @@
 					var apps = Q.getObject("Users.apps.telegram", Q.Config.get(), {});
 					for (var k in apps) {
 						if (k !== "*") {
-							var info2 = Q.Users.appInfo("telegram", k, true)[1];
+							var info2 = Q.Users.appInfo("telegram", k, true).appInfo;
 							token = Q.getObject("token", info2);
 							if (token) break;
 						}
@@ -56,28 +56,34 @@
 		api: function (appId, methodName, params, headers) {
 			var endpoint = Telegram.Bot.endpoint(appId, methodName);
 			var ua = Q.getObject("Telegram.bot.userAgent", Q.Config.get(), "Qbix");
+
+			// Telegram API expects JSON body for everything except multipart
+			var data = JSON.stringify(params);
 			headers = headers || {
 				"Accept": "application/json",
-				"Content-Type": "application/json"
+				"Content-Type": "application/json",
+				"User-Agent": ua
 			};
+
 			return Q.promisify(function (cb) {
-				Q.req("POST", endpoint, params, function (err, responseText) {
+				Q.Utils.post(endpoint, data, null, ua, headers, function (err, body) {
 					if (err) return cb(err);
+
 					var result;
 					try {
-						result = JSON.parse(responseText);
+						result = JSON.parse(body);
 					} catch (e) {
 						return cb(e);
 					}
+
 					if (!result.ok) {
-						return cb(new Error("Telegram API error: " + responseText));
+						return cb(new Error("Telegram API error: " + body));
 					}
+
 					cb(null, result);
-				}, {
-					userAgent: ua,
-					headers: headers
 				});
 			});
+
 		},
 
 		/**

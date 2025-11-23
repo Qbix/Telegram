@@ -62,7 +62,7 @@ function Telegram_after_Q_Plugin_install($params)
             'certificate', 'secret_token', 'allowed_updates'
         ));
         echo "Telegram web hook was set to $url" . PHP_EOL;
-        if ($result['error']) {
+        if (!empty($result['error'])) {
             throw new Telegram_Exception_Webhook(@compact('appId', 'url', 'token', 'certificate'));
         }
         $extra[$appId] = array('setWebhook' => true);

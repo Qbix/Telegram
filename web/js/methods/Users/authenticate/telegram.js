@@ -108,14 +108,21 @@ Q.exports(function (Users, priv) {
 		if (options.startappName) {
 			interpolate.shortName = options.startappName;
 		}
+		var capability = Q.getObject(['Users/authenticate', 'telegram', Q.info.app, 'capability'], Q.Users.Intent.provision.results)
 
+		if (!capability) {
+			console.warn("Users.authenticate: Telegram missing capability for Users/authenticate action in " + Q.info.app)
+			return false;
+		}
+
+		var canHaveTelegramWithMiniApps = Q.info.isMobile || Q.info.isTablet;
 		Q.Users.Intent.start(
-			Q.Users.Intent.provision.results['Users/authenticate'].telegram.FreeCities.capability,
+			capability,
 			{
 				action: 'Users/authenticate',
 				platform: 'telegram',
 				interpolate: {
-					parameter: 'start'
+					parameter: options.startapp && canHaveTelegramWithMiniApps ? 'startapp' : 'start'
 				},
 				interpolateQR: {
 					parameter: options.startapp ? 'startapp' : 'start'
