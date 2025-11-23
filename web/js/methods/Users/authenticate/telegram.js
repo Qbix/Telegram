@@ -50,6 +50,7 @@ Q.exports(function (Users, priv) {
 
 		// Tell any tools that want to optimistically show current user
 		var optimisticPayload = user ? {
+			optimisticId: Q.Optimistic.id(),
 			icon: user.photo_url || null,
 			username: user.username || null,
 			firstName: user.first_name || null,
