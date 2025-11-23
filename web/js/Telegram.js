@@ -234,7 +234,7 @@ Q.text.Users.login.telegram = {
 	alt: "log in with telegram"
 };
 
-Q.Streams.subscribe.options.permissions = {
+Q.Streams.Stream.subscribe.options.permissions = {
 	telegram: true
 };
 
