@@ -30,20 +30,34 @@ Q.exports(function (Users, priv) {
 
 		var initData = null;
 		var unsafe = null;
+		var user = null;
 		var xid = null;
 
 		try {
 			if (window.Telegram && window.Telegram.WebApp) {
 				unsafe = Telegram.WebApp.initDataUnsafe;
+				user = unsafe.user;
 				initData = Telegram.WebApp.initData || null;
-				if (unsafe && unsafe.user && unsafe.user.id) {
-					xid = unsafe.user.id;
+				if (user && user.id) {
+					xid = user.id;
 				}
 			}
 		} catch (e) {
 			if (console && console.warn) {
 				console.warn('Telegram context initialization error:', e);
 			}
+		}
+
+		// Tell any tools that want to optimistically show current user
+		var optimisticPayload = user ? {
+			icon: user.photo_url || null,
+			username: user.username || null,
+			firstName: user.first_name || null,
+			lastName: user.last_name || null,
+			gender: null
+		} : null;
+		if (optimisticPayload) {
+			Q.handle(Q.Optimistic.onBegin("avatar", "@me"), Q.Users, [optimisticPayload]);
 		}
 
 		// CASE 1 + 2: check if cookie or initData available
@@ -53,7 +67,7 @@ Q.exports(function (Users, priv) {
 
 		if (hasCookie || hasInitData) {
 			// Send whichever data we have for verification
-			var appId = options && options.appId || appId
+			appId = options && options.appId || appId
 			var fields = { 
 				platform: 'telegram', 
 				appId: appId,
@@ -76,6 +90,9 @@ Q.exports(function (Users, priv) {
 						// clear stale cookies if invalid
 						Q.cookie(cookieName, null, { path: '/' });
 						Q.cookie(cookieName + '_expires', null, { path: '/' });
+
+						// Tell any tools that want to optimistically show current user
+						Q.handle(Q.Optimistic.onReject("avatar", "@me"), Q.Users, {});
 						return;
 					}
 
@@ -88,8 +105,18 @@ Q.exports(function (Users, priv) {
 						platform,
 						appId,
 						userId,
-						onSuccess,
-						onCancel,
+						function () {
+							if (optimisticPayload) {
+								Q.handle(Q.Optimistic.onResolve("avatar", "@me"), Q.Users, optimisticPayload);
+							}
+							Q.handle(onSuccess, this, arguments);
+						},
+						function () {
+							if (optimisticPayload) {
+								Q.handle(Q.Optimistic.onReject("avatar", "@me"), Q.Users, optimisticPayload);
+							}
+							Q.handle(onCancel, this, arguments);
+						},
 						Q.extend({ response: response, prompt: false }, options)
 					);
 				},
