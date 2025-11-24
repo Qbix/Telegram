@@ -71,8 +71,7 @@ Q.exports(function (Users, priv) {
 			appId = options && options.appId || appId
 			var fields = { 
 				platform: 'telegram', 
-				appId: appId,
-				updateXid: true
+				appId: appId
 			};
 			if (hasInitData) {
 				fields['Q.Users.authPayload.telegram'] = initData;
