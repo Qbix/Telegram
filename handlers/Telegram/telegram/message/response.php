@@ -15,14 +15,18 @@ function Telegram_telegram_message_response($params)
 					Q_Config::expect('Q', 'web', 'appRootUrl')
 				)
 			));
-			Telegram_Bot::sendMessage($appId, $chatId, $text['private']['authenticated']['BackToBrowser'], compact('url'));
+			Telegram_Bot::sendMessage($appId, $chatId, Q::interpolate(
+				$text['private']['authenticated']['BackToBrowser'], compact('url')
+			), array('parse_mode' => 'MarkdownV2'));
 		} else {
 			$url = Q_Uri::url(Q::ifset($info, 'url', 
 				Q::ifset($_SESSION, 'Streams', 'invite', 'appUrl',
 					Q_Config::expect('Q', 'web', 'appRootUrl')
 				)
 			));
-			Telegram_Bot::sendMessage($appId, $chatId, $text['private']['invited']['Approved'], compact('url'));
+			Telegram_Bot::sendMessage($appId, $chatId, Q::interpolate(
+				$text['private']['invited']['Approved'], compact('url')
+			), array('parse_mode' => 'MarkdownV2'));
 		}
 		return;
 	}
