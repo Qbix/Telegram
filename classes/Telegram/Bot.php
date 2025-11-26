@@ -336,10 +336,10 @@ class Telegram_Bot //extends Base_Telegram_Bot
             throw new Q_Exception_InvalidInput(array('source' => '$text'));
         }
         $options['chat_id'] = $chat_id;
-        $options['text'] = $text;
-        if (!empty($options['parse_mode'])) {
-            $text = Q_Markdown::sanitize($text);
+        if (!empty($options['parse_mode']) && $options['parse_mode'] === 'MarkdownV2') {
+            $text = Q_Markdown::cleanup($text);
         }
+        $options['text'] = $text;
         if (isset($options['reply_markup'])
         and is_array($options['reply_markup'])) {
             $options['reply_markup'] = json_encode($options['reply_markup'], true);
@@ -422,8 +422,8 @@ class Telegram_Bot //extends Base_Telegram_Bot
         }
         $params = array_merge($options, compact('chat_id', 'photo'));
         $params['chat_id'] = $chat_id;
-        if (!empty($options['parse_mode']) and !empty($options['caption'])) {
-            $options['caption'] = Q_Markdown::sanitize($options['caption']);
+        if (!empty($options['caption']) && !empty($options['parse_mode']) && $options['parse_mode'] === 'MarkdownV2') {
+            $options['caption'] = Q_Markdown::cleanup($options['caption']);
         }
         
         return self::api($appId, "sendPhoto", $params);
@@ -464,8 +464,8 @@ class Telegram_Bot //extends Base_Telegram_Bot
         }
         $params = array_merge($options, compact('chat_id', 'audio'));
         $params['chat_id'] = $chat_id;
-        if (!empty($options['parse_mode']) and !empty($options['caption'])) {
-            $options['caption'] = Q_Markdown::sanitize($options['caption']);
+        if (!empty($options['caption']) && !empty($options['parse_mode']) && $options['parse_mode'] === 'MarkdownV2') {
+            $options['caption'] = Q_Markdown::cleanup($options['caption']);
         }
 
         return self::api($appId, "sendAudio", $params);
@@ -508,8 +508,8 @@ class Telegram_Bot //extends Base_Telegram_Bot
         }
         $params = array_merge($options, compact('chat_id', 'video'));
         $params['chat_id'] = $chat_id;
-        if (!empty($options['parse_mode']) and !empty($options['caption'])) {
-            $options['caption'] = Q_Markdown::sanitize($options['caption']);
+        if (!empty($options['caption']) && !empty($options['parse_mode']) && $options['parse_mode'] === 'MarkdownV2') {
+            $options['caption'] = Q_Markdown::cleanup($options['caption']);
         }
         
         //actually:
@@ -609,8 +609,8 @@ class Telegram_Bot //extends Base_Telegram_Bot
         }
         $params = array_merge($options, compact('chat_id', 'voice'));
         $params['chat_id'] = $chat_id;
-        if (!empty($options['parse_mode']) and !empty($options['caption'])) {
-            $options['caption'] = Q_Markdown::sanitize($options['caption']);
+        if (!empty($options['caption']) && !empty($options['parse_mode']) and !empty($options['caption'])) {
+            $options['caption'] = Q_Markdown::cleanup($options['caption']);
         }
 
         return self::api($appId, "sendVoice", $params);
@@ -653,8 +653,8 @@ class Telegram_Bot //extends Base_Telegram_Bot
         }
         $params = array_merge($options, compact('chat_id', 'animation'));
         $params['chat_id'] = $chat_id;
-        if (!empty($options['parse_mode']) and !empty($options['caption'])) {
-            $options['caption'] = Q_Markdown::sanitize($options['caption']);
+        if (!empty($options['caption']) && !empty($options['parse_mode']) and !empty($options['caption'])) {
+            $options['caption'] = Q_Markdown::cleanup($options['caption']);
         }
 
         return self::api($appId, "sendAnimation", $params);
@@ -871,8 +871,8 @@ class Telegram_Bot //extends Base_Telegram_Bot
         }
         $params = array_merge($options, compact('chat_id', 'document'));
         $params['chat_id'] = $chat_id;
-        if (!empty($options['parse_mode']) and !empty($options['caption'])) {
-            $options['caption'] = Q_Markdown::sanitize($options['caption']);
+        if (!empty($options['caption']) && !empty($options['parse_mode']) and !empty($options['caption'])) {
+            $options['caption'] = Q_Markdown::cleanup($options['caption']);
         }
 
         return self::api($appId, "sendDocument", $params);
@@ -2072,8 +2072,8 @@ class Telegram_Bot //extends Base_Telegram_Bot
      * @return {array|bool} Message on success, or True if inline
      */
     static function editMessageText($appId, $text, array $params) {
-        if (!empty($params['parse_mode'])) {
-            $text = Q_Markdown::sanitize($text);
+        if (!empty($params['parse_mode']) && $params['parse_mode'] === 'MarkdownV2') {
+            $text = Q_Markdown::cleanup($text);
         }
         $params['text'] = $text;
         return self::api($appId, 'editMessageText', $params);
@@ -2090,8 +2090,8 @@ class Telegram_Bot //extends Base_Telegram_Bot
      * @return {array|bool} Message on success, or True if inline
      */
     static function editMessageCaption($appId, array $params) {
-        if (!empty($params['parse_mode']) and !empty($params['caption'])) {
-            $params['caption'] = Q_Markdown::sanitize($params['caption']);
+        if (!empty($params['caption']) && !empty($params['parse_mode']) and !empty($params['caption'])) {
+            $params['caption'] = Q_Markdown::cleanup($params['caption']);
         }
         return self::api($appId, 'editMessageCaption', $params);
     }
@@ -2149,6 +2149,10 @@ class Telegram_Bot //extends Base_Telegram_Bot
      * @return {array|bool} Message on success, or True if inline
      */
     static function editMessageReplyMarkup($appId, array $params) {
+        if (isset($options['reply_markup'])
+        and is_array($options['reply_markup'])) {
+            $options['reply_markup'] = json_encode($options['reply_markup'], true);
+        }
         return self::api($appId, 'editMessageReplyMarkup', $params);
     }
 
