@@ -23,10 +23,10 @@
 			"Greeting": "Tak fordi du fjernede blokeringen fra mig!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Din Telegram-konto er forbundet! G\u00e5 tilbage til din browser, eller [**tryk for at forts\u00e6tte her.**]( {{url}} )"
+			"BackToBrowser": "Din Telegram-konto er forbundet! G\u00e5 tilbage til din browser, eller <a href='<i translate='no'>999 &#39;&gt; <b>tryk for at forts\u00e6tte her</b></a>"
 		},
 		"invited": {
-			"Approved": "Din invitation er blevet godkendt! [**Du kan nu komme ind.**]( {{url}} )"
+			"Approved": "Din invitation er blevet godkendt! <a href='<i translate='no'>999 &#39;&gt; <strong>Du kan nu komme ind.</strong></a>"
 		}
 	}
 }

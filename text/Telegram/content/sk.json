@@ -23,10 +23,10 @@
 			"Greeting": "\u010eakujem za odblokovanie!"
 		},
 		"authenticated": {
-			"BackToBrowser": "V\u00e1\u0161 \u00fa\u010det Telegram je pripojen\u00fd! Vr\u00e1\u0165te sa do prehliada\u010da alebo [**kliknite pre pokra\u010dovanie tu.**]( {{url}} )"
+			"BackToBrowser": "V\u00e1\u0161 \u00fa\u010det Telegram je pripojen\u00fd! Vr\u00e1\u0165te sa do prehliada\u010da alebo <a href='<i translate='no'><b>kliknite sem a pokra\u010dujte.</b></a>"
 		},
 		"invited": {
-			"Approved": "Va\u0161a pozv\u00e1nka bola schv\u00e1len\u00e1! [**Teraz m\u00f4\u017eete vst\u00fapi\u0165.**]( {{url}} )"
+			"Approved": "Va\u0161a pozv\u00e1nka bola schv\u00e1len\u00e1! <a href='<i translate='no'>999 &#39;&gt; <strong>Teraz m\u00f4\u017eete vst\u00fapi\u0165.</strong></a>"
 		}
 	}
 }

@@ -23,10 +23,10 @@
 			"Greeting": "Eskerrik asko desblokeatzeagatik!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Zure Telegram kontua konektatuta dago! Itzuli zure arakatzailera, edo [**sakatu hemen jarraitzeko.**]( {{url}} )"
+			"BackToBrowser": "Zure Telegram kontua konektatuta dago! Itzuli zure arakatzailera, edo <a href='<i translate='no'><b>sakatu hemen jarraitzeko.</b></a>"
 		},
 		"invited": {
-			"Approved": "Zure gonbidapena onartu da! [**Orain barrura sartu zaitezke.**]( {{url}} )"
+			"Approved": "Zure gonbidapena onartu da! <a href='<i translate='no'>999 &#39;&gt; <strong>Orain barrura sartu zaitezke.</strong></a>"
 		}
 	}
 }

@@ -23,10 +23,10 @@
 			"Greeting": "Hvala \u0161to si me odblokirao/la!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Va\u0161 Telegram ra\u010dun je povezan! Vratite se u preglednik ili [**dodirnite za nastavak ovdje.**]( {{url}} )"
+			"BackToBrowser": "Va\u0161 Telegram ra\u010dun je povezan! Vratite se u preglednik ili <a href='<i translate='no'><b>dodirnite za nastavak ovdje.</b></a>"
 		},
 		"invited": {
-			"Approved": "Va\u0161a je pozivnica odobrena! [**Sada mo\u017eete u\u0107i unutra.**]( {{url}} )"
+			"Approved": "Va\u0161a pozivnica je odobrena! <a href='<i translate='no'>999 &#39;&gt; <strong>Sada mo\u017eete u\u0107i unutra.</strong></a>"
 		}
 	}
 }
