@@ -23,7 +23,10 @@
 			"Greeting": "T\u00e4nan blokeeringu t\u00fchistamise eest!"
 		},
 		"authenticated": {
-			"BackToBrowser": "N\u00fc\u00fcd saate oma brauserisse tagasi minna ja lehte v\u00e4rskendada."
+			"BackToBrowser": "Teie Telegrami konto on \u00fchendatud! Minge tagasi brauserisse v\u00f5i [**puudutage siin j\u00e4tkamiseks.**]( {{url}} )"
+		},
+		"invited": {
+			"Approved": "Teie kutse on heaks kiidetud! [**N\u00fc\u00fcd saate sisse astuda.**]( {{url}} )"
 		}
 	}
 }

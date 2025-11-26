@@ -23,7 +23,10 @@
 			"Greeting": "Asante kwa kunifungulia!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Sasa unaweza kurudi kwenye kivinjari chako na uonyeshe ukurasa upya."
+			"BackToBrowser": "Akaunti yako ya Telegram imeunganishwa! Rudi kwenye kivinjari chako, au [**gonga ili kuendelea hapa.**]( {{url}} )"
+		},
+		"invited": {
+			"Approved": "Mwaliko wako umeidhinishwa! [**Sasa unaweza kuingia ndani.**]( {{url}} )"
 		}
 	}
 }

@@ -23,7 +23,10 @@
 			"Greeting": "Grazzi talli \u017cblokkajtni!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Issa tista&#39; ter\u0121a&#39; lura g\u0127all-braw\u017cer tieg\u0127ek u ta\u0121\u0121orna l-pa\u0121na."
+			"BackToBrowser": "Il-kont Telegram tieg\u0127ek huwa konness! Mur lura g\u0127all-browser tieg\u0127ek, jew [**tektek biex tkompli hawn.**]( {{url}} )"
+		},
+		"invited": {
+			"Approved": "L-istedina tieg\u0127ek \u0121iet approvata! [**Issa tista&#39; tid\u0127ol \u0121ewwa.**]( {{url}} )"
 		}
 	}
 }

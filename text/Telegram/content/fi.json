@@ -23,7 +23,10 @@
 			"Greeting": "Kiitos kun avasit eston!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Voit nyt palata selaimeesi ja p\u00e4ivitt\u00e4\u00e4 sivun."
+			"BackToBrowser": "Telegram-tilisi on yhdistetty! Palaa selaimeesi tai [**napauta jatkaaksesi t\u00e4st\u00e4.**]( {{url}} )"
+		},
+		"invited": {
+			"Approved": "Kutsusi on hyv\u00e4ksytty! [**Voit nyt astua sis\u00e4\u00e4n.**]( {{url}} )"
 		}
 	}
 }

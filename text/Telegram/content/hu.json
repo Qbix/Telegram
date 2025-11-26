@@ -23,7 +23,10 @@
 			"Greeting": "K\u00f6sz\u00f6n\u00f6m, hogy feloldottad a blokkol\u00e1st!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Most visszat\u00e9rhetsz a b\u00f6ng\u00e9sz\u0151dbe, \u00e9s friss\u00edtheted az oldalt."
+			"BackToBrowser": "Telegram-fi\u00f3kod csatlakoztatva van! Menj vissza a b\u00f6ng\u00e9sz\u0151dbe, vagy [**\u00e9rintse meg a folytat\u00e1shoz.**]( {{url}} )"
+		},
+		"invited": {
+			"Approved": "A megh\u00edv\u00f3dat j\u00f3v\u00e1hagytuk! [**Most m\u00e1r bel\u00e9phetsz.**]( {{url}} )"
 		}
 	}
 }

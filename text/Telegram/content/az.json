@@ -23,7 +23,10 @@
 			"Greeting": "M\u0259ni blokdan \u00e7\u0131xard\u0131\u011f\u0131n\u0131z \u00fc\u00e7\u00fcn t\u0259\u015f\u0259kk\u00fcr edir\u0259m!"
 		},
 		"authenticated": {
-			"BackToBrowser": "\u0130ndi brauzeriniz\u0259 qay\u0131d\u0131b s\u0259hif\u0259ni yenil\u0259y\u0259 bil\u0259rsiniz."
+			"BackToBrowser": "Telegram hesab\u0131n\u0131z ba\u011fl\u0131d\u0131r! Brauzeriniz\u0259 qay\u0131d\u0131n v\u0259 ya [**burada davam etm\u0259k \u00fc\u00e7\u00fcn toxunun.**]( {{url}} )"
+		},
+		"invited": {
+			"Approved": "D\u0259v\u0259tiniz t\u0259sdiql\u0259ndi! [**\u0130ndi i\u00e7\u0259ri daxil ola bil\u0259rsiniz.**]( {{url}} )"
 		}
 	}
 }

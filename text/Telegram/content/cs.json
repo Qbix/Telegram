@@ -23,7 +23,10 @@
 			"Greeting": "D\u00edky za odblokov\u00e1n\u00ed!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Nyn\u00ed se m\u016f\u017eete vr\u00e1tit do prohl\u00ed\u017ee\u010de a obnovit str\u00e1nku."
+			"BackToBrowser": "V\u00e1\u0161 \u00fa\u010det Telegram je p\u0159ipojen! Vra\u0165te se do prohl\u00ed\u017ee\u010de nebo [**klepnut\u00edm pokra\u010dujte zde.**]( {{url}} )"
+		},
+		"invited": {
+			"Approved": "Va\u0161e pozv\u00e1nka byla schv\u00e1lena! [**Nyn\u00ed m\u016f\u017eete vstoupit dovnit\u0159.**]( {{url}} )"
 		}
 	}
 }

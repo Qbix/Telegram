@@ -23,7 +23,10 @@
 			"Greeting": "Takk fyrir a\u00f0 opna mig fyrir blokkun!"
 		},
 		"authenticated": {
-			"BackToBrowser": "\u00de\u00fa getur n\u00fa fari\u00f0 aftur \u00ed vafrann \u00feinn og endurn\u00fdja\u00f0 s\u00ed\u00f0una."
+			"BackToBrowser": "Telegram reikningurinn \u00feinn er tengdur! Far\u00f0u aftur \u00ed vafrann \u00feinn e\u00f0a [**smelltu til a\u00f0 halda \u00e1fram h\u00e9r.**]( {{url}} )"
+		},
+		"invited": {
+			"Approved": "Bo\u00f0i\u00f0 \u00feitt hefur veri\u00f0 sam\u00feykkt! [**\u00de\u00fa getur n\u00fa fari\u00f0 inn.**]( {{url}} )"
 		}
 	}
 }

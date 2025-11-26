@@ -23,7 +23,10 @@
 			"Greeting": "Paldies, ka atblo\u0137\u0113ji mani!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Tagad varat atgriezties p\u0101rl\u016bkprogramm\u0101 un atsvaidzin\u0101t lapu."
+			"BackToBrowser": "J\u016bsu Telegram konts ir savienots! Atgriezieties p\u0101rl\u016bkprogramm\u0101 vai [**pieskarieties, lai turpin\u0101tu \u0161eit.**]( {{url}} )"
+		},
+		"invited": {
+			"Approved": "J\u016bsu iel\u016bgums ir apstiprin\u0101ts! [**Tagad varat ieiet iek\u0161\u0101.**]( {{url}} )"
 		}
 	}
 }

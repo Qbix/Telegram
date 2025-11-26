@@ -23,7 +23,10 @@
 			"Greeting": "Mul\u021bumesc c\u0103 m-ai deblocat!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Acum pute\u021bi reveni la browser \u0219i actualiza pagina."
+			"BackToBrowser": "Contul t\u0103u Telegram este conectat! Revino la browser sau [**atinge pentru a continua aici.**] ( {{url}} )"
+		},
+		"invited": {
+			"Approved": "Invita\u021bia ta a fost aprobat\u0103! [**Acum po\u021bi intra.**]( {{url}} )"
 		}
 	}
 }

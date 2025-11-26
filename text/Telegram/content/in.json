@@ -23,7 +23,10 @@
 			"Greeting": "Terima kasih telah membuka blokir saya!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Sekarang Anda dapat kembali ke peramban dan menyegarkan halaman."
+			"BackToBrowser": "Akun Telegram Anda terhubung! Kembali ke peramban Anda, atau [**ketuk untuk melanjutkan di sini.**]( {{url}} )"
+		},
+		"invited": {
+			"Approved": "Undangan Anda telah disetujui! [**Anda sekarang dapat masuk ke dalam.**]( {{url}} )"
 		}
 	}
 }

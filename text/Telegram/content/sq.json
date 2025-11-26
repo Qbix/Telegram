@@ -23,7 +23,10 @@
 			"Greeting": "Faleminderit q\u00eb m\u00eb zhbllokuat!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Tani mund t\u00eb ktheheni n\u00eb shfletuesin tuaj dhe t\u00eb rifreskoni faqen."
+			"BackToBrowser": "Llogaria juaj n\u00eb Telegram \u00ebsht\u00eb lidhur! Kthehuni te shfletuesi juaj ose [**trokitni p\u00ebr t\u00eb vazhduar k\u00ebtu.**]( {{url}} )"
+		},
+		"invited": {
+			"Approved": "Ftesa juaj \u00ebsht\u00eb miratuar! [**Tani mund t\u00eb hyni brenda.**]( {{url}} )"
 		}
 	}
 }

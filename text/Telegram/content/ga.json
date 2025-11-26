@@ -23,7 +23,10 @@
 			"Greeting": "Go raibh maith agat as m\u00e9 a dh\u00edbhloc\u00e1il!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Is f\u00e9idir leat filleadh ar do bhrabhs\u00e1la\u00ed anois agus an leathanach a athnuachan."
+			"BackToBrowser": "T\u00e1 do chuntas Telegram ceangailte! T\u00e9igh ar ais chuig do bhrabhs\u00e1la\u00ed, n\u00f3 [**tap\u00e1il chun lean\u00faint ar aghaidh anseo.**]( {{url}} )"
+		},
+		"invited": {
+			"Approved": "T\u00e1 do chuireadh ceadaithe! [**Is f\u00e9idir leat dul isteach anois.**]( {{url}} )"
 		}
 	}
 }

@@ -23,7 +23,10 @@
 			"Greeting": "Bedankt dat je mij hebt gedeblokkeerd!"
 		},
 		"authenticated": {
-			"BackToBrowser": "U kunt nu teruggaan naar uw browser en de pagina vernieuwen."
+			"BackToBrowser": "Je Telegram-account is gekoppeld! Ga terug naar je browser of [**tik om hier verder te gaan.**]( {{url}} )"
+		},
+		"invited": {
+			"Approved": "Je uitnodiging is goedgekeurd! [**Je kunt nu naar binnen.**]( {{url}} )"
 		}
 	}
 }

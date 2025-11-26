@@ -23,7 +23,10 @@
 			"Greeting": "Diolch am fy dadflocio!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Gallwch nawr fynd yn \u00f4l i&#39;ch porwr ac adnewyddu&#39;r dudalen."
+			"BackToBrowser": "Mae eich cyfrif Telegram wedi&#39;i gysylltu! Ewch yn \u00f4l i&#39;ch porwr, neu [**tapiwch i barhau yma.**]( {{url}} )"
+		},
+		"invited": {
+			"Approved": "Mae eich gwahoddiad wedi cael ei gymeradwyo! [**Gallwch chi fynd i mewn nawr.**]( {{url}} )"
 		}
 	}
 }

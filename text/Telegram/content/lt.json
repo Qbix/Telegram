@@ -23,7 +23,10 @@
 			"Greeting": "A\u010di\u016b, kad atblokavai!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Dabar galite gr\u012f\u017eti \u012f nar\u0161ykl\u0119 ir atnaujinti puslap\u012f."
+			"BackToBrowser": "J\u016bs\u0173 \u201eTelegram\u201c paskyra prijungta! Gr\u012f\u017ekite \u012f nar\u0161ykl\u0119 arba [**palieskite, kad t\u0119stum\u0117te \u010dia.**]( {{url}} )"
+		},
+		"invited": {
+			"Approved": "J\u016bs\u0173 kvietimas patvirtintas! [**Dabar galite u\u017eeiti vidun.**]( {{url}} )"
 		}
 	}
 }

@@ -23,7 +23,10 @@
 			"Greeting": "\u00a1Gracias por desbloquearme!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Ahora puedes volver a tu navegador y actualizar la p\u00e1gina."
+			"BackToBrowser": "\u00a1Tu cuenta de Telegram est\u00e1 conectada! Vuelve a tu navegador o [**pulsa para continuar aqu\u00ed.**]( {{url}} )"
+		},
+		"invited": {
+			"Approved": "\u00a1Tu invitaci\u00f3n ha sido aprobada! [**Ya puedes entrar.**]( {{url}} )"
 		}
 	}
 }

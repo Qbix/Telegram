@@ -23,7 +23,10 @@
 			"Greeting": "Tack f\u00f6r att du avblockerade mig!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Nu kan du g\u00e5 tillbaka till din webbl\u00e4sare och uppdatera sidan."
+			"BackToBrowser": "Ditt Telegram-konto \u00e4r anslutet! G\u00e5 tillbaka till din webbl\u00e4sare eller [**tryck f\u00f6r att forts\u00e4tta h\u00e4r.**]( {{url}} )"
+		},
+		"invited": {
+			"Approved": "Din inbjudan har godk\u00e4nts! [**Du kan nu g\u00e5 in.**]( {{url}} )"
 		}
 	}
 }

@@ -23,7 +23,10 @@
 			"Greeting": "Terima kasih kerana menyahsekat saya!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Anda kini boleh kembali ke penyemak imbas anda dan muat semula halaman."
+			"BackToBrowser": "Akaun Telegram anda disambungkan! Kembali ke penyemak imbas anda atau [**ketik untuk meneruskan di sini.**]( {{url}} )"
+		},
+		"invited": {
+			"Approved": "Jemputan anda telah diluluskan! [**Anda kini boleh masuk ke dalam.**]( {{url}} )"
 		}
 	}
 }
