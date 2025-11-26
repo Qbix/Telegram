@@ -337,6 +337,9 @@ class Telegram_Bot //extends Base_Telegram_Bot
         }
         $options['chat_id'] = $chat_id;
         $options['text'] = $text;
+        if (!empty($options['parse_mode'])) {
+            $text = Q_Markdown::sanitize($text);
+        }
         if (isset($options['reply_markup'])
         and is_array($options['reply_markup'])) {
             $options['reply_markup'] = json_encode($options['reply_markup'], true);
@@ -419,6 +422,9 @@ class Telegram_Bot //extends Base_Telegram_Bot
         }
         $params = array_merge($options, compact('chat_id', 'photo'));
         $params['chat_id'] = $chat_id;
+        if (!empty($options['parse_mode']) and !empty($options['caption'])) {
+            $options['caption'] = Q_Markdown::sanitize($options['caption']);
+        }
         
         return self::api($appId, "sendPhoto", $params);
     }
@@ -458,6 +464,9 @@ class Telegram_Bot //extends Base_Telegram_Bot
         }
         $params = array_merge($options, compact('chat_id', 'audio'));
         $params['chat_id'] = $chat_id;
+        if (!empty($options['parse_mode']) and !empty($options['caption'])) {
+            $options['caption'] = Q_Markdown::sanitize($options['caption']);
+        }
 
         return self::api($appId, "sendAudio", $params);
     }
@@ -498,7 +507,10 @@ class Telegram_Bot //extends Base_Telegram_Bot
             throw new Q_Exception_InvalidInput(array('source' => '$chat_id'));
         }
         $params = array_merge($options, compact('chat_id', 'video'));
-        
+        $params['chat_id'] = $chat_id;
+        if (!empty($options['parse_mode']) and !empty($options['caption'])) {
+            $options['caption'] = Q_Markdown::sanitize($options['caption']);
+        }
         
         //actually:
         // if $params['video'] is URL or telegramID, we just sendVideo with header 'Content-Type: application/json'
@@ -597,6 +609,9 @@ class Telegram_Bot //extends Base_Telegram_Bot
         }
         $params = array_merge($options, compact('chat_id', 'voice'));
         $params['chat_id'] = $chat_id;
+        if (!empty($options['parse_mode']) and !empty($options['caption'])) {
+            $options['caption'] = Q_Markdown::sanitize($options['caption']);
+        }
 
         return self::api($appId, "sendVoice", $params);
     }
@@ -638,6 +653,9 @@ class Telegram_Bot //extends Base_Telegram_Bot
         }
         $params = array_merge($options, compact('chat_id', 'animation'));
         $params['chat_id'] = $chat_id;
+        if (!empty($options['parse_mode']) and !empty($options['caption'])) {
+            $options['caption'] = Q_Markdown::sanitize($options['caption']);
+        }
 
         return self::api($appId, "sendAnimation", $params);
     }
@@ -853,6 +871,9 @@ class Telegram_Bot //extends Base_Telegram_Bot
         }
         $params = array_merge($options, compact('chat_id', 'document'));
         $params['chat_id'] = $chat_id;
+        if (!empty($options['parse_mode']) and !empty($options['caption'])) {
+            $options['caption'] = Q_Markdown::sanitize($options['caption']);
+        }
 
         return self::api($appId, "sendDocument", $params);
     }
@@ -2046,10 +2067,15 @@ class Telegram_Bot //extends Base_Telegram_Bot
      * @method editMessageText
      * @static
      * @param {string} $appId
-     * @param {array} $params Required parameters: chat_id/message_id or inline_message_id, text. Optional: parse_mode, entities, link_preview_options, reply_markup
+     * @param {string} $text
+     * @param {array} $options Required parameters: chat_id/message_id or inline_message_id. Optional: parse_mode, entities, link_preview_options, reply_markup
      * @return {array|bool} Message on success, or True if inline
      */
-    static function editMessageText($appId, array $params) {
+    static function editMessageText($appId, $text, array $params) {
+        if (!empty($params['parse_mode'])) {
+            $text = Q_Markdown::sanitize($text);
+        }
+        $params['text'] = $text;
         return self::api($appId, 'editMessageText', $params);
     }
 
@@ -2064,6 +2090,9 @@ class Telegram_Bot //extends Base_Telegram_Bot
      * @return {array|bool} Message on success, or True if inline
      */
     static function editMessageCaption($appId, array $params) {
+        if (!empty($params['parse_mode']) and !empty($params['caption'])) {
+            $params['caption'] = Q_Markdown::sanitize($params['caption']);
+        }
         return self::api($appId, 'editMessageCaption', $params);
     }
 
