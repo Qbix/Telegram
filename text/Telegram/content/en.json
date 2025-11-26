@@ -23,7 +23,10 @@
 			"Greeting": "Thanks for unblocking me!"
 		},
 		"authenticated": {
-			"BackToBrowser": "You can now go back to your browser and refresh the page."
+			"BackToBrowser": "Your Telegram account is connected! Go back to your browser, or [**tap to continue here.**]({{url}})"
+		},
+		"invited": {
+			"Approved": "Your invite has been approved! [**You can now enter inside.**]({{url}})"
 		}
 	}
 }
