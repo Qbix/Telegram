@@ -85,7 +85,7 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
 						// set invite in session for later processing
 						$_SESSION['Streams']['invite'] = $invite;
 					}
-				}				
+				}
 			} else if ($type === 'invite') {
 				if ($invite = Streams_Invite::fromToken($token)) {
 					// accept invite and autosubscribe if first time and possible
