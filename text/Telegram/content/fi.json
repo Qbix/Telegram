@@ -23,10 +23,12 @@
 			"Greeting": "Kiitos kun avasit eston!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Telegram-tilisi on yhdistetty! Palaa selaimeesi tai <a href='<i translate='no'><b>napauta jatkaaksesi t\u00e4st\u00e4.</b></a>"
+			"BackToBrowser": "Telegram-tilisi on yhdistetty! Palaa selaimeesi.",
+			"OrContinueInsideTelegram": "Tai jatka Telegramissa."
 		},
 		"invited": {
-			"Approved": "Kutsusi on hyv\u00e4ksytty! <a href='<i translate='no'>999 &#39;&gt; <strong>Voit nyt astua sis\u00e4\u00e4n.</strong></a>"
+			"Approved": "Kutsunne on hyv\u00e4ksytty!",
+			"YouCanNowEnterInside": "\ud83d\udc49 Nyt p\u00e4\u00e4set sis\u00e4\u00e4n."
 		}
 	}
 }

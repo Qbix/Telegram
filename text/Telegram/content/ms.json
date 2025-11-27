@@ -23,10 +23,12 @@
 			"Greeting": "Terima kasih kerana menyahsekat saya!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Akaun Telegram anda disambungkan! Kembali ke penyemak imbas anda, atau <a href='<i translate='no'>999 &#39;&gt; <b>ketik untuk meneruskan di sini</b></a>"
+			"BackToBrowser": "Akaun Telegram anda disambungkan! Kembali ke penyemak imbas anda.",
+			"OrContinueInsideTelegram": "Atau teruskan di dalam Telegram."
 		},
 		"invited": {
-			"Approved": "Jemputan anda telah diluluskan! <a href='<i translate='no'>999 &#39;&gt; <strong>Anda kini boleh masuk ke dalam.</strong></a>"
+			"Approved": "Jemputan anda telah diluluskan!",
+			"YouCanNowEnterInside": "\ud83d\udc49 Anda kini boleh masuk ke dalam."
 		}
 	}
 }

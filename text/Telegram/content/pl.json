@@ -23,10 +23,12 @@
 			"Greeting": "Dzi\u0119kuj\u0119 za odblokowanie!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Twoje konto w Telegramie jest po\u0142\u0105czone! Wr\u00f3\u0107 do przegl\u0105darki lub <a href='<i translate='no'><b>kliknij 999 &#39;&gt;, aby kontynuowa\u0107.</b></a>"
+			"BackToBrowser": "Twoje konto Telegram jest po\u0142\u0105czone! Wr\u00f3\u0107 do przegl\u0105darki.",
+			"OrContinueInsideTelegram": "Lub kontynuuj w Telegramie."
 		},
 		"invited": {
-			"Approved": "Twoje zaproszenie zosta\u0142o zatwierdzone! <a href='<i translate='no'>999 &#39;&gt; <strong>Mo\u017cesz teraz wej\u015b\u0107 do \u015brodka.</strong></a>"
+			"Approved": "Twoje zaproszenie zosta\u0142o zatwierdzone!",
+			"YouCanNowEnterInside": "\ud83d\udc49 Teraz mo\u017cesz wej\u015b\u0107 do \u015brodka."
 		}
 	}
 }

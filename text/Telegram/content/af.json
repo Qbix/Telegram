@@ -23,10 +23,12 @@
 			"Greeting": "Dankie dat jy my ontblokkeer het!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Jou Telegram-rekening is gekoppel! Gaan terug na jou blaaier, of <a href='<i translate='no'><b>tik 999 &#39;&gt; om hier voort te gaan</b></a>"
+			"BackToBrowser": "Jou Telegram-rekening is gekoppel! Gaan terug na jou blaaier.",
+			"OrContinueInsideTelegram": "Of gaan voort binne Telegram."
 		},
 		"invited": {
-			"Approved": "Jou uitnodiging is goedgekeur! <a href='<i translate='no'>999 &#39;&gt; <strong>Jy kan nou binnegaan.</strong></a>"
+			"Approved": "Jou uitnodiging is goedgekeur!",
+			"YouCanNowEnterInside": "\ud83d\udc49 Jy kan nou binnegaan."
 		}
 	}
 }

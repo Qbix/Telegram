@@ -23,10 +23,12 @@
 			"Greeting": "Danke, dass du mich entsperrt hast!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Dein Telegram-Konto ist verbunden! Gehe zur\u00fcck zu deinem Browser oder <a href='<i translate='no'><b>tippe hier, um fortzufahren.</b></a>"
+			"BackToBrowser": "Ihr Telegram-Konto ist verbunden! Gehen Sie zur\u00fcck zu Ihrem Browser.",
+			"OrContinueInsideTelegram": "Oder fahren Sie innerhalb von Telegram fort."
 		},
 		"invited": {
-			"Approved": "Ihre Einladung wurde genehmigt! <a href='<i translate='no'>999 &#39;&gt; <strong>Sie k\u00f6nnen jetzt eintreten.</strong></a>"
+			"Approved": "Ihre Einladung wurde genehmigt!",
+			"YouCanNowEnterInside": "\ud83d\udc49 Sie k\u00f6nnen jetzt eintreten."
 		}
 	}
 }

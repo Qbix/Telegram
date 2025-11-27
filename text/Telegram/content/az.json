@@ -23,10 +23,12 @@
 			"Greeting": "M\u0259ni blokdan \u00e7\u0131xard\u0131\u011f\u0131n\u0131z \u00fc\u00e7\u00fcn t\u0259\u015f\u0259kk\u00fcr edir\u0259m!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Telegram hesab\u0131n\u0131z ba\u011fl\u0131d\u0131r! Brauzeriniz\u0259 qay\u0131d\u0131n v\u0259 ya <a href='<i translate='no'><b>burada davam etm\u0259k \u00fc\u00e7\u00fcn 999 &#39;&gt; klikl\u0259yin</b></a>"
+			"BackToBrowser": "Telegram hesab\u0131n\u0131z ba\u011fl\u0131d\u0131r! Brauzeriniz\u0259 qay\u0131d\u0131n.",
+			"OrContinueInsideTelegram": "V\u0259 ya Telegram daxilind\u0259 davam edin."
 		},
 		"invited": {
-			"Approved": "D\u0259v\u0259tiniz t\u0259sdiql\u0259ndi! <a href='<i translate='no'>999 &#39;&gt; <strong>\u0130ndi i\u00e7\u0259ri daxil ola bil\u0259rsiniz.</strong></a>"
+			"Approved": "D\u0259v\u0259tiniz t\u0259sdiql\u0259ndi!",
+			"YouCanNowEnterInside": "\ud83d\udc49 Art\u0131q i\u00e7\u0259ri daxil ola bil\u0259rsiniz."
 		}
 	}
 }

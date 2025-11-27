@@ -23,10 +23,12 @@
 			"Greeting": "Salamat sa pag-unblock sa akin!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Ang iyong Telegram account ay konektado! Bumalik sa iyong browser, o <a href='<i translate='no'>999 &#39;&gt; <b>tapikin upang magpatuloy dito</b></a>"
+			"BackToBrowser": "Ang iyong Telegram account ay konektado! Bumalik sa iyong browser.",
+			"OrContinueInsideTelegram": "O magpatuloy sa loob ng Telegram."
 		},
 		"invited": {
-			"Approved": "Ang iyong imbitasyon ay naaprubahan! <a href='<i translate='no'>999 &#39;&gt; <strong>Maaari ka nang pumasok sa loob.</strong></a>"
+			"Approved": "Ang iyong imbitasyon ay naaprubahan!",
+			"YouCanNowEnterInside": "\ud83d\udc49 Pwede ka nang pumasok sa loob."
 		}
 	}
 }

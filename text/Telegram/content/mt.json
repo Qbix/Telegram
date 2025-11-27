@@ -23,10 +23,12 @@
 			"Greeting": "Grazzi talli \u017cblokkajtni!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Il-kont Telegram tieg\u0127ek huwa konness! Mur lura fil-browser tieg\u0127ek, jew <a href='<i translate='no'>999 &#39;&gt; <b>tektek biex tkompli hawn.</b></a>"
+			"BackToBrowser": "Il-kont tat-Telegram tieg\u0127ek huwa konness! Mur lura fil-braw\u017cer tieg\u0127ek.",
+			"OrContinueInsideTelegram": "Jew kompli \u0121ewwa Telegram."
 		},
 		"invited": {
-			"Approved": "L-istedina tieg\u0127ek \u0121iet approvata! <a href='<i translate='no'>999 &#39;&gt; <strong>Issa tista&#39; tid\u0127ol \u0121ewwa.</strong></a>"
+			"Approved": "L-istedina tieg\u0127ek \u0121iet approvata!",
+			"YouCanNowEnterInside": "\ud83d\udc49 Issa tista&#39; tid\u0127ol \u0121ewwa."
 		}
 	}
 }

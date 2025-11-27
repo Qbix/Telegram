@@ -23,10 +23,12 @@
 			"Greeting": "Obrigado por me desbloquear!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Sua conta do Telegram est\u00e1 conectada! Volte para o seu navegador ou <a href='<i translate='no'><b>toque aqui para continuar.</b></a>"
+			"BackToBrowser": "Sua conta do Telegram est\u00e1 conectada! Volte para o seu navegador.",
+			"OrContinueInsideTelegram": "Ou continue dentro do Telegram."
 		},
 		"invited": {
-			"Approved": "Seu convite foi aprovado! <a href='<i translate='no'>999 &#39;&gt; <strong>Agora voc\u00ea pode entrar.</strong></a>"
+			"Approved": "Seu convite foi aprovado!",
+			"YouCanNowEnterInside": "\ud83d\udc49 Agora voc\u00ea pode entrar."
 		}
 	}
 }

@@ -23,10 +23,12 @@
 			"Greeting": "A\u010di\u016b, kad atblokavai!"
 		},
 		"authenticated": {
-			"BackToBrowser": "J\u016bs\u0173 \u201eTelegram\u201c paskyra prijungta! Gr\u012f\u017ekite \u012f nar\u0161ykl\u0119 arba <a href='<i translate='no'>999 &#39;&gt; <b>palieskite, kad t\u0119stum\u0117te \u010dia</b></a>"
+			"BackToBrowser": "J\u016bs\u0173 \u201eTelegram\u201c paskyra prijungta! Gr\u012f\u017ekite \u012f nar\u0161ykl\u0119.",
+			"OrContinueInsideTelegram": "Arba t\u0119skite \u201eTelegram\u201c viduje."
 		},
 		"invited": {
-			"Approved": "J\u016bs\u0173 kvietimas patvirtintas! <a href='<i translate='no'>999 &#39;&gt; <strong>Dabar galite u\u017eeiti vidun.</strong></a>"
+			"Approved": "J\u016bs\u0173 kvietimas patvirtintas!",
+			"YouCanNowEnterInside": "\ud83d\udc49 Dabar galite u\u017eeiti vidun."
 		}
 	}
 }

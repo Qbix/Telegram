@@ -23,10 +23,12 @@
 			"Greeting": "Go raibh maith agat as m\u00e9 a dh\u00edbhloc\u00e1il!"
 		},
 		"authenticated": {
-			"BackToBrowser": "T\u00e1 do chuntas Telegram ceangailte! T\u00e9igh ar ais chuig do bhrabhs\u00e1la\u00ed, n\u00f3 <a href='<i translate='no'><b>tap\u00e1il 999 &#39;&gt; chun lean\u00faint ar aghaidh anseo</b></a>"
+			"BackToBrowser": "T\u00e1 do chuntas Telegram ceangailte! T\u00e9igh ar ais chuig do bhrabhs\u00e1la\u00ed.",
+			"OrContinueInsideTelegram": "N\u00f3 lean ar aghaidh taobh istigh de Telegram."
 		},
 		"invited": {
-			"Approved": "T\u00e1 do chuireadh ceadaithe! <a href='<i translate='no'>999 &#39;&gt; <strong>Is f\u00e9idir leat dul isteach anois.</strong></a>"
+			"Approved": "T\u00e1 do chuireadh ceadaithe!",
+			"YouCanNowEnterInside": "\ud83d\udc49 Is f\u00e9idir leat dul isteach anois."
 		}
 	}
 }

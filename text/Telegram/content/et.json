@@ -23,10 +23,12 @@
 			"Greeting": "T\u00e4nan blokeeringu t\u00fchistamise eest!"
 		},
 		"authenticated": {
-			"BackToBrowser": "Teie Telegrami konto on \u00fchendatud! Minge tagasi oma brauserisse v\u00f5i <a href='<i translate='no'><b>puudutage siia j\u00e4tkamiseks</b></a>"
+			"BackToBrowser": "Teie Telegrami konto on \u00fchendatud! Minge tagasi oma brauserisse.",
+			"OrContinueInsideTelegram": "V\u00f5i j\u00e4tka Telegramis."
 		},
 		"invited": {
-			"Approved": "Teie kutse on heaks kiidetud! <a href='<i translate='no'>999 &#39;&gt; <strong>N\u00fc\u00fcd saate sisse astuda.</strong></a>"
+			"Approved": "Teie kutse on heaks kiidetud!",
+			"YouCanNowEnterInside": "\ud83d\udc49 N\u00fc\u00fcd saad sisse astuda."
 		}
 	}
 }
