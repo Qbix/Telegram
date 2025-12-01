@@ -7,7 +7,7 @@ function Telegram_telegram_message_response($params)
 	$chatId = Telegram_Bot::chatIdForReply($params);
 	$text = Q_Text::get('Telegram/content');
 	$user = Users::loggedInUser();
-	$userId = $user ? $user->id : null;
+	$userId = $user ? $user->id :
 	list($resolvedAppId, $info) = Users::appInfo('telegram', $appId);
 
 	list($type, $token) = explode('-', Telegram::$startParam, 4);
@@ -74,18 +74,19 @@ function Telegram_telegram_message_response($params)
 				), '', '&');
 				$url = Q_Uri::fixUrl("$url?$querystring");
 			}
+			$button = array('text' => $text['private']['authenticated']['OrContinueInsideTelegram']);
+			if (!empty($info['startapp']) && !empty($info['botUsername'])) {
+				$button['startapp'] = "invite-$token"; // Launch Mini App inside Telegram
+			} else {
+				$button['url'] = $url; // Fallback: open URL in browser
+			}
 			Telegram_Bot::sendMessage($appId, $chatId, Q::interpolate(
 				$text['private']['invited']['Approved'], compact('url')
 			), array(
 				'parse_mode' => 'HTML',
 				'reply_markup' => array(
 					'inline_keyboard' => array(
-						array(
-							array(
-								'text' => $text['private']['invited']['YouCanNowEnterInside'],
-								'url' => $url
-							)
-						)
+						array($button)
 					)
 				)
 			));
