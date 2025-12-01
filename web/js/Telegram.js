@@ -63,8 +63,12 @@ var T = Q.Telegram = Q.plugins.Telegram = {
 	 */
 	context: function () {
 		try {
-			if (window.Telegram && window.Telegram.WebApp) return 'app';
-			if (window.Telegram && window.TelegramWebviewProxy) return 'webview';
+			if (Q.getObject('Telegram.WebApp.initData')) {
+				return 'app';
+			}
+			if (window.Telegram && window.TelegramWebviewProxy) {
+				return 'webview';
+			}
 		} catch (e) {}
 		return 'browser';
 	},
