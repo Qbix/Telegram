@@ -33,7 +33,6 @@ function Telegram_telegram_message_response($params)
 					$botUrl ? $botUrl : $appRootUrl
 				)
 			));
-			tg://resolve?domain=FreeCitiesBot&startapp=invite-lzoqlsvwvrhoosbi
 			if (Users::$intent) {
 				$querystring = http_build_query(array(
 					'Q.Users.intent' => Users::$intent->token,
@@ -41,18 +40,22 @@ function Telegram_telegram_message_response($params)
 				), '', '&');
 				$url = Q_Uri::fixUrl("$url?$querystring");
 			}
+			$button = array('text' => $text['private']['authenticated']['OrContinueInsideTelegram']);
+			if (!empty($info['startapp']) && !empty($info['botUsername'])
+			and Q::startsWith($url, $appRootUrl)) {
+				// Launch Mini App inside Telegram
+				$button['startapp'] = Telegram::$startParam;
+			} else {
+				// Fallback: open URL in browser
+				$button['url'] = $url;
+			}
 			Telegram_Bot::sendMessage($appId, $chatId, Q::interpolate(
 				$text['private']['authenticated']['BackToBrowser'], compact('url')
 			), array(
 				'parse_mode' => 'HTML',
 				'reply_markup' => array(
 					'inline_keyboard' => array(
-						array(
-							array(
-								'text' => $text['private']['authenticated']['OrContinueInsideTelegram'],
-								'url' => $url
-							)
-						)
+						array($button)
 					)
 				)
 			));
@@ -74,11 +77,14 @@ function Telegram_telegram_message_response($params)
 				), '', '&');
 				$url = Q_Uri::fixUrl("$url?$querystring");
 			}
-			$button = array('text' => $text['private']['authenticated']['OrContinueInsideTelegram']);
-			if (!empty($info['startapp']) && !empty($info['botUsername'])) {
-				$button['startapp'] = "invite-$token"; // Launch Mini App inside Telegram
+			$button = array('text' => $text['private']['invite']['YouCanNowEnterInside']);
+			if (!empty($info['startapp']) && !empty($info['botUsername'])
+			and Q::startsWith($url, $appRootUrl)) {
+				// Launch Mini App inside Telegram
+				$button['startapp'] = Telegram::$startParam;
 			} else {
-				$button['url'] = $url; // Fallback: open URL in browser
+				// Fallback: open URL in browser
+				$button['url'] = $url;
 			}
 			Telegram_Bot::sendMessage($appId, $chatId, Q::interpolate(
 				$text['private']['invited']['Approved'], compact('url')
