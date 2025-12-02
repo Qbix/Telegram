@@ -7,7 +7,7 @@ function Telegram_telegram_message_response($params)
 	$chatId = Telegram_Bot::chatIdForReply($params);
 	$text = Q_Text::get('Telegram/content');
 	$user = Users::loggedInUser();
-	$userId = $user ? $user->id :
+	$userId = $user ? $user->id : '';
 	list($resolvedAppId, $info) = Users::appInfo('telegram', $appId);
 
 	list($type, $token) = explode('-', Telegram::$startParam, 4);
