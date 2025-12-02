@@ -41,7 +41,7 @@ function Telegram_telegram_message_response($params)
 				$url = Q_Uri::fixUrl("$url?$querystring");
 			}
 			$button = array('text' => $text['private']['authenticated']['OrContinueInsideTelegram']);
-			if (!empty($info['startapp']) && !empty($info['botUsername'])
+			if (!empty($info['intentapp']) && !empty($info['botUsername'])
 			and Q::startsWith($url, $appRootUrl)) {
 				// Launch Mini App inside Telegram
 				$button['web_app'] = Telegram::$startParam;
@@ -78,7 +78,7 @@ function Telegram_telegram_message_response($params)
 				$url = Q_Uri::fixUrl("$url?$querystring");
 			}
 			$button = array('text' => $text['private']['invite']['YouCanNowEnterInside']);
-			if (!empty($info['startapp']) && !empty($info['botUsername'])
+			if (!empty($info['inviteapp']) && !empty($info['botUsername'])
 			and Q::startsWith($url, $appRootUrl)) {
 				// Launch Mini App inside Telegram
 				$button['web_app'] = Telegram::$startParam;
