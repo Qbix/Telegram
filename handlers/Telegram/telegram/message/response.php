@@ -44,7 +44,7 @@ function Telegram_telegram_message_response($params)
 			if (!empty($info['startapp']) && !empty($info['botUsername'])
 			and Q::startsWith($url, $appRootUrl)) {
 				// Launch Mini App inside Telegram
-				$button['startapp'] = Telegram::$startParam;
+				$button['web_app'] = Telegram::$startParam;
 			} else {
 				// Fallback: open URL in browser
 				$button['url'] = $url;
@@ -81,7 +81,7 @@ function Telegram_telegram_message_response($params)
 			if (!empty($info['startapp']) && !empty($info['botUsername'])
 			and Q::startsWith($url, $appRootUrl)) {
 				// Launch Mini App inside Telegram
-				$button['startapp'] = Telegram::$startParam;
+				$button['web_app'] = Telegram::$startParam;
 			} else {
 				// Fallback: open URL in browser
 				$button['url'] = $url;
