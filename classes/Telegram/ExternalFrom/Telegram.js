@@ -60,14 +60,17 @@ function (notification, callback) {
 	}
 
 	// Retrieve telegram app info
-	var info = Users.appInfo('telegram', this.fields.appId);
+	var appId = this.fields.appId;
+	if (appId === 'all') {
+		appId = Q.apply.name;
+	}
+	var info = Users.appInfo('telegram', appId);
 	if (!info || !info.appInfo || !info.appInfo.token) {
 		return Q.handle(callback, this, [
 			new Q.Error("Users.ExternalFrom.Telegram: Missing Telegram bot token")
 		]);
 	}
 
-	var botAppId = info.appId;
 	var baseUrl  = info.appInfo.baseUrl
 		|| Q.Config.get(['Users','apps','baseUrl'], '');
 
@@ -93,7 +96,7 @@ function (notification, callback) {
 		]);
 	}
 
-	bot.sendMessage(botAppId, xid, text)
+	bot.sendMessage(appId, xid, text)
 	.then(result => {
 		Q.handle(callback, this, [null, result]);
 	})

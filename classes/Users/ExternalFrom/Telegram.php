@@ -182,4 +182,77 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
 		Users::$cache['platformUserData'] = array('telegram' => $result);
 		return $result;
 	}
+
+	/**
+	 * Sends a notification to the user over Telegram
+	 *
+	 * @method handlePushNotification
+	 * @param array $notification The notification array
+	 * @param callable|null $callback Optional callback
+	 */
+	public function handlePushNotification($notification, $callback = null)
+	{
+		$xid = Q::ifset($this->fields, 'xid', null);
+		if (!$xid) {
+			$err = new Q_Exception("Users.ExternalFrom.Telegram: Missing xid");
+			return Q::handle($callback, $this, array($err));
+		}
+
+		// Retrieve telegram app info
+		$appId = $this->appId;
+		if ($appId === 'all') {
+			$appId = Q::app();
+		}
+		$baseUrl = Q_Config::get(array('Users','apps','baseUrl'), '');
+
+		// Build text
+		$text = "";
+		$alert = isset($notification['alert']) ? $notification['alert'] : null;
+
+		if (is_string($alert)) {
+			$text = $alert;
+		} else if (is_array($alert) && !empty($alert['body'])) {
+			$text = $alert['body'];
+		}
+
+		if (!empty($notification['href'])) {
+			$link = $notification['href'];
+			if (strlen($link) && $link[0] === '/') {
+				$link = $baseUrl . $link;
+			}
+			$text .= "\n\n" . $link;
+		}
+
+		// Obtain Telegram bot client
+		try {
+			$result = Telegram_Bot::sendMessage($appId, $xid, $text);
+			return Q::handle($callback, $this, array(null, $result));
+
+		} catch (Exception $e) {
+
+			$msg = strtolower($e->getMessage());
+
+			// Hard permanent rejects
+			if (
+				strpos($msg, "forbidden") !== false ||
+				strpos($msg, "blocked") !== false ||
+				strpos($msg, "chat not found") !== false ||
+				strpos($msg, "deactivated") !== false ||
+				strpos($msg, "user is deactivated") !== false ||
+				strpos($msg, "peer_id_invalid") !== false
+			) {
+				$e->rejected = true;
+			}
+
+			// Soft rejects (retryable)
+			if (
+				strpos($msg, "too many requests") !== false ||
+				strpos($msg, "429") !== false
+			) {
+				$e->rateLimited = true;
+			}
+
+			return Q::handle($callback, $this, array($e));
+		}
+	}
 }
