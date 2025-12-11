@@ -62,7 +62,7 @@ function (notification, callback) {
 	// Retrieve telegram app info
 	var appId = this.fields.appId;
 	if (appId === 'all') {
-		appId = Q.apply.name;
+		appId = Q.app.name;
 	}
 	var info = Users.appInfo('telegram', appId);
 	if (!info || !info.appInfo || !info.appInfo.token) {

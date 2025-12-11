@@ -188,14 +188,14 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
 	 *
 	 * @method handlePushNotification
 	 * @param array $notification The notification array
-	 * @param callable|null $callback Optional callback
+	 * @param array $options Additional options (unused for now)
+	 * @return boolean True on success, false on failure
 	 */
-	public function handlePushNotification($notification, $callback = null)
+	public function handlePushNotification($notification, $options = array())
 	{
 		$xid = Q::ifset($this->fields, 'xid', null);
 		if (!$xid) {
-			$err = new Q_Exception("Users.ExternalFrom.Telegram: Missing xid");
-			return Q::handle($callback, $this, array($err));
+			return false;
 		}
 
 		// Retrieve telegram app info
@@ -223,10 +223,10 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
 			$text .= "\n\n" . $link;
 		}
 
-		// Obtain Telegram bot client
+		// Send
 		try {
-			$result = Telegram_Bot::sendMessage($appId, $xid, $text);
-			return Q::handle($callback, $this, array(null, $result));
+			Telegram_Bot::sendMessage($appId, $xid, $text);
+			return true;
 
 		} catch (Exception $e) {
 
@@ -252,7 +252,8 @@ class Users_ExternalFrom_Telegram extends Users_ExternalFrom implements Users_Ex
 				$e->rateLimited = true;
 			}
 
-			return Q::handle($callback, $this, array($e));
+			return false;
 		}
 	}
+
 }
