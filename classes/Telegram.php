@@ -160,10 +160,10 @@ abstract class Telegram extends Base_Telegram
 	 * @param {string} $appId The app ID
 	 * @param {int|string} $chatId The Telegram chat ID
 	 * @param {array} [$sizes=Q_Image::getSizes('Streams/icon')]
-	 * @param {string} [$suffix='.png'] Optional suffix
+	 * @param {string} [$suffix='.jpg'] Optional suffix
 	 * @return {array|null} Map of size => icon URL
 	 */
-	static function chatIcon($appId, $chatId, $sizes = null, $suffix = '.png')
+	static function chatIcon($appId, $chatId, $sizes = null, $suffix = '.jpg')
 	{
 		$sizes = isset($sizes) ? $sizes : array_keys(Q_Image::getSizes('Streams/icon'));
 		ksort($sizes);
