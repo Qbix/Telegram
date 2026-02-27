@@ -1,9 +1,11 @@
 Q.exports(function (Users, priv) {
+
 	/**
 	 * Authenticates this session with a given platform,
 	 * if the user was already connected to it.
 	 * It tries to do so by checking a cookie that would have been set by the server,
 	 * or Telegram Mini App context if available.
+	 *
 	 * @method authenticate
 	 * @param {String} platform Currently it's `telegram`
 	 * @param {String} appId can be the appId, or "all"
@@ -20,11 +22,11 @@ Q.exports(function (Users, priv) {
 	 *   @param {Boolean} [options.startapp] set to true to use the Mini App flow (`startapp`)
 	 *   @param {String} [options.startappName] optional Telegram Mini App short name (for future use)
 	 */
-	return function telegram(platform, appId, onSuccess, onCancel, options) {
+	function telegram(platform, appId, onSuccess, onCancel, options) {
+
 		options = Q.extend({}, options);
 
 		if (options.startapp === undefined) {
-			// look at the app's config to see if we should use startapp
 			options.startapp = Q.getObject([platform, options.appId, 'startapp'], Users.apps);
 		}
 
@@ -48,7 +50,6 @@ Q.exports(function (Users, priv) {
 			}
 		}
 
-		// Tell any tools that want to optimistically show current user
 		var optimisticPayload = user ? {
 			optimisticId: Q.Optimistic.id(),
 			icon: user.photo_url || null,
@@ -57,22 +58,28 @@ Q.exports(function (Users, priv) {
 			lastName: user.last_name || null,
 			gender: null
 		} : null;
+
 		if (optimisticPayload) {
 			Q.handle(Q.Optimistic.onBegin("avatar", "@me"), Q.Users, [optimisticPayload]);
 		}
 
-		// CASE 1 + 2: check if cookie or initData available
 		var cookieName = 'tgsr_' + appId;
 		var hasCookie = !!Q.cookie(cookieName);
 		var hasInitData = !!initData;
 
+		// ============================================================
+		// CASE 1 + 2: Cookie or initData available
+		// ============================================================
+
 		if (hasCookie || hasInitData) {
-			// Send whichever data we have for verification
-			appId = options && options.appId || appId
-			var fields = { 
-				platform: 'telegram', 
+
+			appId = options && options.appId || appId;
+
+			var fields = {
+				platform: 'telegram',
 				appId: appId
 			};
+
 			if (hasInitData) {
 				fields['Q.Users.authPayload.telegram'] = initData;
 			}
@@ -80,18 +87,20 @@ Q.exports(function (Users, priv) {
 			Q.req(
 				'Users/authenticate',
 				function (err, response) {
+
 					if (err) {
+
 						if (console && console.warn) {
 							console.warn('Telegram authenticate failed:', err);
 						}
+
 						if (typeof onCancel === 'function') {
 							onCancel(err, options);
 						}
-						// clear stale cookies if invalid
+
 						Q.cookie(cookieName, null, { path: '/' });
 						Q.cookie(cookieName + '_expires', null, { path: '/' });
 
-						// Tell any tools that want to optimistically show current user
 						Q.handle(Q.Optimistic.onReject("avatar", "@me"), Q.Users, {});
 						return;
 					}
@@ -117,7 +126,7 @@ Q.exports(function (Users, priv) {
 							}
 							Q.handle(onCancel, this, arguments);
 						},
-						Q.extend({ response: response, prompt: false }, options)
+						Q.extend({ response: response }, options)
 					);
 				},
 				{
@@ -129,27 +138,29 @@ Q.exports(function (Users, priv) {
 			return;
 		}
 
-		// CASE 3: No cookie, no initData → synchronous redirect to Telegram intent
-		var parameter = options.startapp ? 'startapp' : 'start';
-		var interpolate = { parameter: parameter};
-		if (options.startappName) {
-			interpolate.shortName = options.startappName;
-		}
-		var capability = Q.getObject(['Users/authenticate', 'telegram', Q.info.app, 'capability'], Q.Users.Intent.provision.results)
+		// ============================================================
+		// CASE 3: Redirect to Telegram Intent
+		// ============================================================
+
+		var capability = Q.getObject(
+			['Users/authenticate', 'telegram', Q.info.app, 'capability'],
+			Q.Users.Intent.provision.results
+		);
 
 		if (!capability) {
-			console.warn("Users.authenticate: Telegram missing capability for Users/authenticate action in " + Q.info.app)
+			console.warn("Users.authenticate: Telegram missing capability for Users/authenticate action in " + Q.info.app);
 			return false;
 		}
 
-		var canHaveTelegramWithMiniApps = Q.info.isMobile || Q.info.isTablet;
+		var canHaveMiniApps = Q.info.isMobile || Q.info.isTablet;
+
 		Q.Users.Intent.start(
 			capability,
 			{
 				action: 'Users/authenticate',
 				platform: 'telegram',
 				interpolate: {
-					parameter: options.startapp && canHaveTelegramWithMiniApps ? 'startapp' : 'start'
+					parameter: options.startapp && canHaveMiniApps ? 'startapp' : 'start'
 				},
 				interpolateQR: {
 					parameter: options.startapp ? 'startapp' : 'start'
@@ -157,4 +168,98 @@ Q.exports(function (Users, priv) {
 			}
 		);
 	}
+
+	// ============================================================
+	// Prompt Adapter Registration
+	// ============================================================
+
+	Users.prompt = Users.prompt || {};
+
+	Users.prompt.telegram = {
+
+		template: null,
+
+		getData: function (context) {
+			return context;
+		},
+
+		render: function (context, container, done) {
+
+			var currentXid = Q.getObject(['loggedInUser', 'xids', 'telegram'], Users);
+			var newXid = context.xid;
+
+			var unsafe = null;
+			var user = null;
+
+			try {
+				if (window.Telegram && window.Telegram.WebApp) {
+					unsafe = Telegram.WebApp.initDataUnsafe;
+					user = unsafe.user;
+				}
+			} catch (e) {}
+
+			var icon = user && user.photo_url
+				? user.photo_url
+				: Q.url('{{Users}}/img/platforms/telegram.png');
+
+			var caption;
+
+			if (currentXid && currentXid !== newXid) {
+				caption = Q.text.Users.prompt.doSwitch.interpolate({
+					platform: 'telegram',
+					Platform: 'Telegram'
+				});
+			} else {
+				caption = Q.text.Users.prompt.doAuth.interpolate({
+					platform: 'telegram',
+					Platform: 'Telegram'
+				});
+			}
+
+			if (currentXid && currentXid !== newXid) {
+				container.append(_userBlock(
+					currentXid,
+					icon,
+					Q.text.Users.prompt.noLongerUsing.interpolate({
+						platform: 'telegram',
+						Platform: 'Telegram'
+					})
+				));
+			}
+
+			container
+				.append(_userBlock(
+					newXid,
+					icon,
+					Q.text.Users.prompt.areUsing.interpolate({
+						platform: 'telegram',
+						Platform: 'Telegram'
+					})
+				))
+				.append(_authenticateActions(caption));
+
+			done && done();
+		}
+	};
+
+	function _userBlock(xid, icon, explanation) {
+
+		return $("<div class='Users_telegram_block' />").append(
+			$("<div class='Users_telegram_row' />")
+				.append($("<img class='Users_telegram_icon' />").attr('src', icon))
+				.append($("<div class='Users_telegram_text' />")
+					.append($("<div class='Users_explanation' />").html(explanation))
+					.append($("<div class='Users_telegram_id' />").text(xid))
+				)
+		);
+	}
+
+	function _authenticateActions(caption) {
+		return $("<div class='Users_actions Q_big_prompt' />").append(
+			$('<button type="submit" class="Q_button Q_main_button Users_confirm" />')
+				.html(caption)
+		);
+	}
+
+	return telegram;
 });
