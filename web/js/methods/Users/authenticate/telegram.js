@@ -149,6 +149,9 @@ Q.exports(function (Users, priv) {
 
 		if (!capability) {
 			console.warn("Users.authenticate: Telegram missing capability for Users/authenticate action in " + Q.info.app);
+			if (typeof onCancel === 'function') {
+				onCancel(err, options);
+			}
 			return false;
 		}
 
