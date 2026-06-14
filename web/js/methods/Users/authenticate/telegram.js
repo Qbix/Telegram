@@ -6,7 +6,7 @@ Q.exports(function (Users, priv) {
 	 * It tries to do so by checking a cookie that would have been set by the server,
 	 * or Telegram Mini App context if available.
 	 *
-	 * @method authenticate
+	 * @method telegram
 	 * @param {String} platform Currently it's `telegram`
 	 * @param {String} appId can be the appId, or "all"
 	 * @param {Function} onSuccess Called if the user successfully authenticates with the platform, or was already authenticated.
