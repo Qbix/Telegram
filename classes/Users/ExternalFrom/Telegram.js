@@ -50,7 +50,7 @@ Users_ExternalFrom_Telegram.client = function (appId) {
  * @method handlePushNotification
  */
 Users_ExternalFrom_Telegram.prototype.handlePushNotification =
-function (notification, callback) {
+function (notification, options, callback) {
 
 	var xid = this.fields.xid;
 	if (!xid) {
