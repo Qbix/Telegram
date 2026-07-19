@@ -1315,7 +1315,36 @@ class Telegram_Bot //extends Base_Telegram_Bot
         return isset($response['result']) ? $response['result'] : array();
     }
 
-        /**
+    /**
+     * Use this method to get the bot's own information, such as its user ID, username, and capabilities.
+     * https://core.telegram.org/bots/api#getme
+     *
+     * @method getMyId
+     * @static
+     *
+     * @param {string} $appId The appId under Users/apps/telegram config
+     * @return {array} Returns an associative array with bot information:
+     * {
+     *   'id' => (int) Telegram bot user ID,
+     *   'is_bot' => true,
+     *   'username' => (string),     * }
+     */
+    static function getMyInfo($appId)
+    {
+        $appInfo = Users::appInfo('telegram', $appId, true);
+        $id = Q_Config::get($appInfo, 'botId', null);
+        if (!$id and $token = Q_Config::get($appInfo, 'token', null)) {
+            $parts = explode(':', $token);
+            if (count($parts) === 2 && is_numeric($parts[0])) {
+                $id = (int)$parts[0];
+            }
+        }
+        $is_bot = true;
+        $username = Q_Config::get('Users', 'apps', 'telegram', $appId, 'botUsername');
+        return compact('id', 'is_bot', 'username');
+    }
+
+    /**
      * Use this method to get the bot's display name and other profile info.
      * https://core.telegram.org/bots/api#getmyname
      *
